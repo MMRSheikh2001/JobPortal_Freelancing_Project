@@ -1,0 +1,162 @@
+<div class="container py-4">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- Review Form -->
+
+    <div *ngIf="!loading && order">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+
+                <div class="card shadow-sm">
+
+                    <!-- Header -->
+
+                    <div class="card-header bg-white">
+
+                        <div class="d-flex align-items-center">
+
+                            <img [src]="fileService.getGigImage(order.gigImage)" width="80" height="80"
+                                class="rounded border object-fit-cover">
+
+                            <div class="ms-3">
+
+                                <h4 class="mb-1">
+
+                                    {{order.gigTitle}}
+
+                                </h4>
+
+                                <div class="text-muted">
+
+                                    Seller:
+                                    <strong>{{order.sellerName}}</strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Body -->
+
+                    <div class="card-body">
+
+                        <!-- Not Allowed -->
+
+                        <div *ngIf="!canReview" class="alert alert-warning">
+
+                            You can review this gig only after you have
+                            accepted the delivery.
+
+                        </div>
+
+                        <!-- Existing Review -->
+
+                        <div *ngIf="reviewExists" class="alert alert-info">
+
+                            You have already reviewed this gig.
+                            You may edit your review.
+
+                        </div>
+
+                        <!-- Rating -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+
+                                Rating
+
+                            </label>
+
+                            <div>
+
+                                <span *ngFor="let star of stars" class="fs-2 me-2" style="cursor:pointer;"
+                                    (click)="setRating(star)">
+
+                                    <span [class.text-warning]="star <= request.rating"
+                                        [class.text-secondary]="star > request.rating">
+
+                                        ★
+
+                                    </span>
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Comment -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+
+                                Comment
+
+                            </label>
+
+                            <textarea class="form-control" rows="6" maxlength="1000" [(ngModel)]="request.comment"
+                                [disabled]="!canReview" placeholder="Share your experience with this seller...">
+                            </textarea>
+
+                            <div class="text-end mt-1">
+
+                                <small class="text-muted">
+
+                                    {{request.comment.length}} / 1000
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+
+                    <div class="card-footer bg-white">
+
+                        <div class="d-flex justify-content-between">
+
+                            <button class="btn btn-secondary" (click)="goBack()">
+
+                                Back
+
+                            </button>
+
+                            <button class="btn btn-primary" (click)="save()" [disabled]="saving || !canReview">
+
+                                <span *ngIf="saving" class="spinner-border spinner-border-sm me-2">
+                                </span>
+
+                                {{reviewExists ? 'Update Review' : 'Submit Review'}}
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

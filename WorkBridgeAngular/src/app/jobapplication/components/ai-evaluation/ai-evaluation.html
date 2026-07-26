@@ -1,0 +1,299 @@
+<div class="container py-4">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- Content -->
+
+    <div *ngIf="!loading && application">
+
+        <!-- Header -->
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-0">
+
+                    AI Evaluation
+
+                </h2>
+
+                <small class="text-muted">
+
+                    Review your AI screening result
+
+                </small>
+
+            </div>
+
+            <button class="btn btn-outline-secondary" (click)="back()">
+
+                Back
+
+            </button>
+
+        </div>
+
+        <!-- Job Information -->
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body">
+
+                <h4 class="fw-bold">
+
+                    {{application.jobTitle}}
+
+                </h4>
+
+                <h5 class="text-primary">
+
+                    {{application.companyName}}
+
+                </h5>
+
+                <hr>
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+
+                        <strong>Application Status</strong>
+
+                        <div>
+
+                            {{application.status}}
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <strong>Applied</strong>
+
+                        <div>
+
+                            {{application.appliedAt | date:'medium'}}
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <strong>Completed</strong>
+
+                        <div>
+
+                            {{application.aiCompletedAt | date:'medium'}}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CV Screening -->
+
+        <div *ngIf="application.aiCvScreeningEnabled" class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-primary text-white">
+
+                <h5 class="mb-0">
+
+                    AI CV Screening
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="mb-3">
+
+                    <strong>
+
+                        CV Match Score
+
+                    </strong>
+
+                    <h3 class="mt-2" [class]="getScoreClass(application.aiMatchScore)">
+
+                        {{application.aiMatchScore}} %
+
+                    </h3>
+
+                </div>
+
+                <div>
+
+                    <strong>
+
+                        AI Feedback
+
+                    </strong>
+
+                    <div class="border rounded p-3 mt-2 bg-light">
+
+                        {{application.aiMatchFeedback}}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Interview Summary -->
+
+        <div *ngIf="hasInterview() && interview" class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-success text-white">
+
+                <h5 class="mb-0">
+
+                    AI Interview Summary
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row text-center">
+
+                    <div class="col-md-4">
+
+                        <strong>
+
+                            Interview Score
+
+                        </strong>
+
+                        <h3 [class]="getScoreClass(application.aiInterviewScore)">
+
+                            {{application.aiInterviewScore}}
+
+                        </h3>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <strong>
+
+                            Final Score
+
+                        </strong>
+
+                        <h3 [class]="getScoreClass(application.aiFinalScore)">
+
+                            {{application.aiFinalScore}}
+
+                        </h3>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <strong>
+
+                            Completed
+
+                        </strong>
+
+                        <div>
+
+                            {{interview.completedAt | date:'medium'}}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Questions -->
+
+        <div *ngIf="hasQuestions()" class="card shadow-sm border-0">
+
+            <div class="card-header bg-dark text-white">
+
+                <h5 class="mb-0">
+
+                    Interview Questions & Evaluation
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div *ngFor="let question of interview?.questions; let i=index" class="border rounded p-3 mb-4">
+
+                    <h5 class="fw-bold">
+
+                        Question {{i+1}}
+
+                    </h5>
+
+                    <p>
+
+                        {{question.question}}
+
+                    </p>
+
+                    <hr>
+
+                    <h6 class="fw-bold">
+
+                        Your Answer
+
+                    </h6>
+
+                    <p>
+
+                        {{question.answer}}
+
+                    </p>
+
+                    <hr>
+
+                    <h6 class="fw-bold">
+
+                        AI Score
+
+                    </h6>
+
+                    <span class="badge fs-6" [class.bg-success]="(question.score ?? 0) >= 8"
+                        [class.bg-warning]="(question.score ?? 0) >=5 && (question.score ?? 0)<8"
+                        [class.bg-danger]="(question.score ?? 0)<5">
+
+                        {{question.score}} / 10
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

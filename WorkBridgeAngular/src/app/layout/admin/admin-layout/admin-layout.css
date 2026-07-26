@@ -1,0 +1,37 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    /* Stops the main window from creating a separate scrollbar */
+}
+
+app-admin-navbar {
+    display: block;
+    height: 70px;
+    flex-shrink: 0;
+}
+
+.layout-container {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 70px);
+    overflow: hidden;
+}
+
+app-admin-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: #ffffff;
+    border-right: 1px solid #dee2e6;
+    /* Clean Bootstrap-like border color */
+    overflow-y: auto;
+}
+
+.content-area {
+    flex: 1;
+    overflow-y: auto;
+    /* The ONLY place that handles content scrolling */
+    background: #f8f9fa;
+    padding: 20px;
+}

@@ -1,0 +1,973 @@
+<div class="container-fluid py-4">
+
+    <form #profileForm="ngForm">
+
+        <!-- ============================ -->
+        <!-- Profile Image -->
+        <!-- ============================ -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-3 text-center">
+
+                        <img [src]="getProfileImage()" class="img-thumbnail rounded-circle mb-3"
+                            style="width:180px;height:180px;object-fit:cover;">
+
+                        <input type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)">
+
+                    </div>
+
+                    <div class="col-md-9">
+
+                        <h3 class="fw-bold mb-3">
+                            User Profile
+                        </h3>
+
+                        <p class="text-muted">
+
+                            Complete your profile to increase your visibility to employers.
+
+                        </p>
+
+                        <button type="button" class="btn btn-primary me-2" (click)="save()">
+
+                            Save Profile
+
+                        </button>
+
+                        <button type="button" class="btn btn-secondary me-2" (click)="reset()">
+
+                            Reset
+
+                        </button>
+
+                        @if(hasImage()){
+
+                        <button type="button" class="btn btn-danger" (click)="deleteImage()">
+
+                            Delete Image
+
+                        </button>
+
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ============================ -->
+        <!-- Personal Information -->
+        <!-- ============================ -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Personal Information
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Full Name
+
+                        </label>
+
+                        <input type="text" class="form-control" [(ngModel)]="userProfile.name" name="name" required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Phone
+
+                        </label>
+
+                        <input type="text" class="form-control" [(ngModel)]="userProfile.phone" name="phone" required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Date of Birth
+
+                        </label>
+
+                        <input type="date" class="form-control" [(ngModel)]="userProfile.dateOfBirth" name="dob">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Gender
+
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="userProfile.gender" name="gender">
+
+                            <option value="">Select Gender</option>
+
+                            <option value="MALE">
+                                Male
+                            </option>
+
+                            <option value="FEMALE">
+                                Female
+                            </option>
+
+                            <option value="OTHER">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Nationality
+
+                        </label>
+
+                        <input type="text" class="form-control" [(ngModel)]="userProfile.nationality"
+                            name="nationality">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Religion
+
+                        </label>
+
+                        <input type="text" class="form-control" [(ngModel)]="userProfile.religion" name="religion">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Marital Status
+
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="userProfile.maritalStatus" name="maritalStatus">
+
+                            <option value="">Select</option>
+
+                            <option value="Single">
+                                Single
+                            </option>
+
+                            <option value="Married">
+                                Married
+                            </option>
+
+                            <option value="Divorced">
+                                Divorced
+                            </option>
+
+                            <option value="Widowed">
+                                Widowed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div> <!-- ========================================= -->
+        <!-- Professional Information -->
+        <!-- ========================================= -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+                    Professional Information
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-12 mb-3">
+
+                        <label class="form-label">
+                            Professional Headline
+                        </label>
+
+                        <input type="text" class="form-control" name="headline" [(ngModel)]="userProfile.headline">
+
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+
+                        <label class="form-label">
+                            Professional Summary
+                        </label>
+
+                        <textarea rows="4" class="form-control" name="professionalSummary"
+                            [(ngModel)]="userProfile.professionalSummary">
+                        </textarea>
+
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+
+                        <label class="form-label">
+                            Bio
+                        </label>
+
+                        <textarea rows="4" class="form-control" name="bio" [(ngModel)]="userProfile.bio">
+                        </textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- Parents Information -->
+        <!-- ========================================= -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+                    Parents Information
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Father's Name
+                        </label>
+
+                        <input type="text" class="form-control" name="fatherName" [(ngModel)]="userProfile.fatherName">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Mother's Name
+                        </label>
+
+                        <input type="text" class="form-control" name="motherName" [(ngModel)]="userProfile.motherName">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- Government IDs -->
+        <!-- ========================================= -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+                    Government IDs
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            NID Number
+                        </label>
+
+                        <input type="text" class="form-control" name="nidNumber" [(ngModel)]="userProfile.nidNumber">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Passport Number
+                        </label>
+
+                        <input type="text" class="form-control" name="passportNumber"
+                            [(ngModel)]="userProfile.passportNumber">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- Social Links -->
+        <!-- ========================================= -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+                    Social Links
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-12 mb-3">
+
+                        <label class="form-label">
+                            GitHub
+                        </label>
+
+                        <input type="url" class="form-control" name="githubLink" [(ngModel)]="userProfile.githubLink">
+
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+
+                        <label class="form-label">
+                            LinkedIn
+                        </label>
+
+                        <input type="url" class="form-control" name="linkedinLink"
+                            [(ngModel)]="userProfile.linkedinLink">
+
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+
+                        <label class="form-label">
+                            Portfolio Website
+                        </label>
+
+                        <input type="url" class="form-control" name="portfolioWebsite"
+                            [(ngModel)]="userProfile.portfolioWebsite">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div><!-- ========================================= -->
+        <!-- Salary & Job Preferences -->
+        <!-- ========================================= -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Salary & Job Preference
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Expected Salary
+
+                        </label>
+
+                        <input type="number" class="form-control" name="expectedSalary"
+                            [(ngModel)]="userProfile.expectedSalary">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Current Salary
+
+                        </label>
+
+                        <input type="number" class="form-control" name="currentSalary"
+                            [(ngModel)]="userProfile.currentSalary">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Preferred Job Type
+
+                        </label>
+
+                        <select class="form-select" name="preferredJobType" [(ngModel)]="userProfile.preferredJobType">
+
+                            <option value="">Select Job Type</option>
+
+                            <option value="FULL_TIME">
+                                Full Time
+                            </option>
+
+                            <option value="PART_TIME">
+                                Part Time
+                            </option>
+
+                            <option value="CONTRACT">
+                                Contract
+                            </option>
+
+                            <option value="INTERNSHIP">
+                                Internship
+                            </option>
+
+                            <option value="FREELANCE">
+                                Freelance
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Preferred Workplace
+
+                        </label>
+
+                        <select class="form-select" name="preferredWorkplace"
+                            [(ngModel)]="userProfile.preferredWorkplace">
+
+                            <option value="">Select Workplace</option>
+
+                            <option value="ONSITE">
+                                On Site
+                            </option>
+
+                            <option value="REMOTE">
+                                Remote
+                            </option>
+
+                            <option value="HYBRID">
+                                Hybrid
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- Career -->
+        <!-- ========================================= -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Career Information
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Career Objective
+
+                    </label>
+
+                    <textarea rows="5" class="form-control" name="careerObjective"
+                        [(ngModel)]="userProfile.careerObjective">
+
+            </textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Freelancer Title
+
+                    </label>
+
+                    <input type="text" class="form-control" name="freelancerTitle"
+                        [(ngModel)]="userProfile.freelancerTitle">
+
+                </div>
+
+            </div>
+
+        </div><!-- ========================================= -->
+        <!-- Present Address -->
+        <!-- ========================================= -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Present Address
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <!-- Country -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Country
+                        </label>
+
+                        <select class="form-select" name="presentCountryId" [(ngModel)]="presentCountryId"
+                            (change)="onPresentCountryChange()">
+
+                            <option [ngValue]="0">
+                                Select Country
+                            </option>
+
+                            @for(country of countries; track country.countryId){
+
+                            <option [ngValue]="country.countryId">
+
+                                {{country.countryName}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <!-- Division -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Division
+                        </label>
+
+                        <select class="form-select" name="presentDivisionId" [(ngModel)]="presentDivisionId"
+                            (change)="onPresentDivisionChange()">
+
+                            <option [ngValue]="0">
+                                Select Division
+                            </option>
+
+                            @for(division of presentDivisions; track division.divisionId){
+
+                            <option [ngValue]="division.divisionId">
+
+                                {{division.divisionName}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <!-- District -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            District
+                        </label>
+
+                        <select class="form-select" name="presentDistrictId" [(ngModel)]="presentDistrictId"
+                            (change)="onPresentDistrictChange()">
+
+                            <option [ngValue]="0">
+                                Select District
+                            </option>
+
+                            @for(district of presentDistricts; track district.districtId){
+
+                            <option [ngValue]="district.districtId">
+
+                                {{district.districtName}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <!-- Police Station -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Police Station
+                        </label>
+
+                        <select class="form-select" name="presentPoliceStationId"
+                            [(ngModel)]="userProfile.presentAddressPoliceStationId">
+
+                            <option [ngValue]="0">
+                                Select Police Station
+                            </option>
+
+                            @for(police of presentPoliceStations; track police.policeStationId){
+
+                            <option [ngValue]="police.policeStationId">
+
+                                {{police.policeStationName}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <!-- Address -->
+
+                    <div class="col-md-8 mb-3">
+
+                        <label class="form-label">
+
+                            Address Details
+
+                        </label>
+
+                        <textarea rows="3" class="form-control" name="presentAddressDetails"
+                            [(ngModel)]="userProfile.presentAddressDetails">
+
+                </textarea>
+
+                    </div>
+
+                    <!-- Post Code -->
+
+                    <div class="col-md-4 mb-3">
+
+                        <label class="form-label">
+
+                            Post Code
+
+                        </label>
+
+                        <input type="text" class="form-control" name="presentAddressPostCode"
+                            [(ngModel)]="userProfile.presentAddressPostCode">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div><!-- ========================================= -->
+        <!-- Permanent Address -->
+        <!-- ========================================= -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+
+                    Permanent Address
+
+                </h5>
+
+                <div class="form-check">
+
+                    <input type="checkbox" class="form-check-input" id="sameAsPresent" name="sameAsPresent"
+                        [(ngModel)]="sameAsPresent" (change)="sameAddressChanged()">
+
+                    <label class="form-check-label" for="sameAddress">
+
+                        Same as Present Address
+
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <!-- Country -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Country
+
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="permanentCountryId" name="permanentCountryId"
+                            (change)="onPermanentCountryChange()" [disabled]="sameAsPresent">
+
+                            <option [ngValue]="0">
+
+                                Select Country
+
+                            </option>
+
+                            @for(country of countries; track country.countryId){
+
+                            <option [ngValue]="country.countryId">
+
+                                {{country.countryName}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <!-- Division -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Division
+
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="permanentDivisionId" name="permanentDivisionId"
+                            (change)="onPermanentDivisionChange()" [disabled]="sameAsPresent">
+
+                            <option [ngValue]="0">
+
+                                Select Division
+
+                            </option>
+
+                            @for(division of permanentDivisions; track division.divisionId){
+
+                            <option [ngValue]="division.divisionId">
+
+                                {{division.divisionName}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <!-- District -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            District
+
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="permanentDistrictId" name="permanentDistrictId"
+                            (change)="onPermanentDistrictChange()" [disabled]="sameAsPresent">
+
+                            <option [ngValue]="0">
+
+                                Select District
+
+                            </option>
+
+                            @for(district of permanentDistricts; track district.districtId){
+
+                            <option [ngValue]="district.districtId">
+
+                                {{district.districtName}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <!-- Police Station -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Police Station
+
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="userProfile.permanentAddressPoliceStationId"
+                            name="permanentPoliceStationId" [disabled]="sameAsPresent">
+
+                            <option [ngValue]="0">
+
+                                Select Police Station
+
+                            </option>
+
+                            @for(police of permanentPoliceStations; track police.policeStationId){
+
+                            <option [ngValue]="police.policeStationId">
+
+                                {{police.policeStationName}}
+
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <!-- Address -->
+
+                    <div class="col-md-8 mb-3">
+
+                        <label class="form-label">
+
+                            Address Details
+
+                        </label>
+
+                        <textarea rows="3" class="form-control" [(ngModel)]="userProfile.permanentAddressDetails"
+                            name="permanentAddressDetails" [readonly]="sameAsPresent">
+
+                </textarea>
+
+                    </div>
+
+                    <!-- Post Code -->
+
+                    <div class="col-md-4 mb-3">
+
+                        <label class="form-label">
+
+                            Post Code
+
+                        </label>
+
+                        <input type="text" class="form-control" [(ngModel)]="userProfile.permanentAddressPostCode"
+                            name="permanentAddressPostCode" [readonly]="sameAsPresent">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- Bottom Buttons -->
+        <!-- ========================================= -->
+
+        <div class="text-end mb-5">
+
+            <button type="button" class="btn btn-secondary me-2" (click)="reset()">
+
+                Reset
+
+            </button>
+
+            <button type="button" class="btn btn-primary" (click)="save()">
+
+                Save Profile
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

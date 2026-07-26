@@ -1,0 +1,334 @@
+<div class="container py-4">
+
+    <!-- ================================= -->
+    <!-- Header -->
+    <!-- ================================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h3 class="fw-bold mb-0">
+                Report Management
+            </h3>
+
+            <small class="text-muted">
+                Search and manage all user reports
+            </small>
+
+        </div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Filter -->
+    <!-- ================================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <!-- Keyword -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Search
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="filter.keyword"
+                        placeholder="Subject / Description / Email">
+
+                </div>
+
+                <!-- User Id -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        User Id
+                    </label>
+
+                    <input type="number" class="form-control" [(ngModel)]="filter.userId">
+
+                </div>
+
+                <!-- User Role -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        User Role
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.userRole">
+
+                        <option [ngValue]="undefined">
+                            All
+                        </option>
+
+                        <option *ngFor="let role of userRoles" [ngValue]="role">
+
+                            {{role}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Type -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Type
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.type">
+
+                        <option [ngValue]="undefined">
+                            All
+                        </option>
+
+                        <option *ngFor="let type of reportTypes" [ngValue]="type">
+
+                            {{type}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Status -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Status
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.status">
+
+                        <option [ngValue]="undefined">
+                            All
+                        </option>
+
+                        <option *ngFor="let status of reportStatuses" [ngValue]="status">
+
+                            {{status}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Created From -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Created From
+                    </label>
+
+                    <input type="date" class="form-control" [(ngModel)]="filter.createdFrom">
+
+                </div>
+
+                <!-- Created To -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Created To
+                    </label>
+
+                    <input type="date" class="form-control" [(ngModel)]="filter.createdTo">
+
+                </div>
+
+                <!-- Buttons -->
+
+                <div class="col-md-6 d-flex align-items-end gap-2">
+
+                    <button class="btn btn-primary w-100" (click)="search()">
+
+                        Search
+
+                    </button>
+
+                    <button class="btn btn-secondary w-100" (click)="clearFilter()">
+
+                        Clear
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Loading -->
+    <!-- ================================= -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border"></div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Empty -->
+    <!-- ================================= -->
+
+    <div *ngIf="!loading && reports.length==0" class="alert alert-info">
+
+        No reports found.
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Table -->
+    <!-- ================================= -->
+
+    <div *ngIf="!loading && reports.length>0" class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>User</th>
+
+                    <th>Role</th>
+
+                    <th>Type</th>
+
+                    <th>Subject</th>
+
+                    <th>Status</th>
+
+                    <th>Created</th>
+
+                    <th width="220">
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let report of reports">
+
+                    <!-- User -->
+
+                    <td>
+
+                        <div class="fw-semibold">
+
+                            {{report.userName}}
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            {{report.userEmail}}
+
+                        </small>
+
+                    </td>
+
+                    <!-- Role -->
+
+                    <td>
+
+                        <span class="badge bg-info">
+
+                            {{report.userRole}}
+
+                        </span>
+
+                    </td>
+
+                    <!-- Type -->
+
+                    <td>
+
+                        {{report.type}}
+
+                    </td>
+
+                    <!-- Subject -->
+
+                    <td>
+
+                        <div class="fw-semibold">
+
+                            {{report.subject}}
+
+                        </div>
+
+                    </td>
+
+                    <!-- Status -->
+
+                    <td>
+
+                        <span class="badge" [ngClass]="getStatusClass(report.status)">
+
+                            {{report.status}}
+
+                        </span>
+
+                    </td>
+
+                    <!-- Created -->
+
+                    <td>
+
+                        {{report.createdAt | date:'medium'}}
+
+                    </td>
+
+                    <!-- Actions -->
+
+                    <td>
+
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <button class="btn btn-sm btn-outline-primary" (click)="viewUser(report)">
+
+                                User
+
+                            </button>
+
+                            <button class="btn btn-sm btn-dark" (click)="viewDetails(report.id)">
+
+                                Details
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

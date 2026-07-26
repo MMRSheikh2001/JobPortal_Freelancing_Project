@@ -1,0 +1,26 @@
+:host {
+    display: block;
+    height: 100vh;
+}
+
+app-company-navbar {
+    display: block;
+    height: 70px;
+}
+
+.layout-container {
+    display: flex;
+    height: calc(100vh - 70px);
+}
+
+app-company-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+}
+
+.content-area {
+    flex: 1;
+    overflow-y: auto;
+    background: #f8f9fa;
+    padding: 20px;
+}

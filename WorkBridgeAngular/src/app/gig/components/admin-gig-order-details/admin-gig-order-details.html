@@ -1,0 +1,300 @@
+<div class="container-fluid py-4" *ngIf="order && conversation">
+
+    <!-- ===================================== -->
+    <!-- Order Summary -->
+    <!-- ===================================== -->
+
+    <div class="card mb-4">
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-2 text-center">
+
+                    <img [src]="fileService.getGigImage(order.gigImage)" class="img-fluid rounded border">
+
+                </div>
+
+                <div class="col-md-10">
+
+                    <h3>{{order.gigTitle}}</h3>
+
+                    <div class="row mt-3">
+
+                        <div class="col-md-6">
+
+                            <p><strong>Buyer :</strong> {{order.buyerName}}</p>
+
+                            <p><strong>Seller :</strong> {{order.sellerName}}</p>
+
+                            <p>
+                                <strong>Status :</strong>
+
+                                <span class="badge bg-primary">
+                                    {{order.status}}
+                                </span>
+
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <p>
+                                <strong>Quoted Price :</strong>
+
+                                {{order.quotedPrice | number:'1.0-2'}}
+
+                            </p>
+
+                            <p>
+                                <strong>Agreed Price :</strong>
+
+                                {{order.agreedPrice | number:'1.0-2'}}
+
+                            </p>
+
+                            <p>
+                                <strong>Final Price :</strong>
+
+                                {{order.finalPrice | number:'1.0-2'}}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+
+                            <small class="text-muted">
+
+                                Ordered
+
+                            </small>
+
+                            <br>
+
+                            {{order.createdAt | date:'medium'}}
+
+                        </div>
+
+                        <div class="col-md-4" *ngIf="order.quotedAt">
+
+                            <small class="text-muted">
+
+                                Quote Sent
+
+                            </small>
+
+                            <br>
+
+                            {{order.quotedAt | date:'medium'}}
+
+                        </div>
+
+                        <div class="col-md-4" *ngIf="order.quoteAcceptedAt">
+
+                            <small class="text-muted">
+
+                                Quote Accepted
+
+                            </small>
+
+                            <br>
+
+                            {{order.quoteAcceptedAt | date:'medium'}}
+
+                        </div>
+
+                        <div class="col-md-4 mt-3" *ngIf="order.deliveredAt">
+
+                            <small class="text-muted">
+
+                                Delivered
+
+                            </small>
+
+                            <br>
+
+                            {{order.deliveredAt | date:'medium'}}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Delivery -->
+    <!-- ===================================== -->
+
+    <div class="card mb-4" *ngIf="order.deliveryMessage || order.deliveryFileUrl">
+
+        <div class="card-header fw-bold">
+
+            Final Delivery
+
+        </div>
+
+        <div class="card-body">
+
+            <div *ngIf="order.deliveryMessage">
+
+                <strong>Delivery Message</strong>
+
+                <p class="mt-2">
+
+                    {{order.deliveryMessage}}
+
+                </p>
+
+            </div>
+
+            <a *ngIf="order.deliveryFileUrl" class="btn btn-outline-primary" target="_blank"
+                [href]="fileService.getGigDelivery(order.deliveryFileUrl)">
+
+                Download Delivery File
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Conversation -->
+    <!-- ===================================== -->
+
+    <div class="card mb-4">
+
+        <div class="card-header fw-bold">
+
+            Conversation History
+
+        </div>
+
+        <div class="card-body bg-light" style="max-height:650px;overflow-y:auto;">
+
+            <div *ngFor="let message of messages" class="mb-4">
+
+                <div class="fw-bold mb-1">
+
+                    {{message.senderName}}
+
+                </div>
+
+                <div class="border rounded p-3 bg-white">
+
+                    <div *ngIf="message.messageText">
+
+                        {{message.messageText}}
+
+                    </div>
+
+                    <!-- Image -->
+
+                    <div *ngIf="message.attachment &&
+                        (
+                        message.attachment.toLowerCase().endsWith('.png') ||
+                        message.attachment.toLowerCase().endsWith('.jpg') ||
+                        message.attachment.toLowerCase().endsWith('.jpeg') ||
+                        message.attachment.toLowerCase().endsWith('.gif') ||
+                        message.attachment.toLowerCase().endsWith('.webp')
+                        )" class="mt-3">
+
+                        <a [href]="fileService.getMessageAttachment(message.attachment)" target="_blank">
+
+                            <img [src]="fileService.getMessageAttachment(message.attachment)"
+                                class="img-fluid rounded border">
+
+                        </a>
+
+                    </div>
+
+                    <!-- File -->
+
+                    <div *ngIf="message.attachment &&
+                        !(
+                        message.attachment.toLowerCase().endsWith('.png') ||
+                        message.attachment.toLowerCase().endsWith('.jpg') ||
+                        message.attachment.toLowerCase().endsWith('.jpeg') ||
+                        message.attachment.toLowerCase().endsWith('.gif') ||
+                        message.attachment.toLowerCase().endsWith('.webp')
+                        )" class="mt-3">
+
+                        <a class="btn btn-outline-secondary btn-sm"
+                            [href]="fileService.getMessageAttachment(message.attachment)" target="_blank">
+
+                            Download Attachment
+
+                        </a>
+
+                    </div>
+
+                    <div class="text-end mt-3">
+
+                        <small class="text-muted">
+
+                            {{message.sentAt | date:'medium'}}
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Admin Decision -->
+    <!-- ===================================== -->
+
+    <div class="card" *ngIf="order.status=='SELLER_DISPUTED'">
+
+        <div class="card-header fw-bold">
+
+            Admin Decision
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="alert alert-warning">
+
+                Review the complete conversation and delivery before making a decision.
+
+            </div>
+
+            <button class="btn btn-success me-2" (click)="releasePayment()" [disabled]="saving">
+
+                Release Payment To Seller
+
+            </button>
+
+            <button class="btn btn-danger" (click)="refundBuyer()" [disabled]="saving">
+
+                Refund Buyer
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

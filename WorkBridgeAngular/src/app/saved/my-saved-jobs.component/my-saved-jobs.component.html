@@ -1,0 +1,126 @@
+<div class="container py-4">
+
+    <!-- Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h3 class="fw-bold">
+
+            My Saved Jobs
+
+        </h3>
+
+        <span class="badge bg-primary">
+
+            {{filteredJobs.length}} Jobs
+
+        </span>
+
+    </div>
+
+    <!-- Search -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <input type="text" class="form-control" placeholder="Search by job title or company..." [(ngModel)]="search"
+                (input)="filter()">
+
+        </div>
+
+    </div>
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- Empty -->
+
+    <div *ngIf="!loading && filteredJobs.length==0" class="alert alert-info text-center">
+
+        You haven't saved any jobs yet.
+
+    </div>
+
+    <!-- List -->
+
+    <div *ngIf="!loading && filteredJobs.length">
+
+        <div class="card shadow-sm mb-3" *ngFor="let item of filteredJobs">
+
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <!-- Company Logo -->
+
+                    <div class="col-md-2 text-center">
+
+                        <img [src]="fileService.getCompanyProfileImage(item.companyLogo)" class="rounded-circle border"
+                            width="80" height="80" alt="Company">
+
+                    </div>
+
+                    <!-- Details -->
+
+                    <div class="col-md-7">
+
+                        <h5 class="fw-bold mb-1">
+
+                            {{item.jobTitle}}
+
+                        </h5>
+
+                        <h6 class="text-primary mb-2">
+
+                            {{item.companyName}}
+
+                        </h6>
+
+                        <p class="text-muted mb-2">
+
+                            {{item.jobDescription}}
+
+                        </p>
+
+                        <small class="text-secondary">
+
+                            Saved on
+                            {{item.createdAt | date:'mediumDate'}}
+
+                        </small>
+
+                    </div>
+
+                    <!-- Buttons -->
+
+                    <div class="col-md-3 text-end">
+
+                        <button class="btn btn-outline-primary w-100 mb-2" (click)="view(item)">
+
+                            View Job
+
+                        </button>
+
+                        <button class="btn btn-outline-danger w-100" (click)="remove(item)">
+
+                            Remove
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

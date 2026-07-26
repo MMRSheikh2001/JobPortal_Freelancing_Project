@@ -1,0 +1,770 @@
+<div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary"></div>
+</div>
+
+<div *ngIf="!loading && resume" class="resume-page">
+
+    <!-- Print Buttons -->
+
+    <div class="resume-actions no-print">
+
+        <button class="btn btn-primary" (click)="printResume()">
+
+            Download Angular PDF
+
+        </button>
+
+        <button class="btn btn-outline-primary" (click)="downloadBackendPdf()">
+
+            Backend PDF
+
+        </button>
+
+    </div>
+
+    <div class="resume">
+
+        <!-- LEFT SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="profile-image">
+
+                <img [src]="getProfileImage(resume.profile.image)" alt="Profile">
+
+            </div>
+
+            <h2>
+
+                {{resume.profile.name}}
+
+            </h2>
+
+            <p class="headline">
+
+                {{resume.profile.headline}}
+
+            </p>
+
+            <section>
+
+                <h3>
+
+                    Contact
+
+                </h3>
+
+                <div class="item">
+
+                    <strong>Email</strong>
+
+                    <span>
+
+                        {{resume.profile.userEmail}}
+
+                    </span>
+
+                </div>
+
+                <div class="item">
+
+                    <strong>Phone</strong>
+
+                    <span>
+
+                        {{resume.profile.phone}}
+
+                    </span>
+
+                </div>
+
+                <div class="item">
+
+                    <strong>Address</strong>
+
+                    <span>
+
+                        {{getPresentAddress()}}
+
+                    </span>
+
+                </div>
+
+            </section>
+
+            <section>
+
+                <h3>
+
+                    Personal
+
+                </h3>
+
+                <div class="item">
+
+                    Gender
+
+                    <span>
+
+                        {{getGender()}}
+
+                    </span>
+
+                </div>
+
+                <div class="item">
+
+                    Nationality
+
+                    <span>
+
+                        {{resume.profile.nationality}}
+
+                    </span>
+
+                </div>
+
+                <div class="item">
+
+                    Religion
+
+                    <span>
+
+                        {{resume.profile.religion}}
+
+                    </span>
+
+                </div>
+
+                <div class="item">
+
+                    Marital Status
+
+                    <span>
+
+                        {{resume.profile.maritalStatus}}
+
+                    </span>
+
+                </div>
+
+            </section>
+
+            <section *ngIf="resume.skills.length">
+
+                <h3>
+
+                    Skills
+
+                </h3>
+
+                <div class="skill" *ngFor="let skill of resume.skills">
+
+                    <span>
+
+                        {{skill.skillName}}
+
+                    </span>
+
+                    <small>
+
+                        {{skill.proficiencyLevel}}
+
+                    </small>
+
+                </div>
+
+            </section>
+
+            <section *ngIf="resume.languages.length">
+
+                <h3>
+
+                    Languages
+
+                </h3>
+
+                <div class="skill" *ngFor="let lang of resume.languages">
+
+                    <span>
+
+                        {{lang.languageName}}
+
+                    </span>
+
+                    <small>
+
+                        {{lang.proficiency}}
+
+                    </small>
+
+                </div>
+
+            </section>
+
+            <section>
+
+                <h3>
+
+                    Links
+
+                </h3>
+
+                <div *ngIf="resume.profile.githubLink">
+
+                    <a href="javascript:void(0)" (click)="open(resume.profile.githubLink)">
+
+                        GitHub
+
+                    </a>
+
+                </div>
+
+                <div *ngIf="resume.profile.linkedinLink">
+
+                    <a href="javascript:void(0)" (click)="open(resume.profile.linkedinLink)">
+
+                        LinkedIn
+
+                    </a>
+
+                </div>
+
+                <div *ngIf="resume.profile.portfolioWebsite">
+
+                    <a href="javascript:void(0)" (click)="open(resume.profile.portfolioWebsite)">
+
+                        Portfolio
+
+                    </a>
+
+                </div>
+
+            </section>
+
+        </aside>
+
+        <!-- RIGHT SIDE STARTS HERE -->
+
+        <main class="content"><!-- ===================================== -->
+            <!-- Professional Summary -->
+            <!-- ===================================== -->
+
+            <section *ngIf="resume.profile.professionalSummary">
+
+                <h1>
+
+                    {{resume.profile.name}}
+
+                </h1>
+
+                <h2>
+
+                    {{resume.profile.headline}}
+
+                </h2>
+
+                <div class="section">
+
+                    <h3>
+
+                        Professional Summary
+
+                    </h3>
+
+                    <p>
+
+                        {{resume.profile.professionalSummary}}
+
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- ===================================== -->
+            <!-- Career Objective -->
+            <!-- ===================================== -->
+
+            <section *ngIf="resume.profile.careerObjective">
+
+                <div class="section">
+
+                    <h3>
+
+                        Career Objective
+
+                    </h3>
+
+                    <p>
+
+                        {{resume.profile.careerObjective}}
+
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- ===================================== -->
+            <!-- Experience -->
+            <!-- ===================================== -->
+
+            <section *ngIf="resume.experiences.length">
+
+                <div class="section">
+
+                    <h3>
+
+                        Professional Experience
+
+                    </h3>
+
+                    <div class="timeline" *ngFor="let exp of resume.experiences">
+
+                        <div class="timeline-header">
+
+                            <div>
+
+                                <h4>
+
+                                    {{exp.position}}
+
+                                </h4>
+
+                                <strong>
+
+                                    {{exp.companyName}}
+
+                                </strong>
+
+                            </div>
+
+                            <div class="date">
+
+                                {{exp.startDate}}
+
+                                -
+
+                                {{exp.currentlyWorking ? 'Present' : exp.endDate}}
+
+                            </div>
+
+                        </div>
+
+                        <div class="subtitle">
+
+                            {{exp.employmentType}}
+
+                        </div>
+
+                        <div *ngIf="exp.responsibilities">
+
+                            <strong>
+
+                                Responsibilities
+
+                            </strong>
+
+                            <p>
+
+                                {{exp.responsibilities}}
+
+                            </p>
+
+                        </div>
+
+                        <div *ngIf="exp.achievements">
+
+                            <strong>
+
+                                Achievements
+
+                            </strong>
+
+                            <p>
+
+                                {{exp.achievements}}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ===================================== -->
+            <!-- Education -->
+            <!-- ===================================== -->
+
+            <section *ngIf="resume.educations.length">
+
+                <div class="section">
+
+                    <h3>
+
+                        Education
+
+                    </h3>
+
+                    <div class="timeline" *ngFor="let edu of resume.educations">
+
+                        <div class="timeline-header">
+
+                            <div>
+
+                                <h4>
+
+                                    {{edu.educationLevel}}
+
+                                </h4>
+
+                                <strong>
+
+                                    {{edu.institution}}
+
+                                </strong>
+
+                            </div>
+
+                            <div class="date">
+
+                                {{edu.startDate}}
+
+                                -
+
+                                {{edu.currentlyStudying ? 'Present' : edu.endDate}}
+
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            {{edu.fieldOfStudy}}
+
+                        </div>
+
+                        <div>
+
+                            {{edu.board}}
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+
+                                Result :
+
+                            </strong>
+
+                            {{edu.result}}
+
+                            <span *ngIf="edu.outOf">
+
+                                /
+
+                                {{edu.outOf}}
+
+                            </span>
+
+                            ({{edu.resultType}})
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section><!-- ===================================== -->
+            <!-- Training & Certifications -->
+            <!-- ===================================== -->
+
+            <section *ngIf="resume.trainings.length">
+
+                <div class="section">
+
+                    <h3>
+
+                        Training & Certifications
+
+                    </h3>
+
+                    <div class="timeline" *ngFor="let training of resume.trainings">
+
+                        <div class="timeline-header">
+
+                            <div>
+
+                                <h4>
+
+                                    {{training.name}}
+
+                                </h4>
+
+                                <strong>
+
+                                    {{training.institution}}
+
+                                </strong>
+
+                            </div>
+
+                            <div class="date">
+
+                                {{training.startDate}}
+
+                                -
+
+                                {{training.completed ? training.endDate : 'Present'}}
+
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            {{training.trainingType}}
+
+                        </div>
+
+                        <div *ngIf="training.duration">
+
+                            Duration :
+                            {{training.duration}}
+
+                        </div>
+
+                        <p>
+
+                            {{training.description}}
+
+                        </p>
+
+                        <div *ngIf="training.certificateId">
+
+                            Certificate ID :
+                            {{training.certificateId}}
+
+                        </div>
+
+                        <div *ngIf="training.certificateVerificationUrl">
+
+                            <a href="javascript:void(0)" (click)="open(training.certificateVerificationUrl)">
+
+                                Verify Certificate
+
+                            </a>
+
+                        </div>
+
+                        <div *ngIf="training.certificateFile">
+
+                            <a [href]="getTraining(training.certificateFile)" target="_blank">
+
+                                View Certificate
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ===================================== -->
+            <!-- Portfolio -->
+            <!-- ===================================== -->
+
+            <section *ngIf="resume.portfolios.length">
+
+                <div class="section">
+
+                    <h3>
+
+                        Portfolio
+
+                    </h3>
+
+                    <div class="timeline" *ngFor="let project of resume.portfolios">
+
+                        <h4>
+
+                            {{project.title}}
+
+                        </h4>
+
+                        <p>
+
+                            {{project.description}}
+
+                        </p>
+
+                        <div>
+
+                            <strong>
+
+                                Technologies :
+
+                            </strong>
+
+                            {{project.technologies}}
+
+                        </div>
+
+                        <div *ngIf="project.projectUrl">
+
+                            <a href="javascript:void(0)" (click)="open(project.projectUrl)">
+
+                                Visit Project
+
+                            </a>
+
+                        </div>
+
+                        <div *ngIf="project.fileUrl">
+
+                            <a [href]="getPortfolio(project.fileUrl)" target="_blank">
+
+                                View Attachment
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ===================================== -->
+            <!-- Extracurricular Activities -->
+            <!-- ===================================== -->
+
+            <section *ngIf="resume.extracurriculars.length">
+
+                <div class="section">
+
+                    <h3>
+
+                        Extracurricular Activities
+
+                    </h3>
+
+                    <div class="timeline" *ngFor="let activity of resume.extracurriculars">
+
+                        <div class="timeline-header">
+
+                            <div>
+
+                                <h4>
+
+                                    {{activity.title}}
+
+                                </h4>
+
+                                <strong>
+
+                                    {{activity.organization}}
+
+                                </strong>
+
+                            </div>
+
+                            <div>
+
+                                {{activity.role}}
+
+                            </div>
+
+                        </div>
+
+                        <p>
+
+                            {{activity.description}}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ===================================== -->
+            <!-- References -->
+            <!-- ===================================== -->
+
+            <section *ngIf="resume.references.length">
+
+                <div class="section">
+
+                    <h3>
+
+                        References
+
+                    </h3>
+
+                    <div class="reference-card" *ngFor="let reference of resume.references">
+
+                        <h4>
+
+                            {{reference.name}}
+
+                        </h4>
+
+                        <div>
+
+                            {{reference.designation}}
+
+                        </div>
+
+                        <div>
+
+                            {{reference.organization}}
+
+                        </div>
+
+                        <div>
+
+                            {{reference.phone}}
+
+                        </div>
+
+                        <div>
+
+                            {{reference.email}}
+
+                        </div>
+
+                        <div>
+
+                            {{reference.address}}
+
+                        </div>
+
+                        <div>
+
+                            Relationship :
+                            {{reference.relation}}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>

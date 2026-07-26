@@ -1,0 +1,31 @@
+.footer {
+
+    background: #212529;
+
+    color: white;
+
+    padding: 20px 0;
+
+    margin-top: auto;
+
+}
+
+.footer h6 {
+
+    font-weight: 600;
+
+}
+
+.footer p {
+
+    color: #ced4da;
+
+    margin-bottom: 6px;
+
+}
+
+.footer small {
+
+    color: #adb5bd;
+
+}

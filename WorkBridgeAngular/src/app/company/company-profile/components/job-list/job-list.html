@@ -1,0 +1,222 @@
+<div class="container py-4">
+
+    <!-- ============================== -->
+    <!-- Header -->
+    <!-- ============================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h3 class="fw-bold mb-0">
+                Manage Jobs
+            </h3>
+
+            <small class="text-muted">
+                Create, edit and manage your job posts
+            </small>
+
+        </div>
+
+        <button class="btn btn-primary" (click)="createJob()">
+
+            <i class="bi bi-plus-circle me-2"></i>
+
+            Create New Job
+
+        </button>
+
+    </div>
+
+    <!-- ============================== -->
+    <!-- Loading -->
+    <!-- ============================== -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border"></div>
+
+    </div>
+
+    <!-- ============================== -->
+    <!-- No Jobs -->
+    <!-- ============================== -->
+
+    <div *ngIf="!loading && jobs.length==0" class="alert alert-info">
+
+        You have not created any jobs yet.
+
+    </div>
+
+    <!-- ============================== -->
+    <!-- Job Table -->
+    <!-- ============================== -->
+
+    <div *ngIf="!loading && jobs.length>0" class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Title</th>
+
+                    <th>Category</th>
+
+                    <th>Location</th>
+
+                    <th>Employment</th>
+
+                    <th>Vacancy</th>
+
+                    <th>Deadline</th>
+
+                    <th>Status</th>
+
+                    <th width="360">
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let job of jobs">
+
+                    <!-- Title -->
+
+                    <td>
+
+                        <div class="fw-semibold">
+
+                            {{job.title}}
+
+                        </div>
+
+                    </td>
+
+                    <!-- Category -->
+
+                    <td>
+
+                        {{job.categoryName}}
+
+                    </td>
+
+                    <!-- Location -->
+
+                    <td>
+
+                        {{job.locationPoliceStationName}},
+                        {{job.locationDistrictName}}
+
+                    </td>
+
+                    <!-- Employment -->
+
+                    <td>
+
+                        {{job.employmentType}}
+
+                    </td>
+
+                    <!-- Vacancy -->
+
+                    <td>
+
+                        {{job.vacancy}}
+
+                    </td>
+
+                    <!-- Deadline -->
+
+                    <td>
+
+                        {{job.applicationDeadline}}
+
+                    </td>
+
+                    <!-- Status -->
+
+                    <td>
+
+                        <span *ngIf="job.isActive" class="badge bg-success">
+
+                            Active
+
+                        </span>
+
+                        <span *ngIf="!job.isActive" class="badge bg-secondary">
+
+                            Inactive
+
+                        </span>
+
+                    </td>
+
+                    <!-- Buttons -->
+
+                    <td>
+
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <!-- View -->
+
+                            <button class="btn btn-sm btn-outline-primary" (click)="viewJob(job.id)">
+
+                                View
+
+                            </button>
+
+                            <!-- Applicants -->
+
+                            <button class="btn btn-sm btn-info" (click)="viewApplications(job.id)">
+
+                                Applicants
+
+                            </button>
+
+                            <!-- Edit -->
+
+                            <button class="btn btn-sm btn-warning" (click)="editJob(job.id)">
+
+                                Edit
+
+                            </button>
+
+                            <!-- Activate / Deactivate -->
+
+                            <button class="btn btn-sm" [ngClass]="job.isActive
+                                ? 'btn-secondary'
+                                : 'btn-success'" (click)="toggleStatus(job)">
+
+                                {{job.isActive
+                                ? 'Deactivate'
+                                : 'Activate'}}
+
+                            </button>
+
+                            <!-- Delete -->
+
+                            <button class="btn btn-sm btn-danger" (click)="deleteJob(job)">
+
+                                Delete
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

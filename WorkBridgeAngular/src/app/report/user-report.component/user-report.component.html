@@ -1,0 +1,245 @@
+<div class="container py-4">
+
+    <!-- ================================= -->
+    <!-- Header -->
+    <!-- ================================= -->
+
+    <div class="mb-4">
+
+        <h2 class="fw-bold mb-1">
+            Report Center
+        </h2>
+
+        <p class="text-muted mb-0">
+            Report bugs, payment issues, account problems or send suggestions.
+        </p>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Create Report -->
+    <!-- ================================= -->
+
+    <div class="card shadow-sm mb-5">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+                Submit New Report
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <!-- Type -->
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+                        Report Type
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="type">
+
+                        <option *ngFor="let item of reportTypes" [ngValue]="item">
+
+                            {{item.replaceAll('_',' ')}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Subject -->
+
+                <div class="col-md-8">
+
+                    <label class="form-label">
+                        Subject
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="subject" placeholder="Short summary">
+
+                </div>
+
+                <!-- Description -->
+
+                <div class="col-12">
+
+                    <label class="form-label">
+                        Description
+                    </label>
+
+                    <textarea rows="5" class="form-control" [(ngModel)]="description"
+                        placeholder="Explain your issue in detail..."></textarea>
+
+                </div>
+
+                <!-- Attachment -->
+
+                <div class="col-md-8">
+
+                    <label class="form-label">
+                        Attachment (Optional)
+                    </label>
+
+                    <input #fileInput type="file" class="form-control" (change)="onFileSelected($event)">
+
+                </div>
+
+                <!-- Submit -->
+
+                <div class="col-md-4 d-flex align-items-end gap-2">
+
+                    <button class="btn btn-secondary w-50" (click)="resetForm()">
+
+                        Reset
+
+                    </button>
+
+                    <button class="btn btn-primary w-50" (click)="submit()">
+
+                        Submit
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Loading -->
+    <!-- ================================= -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary">
+
+        </div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Empty -->
+    <!-- ================================= -->
+
+    <div *ngIf="!loading && reports.length===0" class="alert alert-info">
+
+        You haven't submitted any reports yet.
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Report Cards -->
+    <!-- ================================= -->
+
+    <div *ngIf="!loading && reports.length>0" class="row g-4">
+
+        <div class="col-lg-6" *ngFor="let report of reports">
+
+            <div class="card shadow-sm h-100 border-0">
+
+                <div class="card-body">
+
+                    <!-- Header -->
+
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+
+                        <div>
+
+                            <h5 class="fw-bold mb-1">
+
+                                {{report.subject}}
+
+                            </h5>
+
+                            <small class="text-muted">
+
+                                {{report.type.replaceAll('_',' ')}}
+
+                            </small>
+
+                        </div>
+
+                        <span class="badge" [ngClass]="getStatusClass(report.status)">
+
+                            {{report.status}}
+
+                        </span>
+
+                    </div>
+
+                    <!-- Description -->
+
+                    <p class="mb-3">
+
+                        {{report.description}}
+
+                    </p>
+
+                    <!-- Attachment -->
+
+                    <div *ngIf="report.attachmentUrl" class="mb-3">
+
+                        <a class="btn btn-outline-primary btn-sm" [href]="getAttachment(report.attachmentUrl)"
+                            target="_blank">
+
+                            View Attachment
+
+                        </a>
+
+                    </div>
+
+                    <!-- Admin Reply -->
+
+                    <div *ngIf="report.adminReply" class="alert alert-light border">
+
+                        <strong>
+
+                            Admin Reply
+
+                        </strong>
+
+                        <hr class="my-2">
+
+                        {{report.adminReply}}
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer bg-white">
+
+                    <small class="text-muted">
+
+                        Submitted :
+                        {{report.createdAt | date:'medium'}}
+
+                    </small>
+
+                    <br>
+
+                    <small *ngIf="report.resolvedAt" class="text-success">
+
+                        Updated :
+                        {{report.resolvedAt | date:'medium'}}
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

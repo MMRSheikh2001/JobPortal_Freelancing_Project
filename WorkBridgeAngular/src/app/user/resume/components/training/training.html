@@ -1,0 +1,351 @@
+<div class="container py-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+
+                {{ isEdit ? 'Edit Training' : 'Add Training' }}
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Training Name -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Training Name
+
+                    </label>
+
+                    <input type="text" class="form-control" [(ngModel)]="training.name">
+
+                </div>
+
+                <!-- Institution -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Institution
+
+                    </label>
+
+                    <input type="text" class="form-control" [(ngModel)]="training.institution">
+
+                </div>
+
+                <!-- Training Type -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Training Type
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="training.trainingType">
+
+                        <option *ngFor="let type of trainingTypes" [ngValue]="type">
+
+                            {{ type }}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Duration -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Duration
+
+                    </label>
+
+                    <input type="text" class="form-control" placeholder="Example: 6 Months"
+                        [(ngModel)]="training.duration">
+
+                </div>
+
+                <!-- Description -->
+
+                <div class="col-12 mb-3">
+
+                    <label class="form-label">
+
+                        Description
+
+                    </label>
+
+                    <textarea rows="4" class="form-control" [(ngModel)]="training.description">
+
+                    </textarea>
+
+                </div> <!-- Start Date -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Start Date
+
+                    </label>
+
+                    <input type="date" class="form-control" [(ngModel)]="training.startDate">
+
+                </div>
+
+                <!-- End Date -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        End Date
+
+                    </label>
+
+                    <input type="date" class="form-control" name="endDate" [(ngModel)]="training.endDate"
+                        [disabled]="!trainingCompleted">
+
+                </div>
+
+                <!-- Completed -->
+
+                <div class="col-md-4 mb-3 d-flex align-items-end">
+
+                    <div class="form-check">
+
+                        <input class="form-check-input" type="checkbox" [checked]="trainingCompleted"
+                            (change)="completedChanged($event)">
+
+                        <label class="form-check-label">
+
+                            Training Completed
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <!-- Certificate File -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Certificate File
+
+                    </label>
+
+                    <input type="file" class="form-control" (change)="onFileSelected($event)">
+
+                </div>
+
+                <!-- Certificate ID -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Certificate ID
+
+                    </label>
+
+                    <input type="text" class="form-control" [(ngModel)]="training.certificateId">
+
+                </div>
+
+                <!-- Verification URL -->
+
+                <div class="col-12 mb-3">
+
+                    <label class="form-label">
+
+                        Certificate Verification URL
+
+                    </label>
+
+                    <input type="url" class="form-control" placeholder="https://..."
+                        [(ngModel)]="training.certificateVerificationUrl">
+
+                </div> <!-- Buttons -->
+
+                <div class="col-12 text-end mt-3">
+
+                    <button class="btn btn-success me-2" (click)="save()">
+
+                        {{ isEdit ? 'Update Training' : 'Save Training' }}
+
+                    </button>
+
+                    <button class="btn btn-secondary" (click)="reset()">
+
+                        Reset
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ============================= -->
+    <!-- Training List -->
+    <!-- ============================= -->
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header bg-dark text-white">
+
+            <h5 class="mb-0">
+
+                My Trainings
+
+            </h5>
+
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>Name</th>
+
+                        <th>Institution</th>
+
+                        <th>Type</th>
+
+                        <th>Duration</th>
+
+                        <th>Completed</th>
+
+                        <th>Certificate</th>
+
+                        <th width="220">
+
+                            Action
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let t of trainings">
+
+                        <td>
+
+                            {{ t.name }}
+
+                        </td>
+
+                        <td>
+
+                            {{ t.institution }}
+
+                        </td>
+
+                        <td>
+
+                            {{ t.trainingType }}
+
+                        </td>
+
+                        <td>
+
+                            {{ t.duration }}
+
+                        </td>
+
+                        <td>
+
+                            {{ t.completed ? 'Yes' : 'No' }}
+
+                        </td>
+
+                        <td>
+
+                            <a *ngIf="hasCertificate(t.certificateFile)" [href]="getCertificate(t.certificateFile)"
+                                target="_blank" class="btn btn-sm btn-info">
+
+                                View
+
+                            </a>
+
+                            <span *ngIf="!hasCertificate(t.certificateFile)" class="text-muted">
+
+                                No Certificate
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-warning btn-sm me-1" (click)="edit(t)">
+
+                                Edit
+
+                            </button>
+
+                            <button class="btn btn-danger btn-sm me-1" (click)="delete(t.id)">
+
+                                Delete
+
+                            </button>
+
+                            <button *ngIf="hasCertificate(t.certificateFile)" class="btn btn-outline-danger btn-sm"
+                                (click)="deleteCertificate(t.id)">
+
+                                Delete File
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="trainings.length === 0">
+
+                        <td colspan="7" class="text-center text-muted">
+
+                            No training records found.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

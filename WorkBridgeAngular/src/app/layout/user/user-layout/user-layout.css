@@ -1,0 +1,48 @@
+/* Whole page */
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    /* Stops the main browser window from breaking layout */
+}
+
+/* Navbar takes full width */
+app-user-navbar {
+    display: block;
+    height: 70px;
+    flex-shrink: 0;
+    /* Prevents navbar from shrinking */
+}
+
+/* Sidebar + Content */
+.layout-container {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 70px);
+    overflow: hidden;
+}
+
+/* Sidebar */
+app-user-sidebar {
+    display: block;
+    /* CRITICAL: Allows height calculations to work */
+    width: 260px;
+    height: 100%;
+    /* Fills the container height */
+    overflow-y: auto;
+    /* Gives the sidebar its own independent scrollbar if it overflows */
+    flex-shrink: 0;
+}
+
+/* Page Content */
+.content-area {
+    flex: 1;
+    overflow-y: auto;
+    /* Independent scrollbar for main dashboard elements */
+    background: #f8f9fa;
+    padding: 20px;
+    display: flex;
+    /* Forces child Bootstrap grids to stretch properly */
+    flex-direction: column;
+}

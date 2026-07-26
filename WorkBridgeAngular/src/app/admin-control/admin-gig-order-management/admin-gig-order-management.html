@@ -1,0 +1,367 @@
+<div class="container py-4">
+
+    <!-- ================================= -->
+    <!-- Header -->
+    <!-- ================================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h3 class="fw-bold mb-0">
+                Gig Order Management
+            </h3>
+
+            <small class="text-muted">
+                Search and manage all gig orders
+            </small>
+
+        </div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Filter -->
+    <!-- ================================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <!-- Keyword -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Search
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="filter.keyword" placeholder="Buyer / Seller / Gig">
+
+                </div>
+
+                <!-- Buyer -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Buyer Id
+                    </label>
+
+                    <input type="number" class="form-control" [(ngModel)]="filter.buyerId">
+
+                </div>
+
+                <!-- Seller -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Seller Id
+                    </label>
+
+                    <input type="number" class="form-control" [(ngModel)]="filter.sellerId">
+
+                </div>
+
+                <!-- Gig -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Gig Id
+                    </label>
+
+                    <input type="number" class="form-control" [(ngModel)]="filter.gigId">
+
+                </div>
+
+                <!-- Category -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Category Id
+                    </label>
+
+                    <input type="number" class="form-control" [(ngModel)]="filter.categoryId">
+
+                </div>
+
+                <!-- Status -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Status
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.status">
+
+                        <option [ngValue]="undefined">
+                            All
+                        </option>
+
+                        <option *ngFor="let status of statuses" [ngValue]="status">
+
+                            {{status}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Payment -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Payment Locked
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.paymentLocked">
+
+                        <option [ngValue]="undefined">
+                            All
+                        </option>
+
+                        <option [ngValue]="true">
+                            Yes
+                        </option>
+
+                        <option [ngValue]="false">
+                            No
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- From -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Created From
+                    </label>
+
+                    <input type="date" class="form-control" [(ngModel)]="filter.createdFrom">
+
+                </div>
+
+                <!-- To -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Created To
+                    </label>
+
+                    <input type="date" class="form-control" [(ngModel)]="filter.createdTo">
+
+                </div>
+
+                <!-- Buttons -->
+
+                <div class="col-md-3 d-flex align-items-end gap-2">
+
+                    <button class="btn btn-primary w-100" (click)="search()">
+
+                        Search
+
+                    </button>
+
+                    <button class="btn btn-secondary w-100" (click)="clearFilter()">
+
+                        Clear
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Loading -->
+    <!-- ================================= -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border"></div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Empty -->
+    <!-- ================================= -->
+
+    <div *ngIf="!loading && orders.length==0" class="alert alert-info">
+
+        No gig orders found.
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Table -->
+    <!-- ================================= -->
+
+    <div *ngIf="!loading && orders.length>0" class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Buyer</th>
+
+                    <th>Seller</th>
+
+                    <th>Gig</th>
+
+                    <th>Status</th>
+
+                    <th>Price</th>
+
+                    <th>Created</th>
+
+                    <th width="420">
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let order of orders">
+
+                    <!-- Buyer -->
+
+                    <td>
+
+                        <div class="fw-semibold">
+
+                            {{order.buyerName}}
+
+                        </div>
+
+                    </td>
+
+                    <!-- Seller -->
+
+                    <td>
+
+                        {{order.sellerName}}
+
+                    </td>
+
+                    <!-- Gig -->
+
+                    <td>
+
+                        <div class="fw-semibold">
+
+                            {{order.gigTitle}}
+
+                        </div>
+
+                    </td>
+
+                    <!-- Status -->
+
+                    <td>
+
+                        <span class="badge" [ngClass]="getStatusClass(order.status)">
+
+                            {{order.status.replaceAll('_',' ')}}
+
+                        </span>
+
+                    </td>
+
+                    <!-- Price -->
+
+                    <td>
+
+                        <strong>
+
+                            {{order.finalPrice ?? order.agreedPrice ?? order.quotedPrice | number:'1.2-2'}}
+
+                        </strong>
+
+                    </td>
+
+                    <!-- Created -->
+
+                    <td>
+
+                        {{order.createdAt | date:'medium'}}
+
+                    </td>
+
+                    <!-- Actions -->
+
+                    <td>
+
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <button class="btn btn-sm btn-outline-primary" (click)="viewBuyer(order)">
+
+                                Buyer
+
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-info" (click)="viewSeller(order.sellerId)">
+
+                                Seller
+
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-secondary" (click)="viewGig(order.gigId)">
+
+                                Gig
+
+                            </button>
+
+                            <button class="btn btn-sm btn-dark" (click)="viewOrderDetails(order.id)">
+
+                                Details
+
+                            </button>
+
+                            <button *ngIf="order.status=='SELLER_DISPUTED'" class="btn btn-sm btn-success"
+                                (click)="releasePayment(order)">
+
+                                Release Payment
+
+                            </button>
+
+                            <button *ngIf="order.status=='SELLER_DISPUTED'" class="btn btn-sm btn-danger"
+                                (click)="refundBuyer(order)">
+
+                                Refund
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

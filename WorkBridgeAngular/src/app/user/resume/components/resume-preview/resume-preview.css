@@ -1,0 +1,695 @@
+/* =======================================================
+   PAGE
+======================================================= */
+
+body {
+
+    background: #ececec;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.resume-page {
+
+    padding: 40px;
+
+    background: #ececec;
+
+}
+
+/* =======================================================
+   BUTTONS
+======================================================= */
+
+.resume-actions {
+
+    width: 900px;
+
+    margin: auto;
+
+    margin-bottom: 20px;
+
+    display: flex;
+
+    justify-content: end;
+
+    gap: 10px;
+
+}
+
+/* =======================================================
+   MAIN RESUME
+======================================================= */
+
+.resume {
+
+    width: 900px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: 280px 1fr;
+
+    background: white;
+
+    box-shadow: 0 0 30px rgba(0, 0, 0, .15);
+
+    min-height: 1200px;
+
+}
+
+/* =======================================================
+   SIDEBAR
+======================================================= */
+
+.sidebar {
+
+    background: #1f3b57;
+
+    color: white;
+
+    padding: 35px;
+
+}
+
+.profile-image {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+}
+
+.profile-image img {
+
+    width: 170px;
+
+    height: 170px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 6px solid white;
+
+}
+
+.sidebar h2 {
+
+    text-align: center;
+
+    margin-top: 10px;
+
+    margin-bottom: 5px;
+
+    font-size: 28px;
+
+}
+
+.headline {
+
+    text-align: center;
+
+    color: #d8e8ff;
+
+    margin-bottom: 35px;
+
+}
+
+.sidebar section {
+
+    margin-bottom: 35px;
+
+}
+
+.sidebar h3 {
+
+    border-bottom: 2px solid rgba(255, 255, 255, .4);
+
+    padding-bottom: 8px;
+
+    margin-bottom: 15px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    font-size: 17px;
+
+}
+
+.item {
+
+    margin-bottom: 12px;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.item strong {
+
+    color: #ffffff;
+
+    margin-bottom: 3px;
+
+}
+
+.item span {
+
+    color: #d5d5d5;
+
+    font-size: 14px;
+
+    word-break: break-word;
+
+}
+
+.sidebar a {
+
+    color: white;
+
+    text-decoration: none;
+
+}
+
+.sidebar a:hover {
+
+    text-decoration: underline;
+
+}
+
+/* =======================================================
+   SKILLS
+======================================================= */
+
+.skill {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    padding-bottom: 5px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, .15);
+
+}
+
+.skill span {
+
+    font-size: 14px;
+
+}
+
+.skill small {
+
+    color: #d7d7d7;
+
+}
+
+/* =======================================================
+   RIGHT CONTENT
+======================================================= */
+
+.content {
+
+    padding: 45px;
+
+    background: #ffffff;
+
+}
+
+.content h1 {
+
+    font-size: 38px;
+
+    font-weight: bold;
+
+    color: #1f3b57;
+
+    margin-bottom: 8px;
+
+}
+
+.content h2 {
+
+    font-size: 20px;
+
+    color: #666;
+
+    margin-bottom: 35px;
+
+    font-weight: normal;
+
+}
+
+/* =======================================================
+   SECTION
+======================================================= */
+
+.section {
+
+    margin-bottom: 35px;
+
+}
+
+.section h3 {
+
+    display: inline-block;
+
+    color: #1f3b57;
+
+    font-size: 20px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 20px;
+
+    padding-bottom: 6px;
+
+    border-bottom: 3px solid #1f3b57;
+
+}
+
+.section p {
+
+    line-height: 1.8;
+
+    color: #444;
+
+    text-align: justify;
+
+}
+
+/* =======================================================
+   TIMELINE
+======================================================= */
+
+.timeline {
+
+    position: relative;
+
+    margin-bottom: 30px;
+
+    padding-left: 28px;
+
+    border-left: 3px solid #1f3b57;
+
+}
+
+.timeline::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 14px;
+
+    height: 14px;
+
+    border-radius: 50%;
+
+    background: #1f3b57;
+
+    left: -9px;
+
+    top: 4px;
+
+}
+
+.timeline-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 10px;
+
+}
+
+.timeline h4 {
+
+    margin: 0;
+
+    color: #222;
+
+    font-size: 18px;
+
+}
+
+.timeline strong {
+
+    color: #1f3b57;
+
+}
+
+.timeline .date {
+
+    white-space: nowrap;
+
+    color: #777;
+
+    font-size: 14px;
+
+}
+
+.subtitle {
+
+    color: #777;
+
+    margin-bottom: 12px;
+
+    font-style: italic;
+
+}
+
+.timeline p {
+
+    margin-top: 8px;
+
+    margin-bottom: 12px;
+
+    color: #444;
+
+    line-height: 1.7;
+
+}
+
+/* =======================================================
+   LINKS
+======================================================= */
+
+.content a {
+
+    color: #1565c0;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+}
+
+.content a:hover {
+
+    text-decoration: underline;
+
+}
+
+/* =======================================================
+   REFERENCE CARD
+======================================================= */
+
+.reference-card {
+
+    margin-bottom: 22px;
+
+    padding: 18px;
+
+    border: 1px solid #dcdcdc;
+
+    border-radius: 8px;
+
+    background: #fafafa;
+
+}
+
+.reference-card h4 {
+
+    margin-bottom: 8px;
+
+    color: #1f3b57;
+
+}
+
+.reference-card div {
+
+    margin-bottom: 4px;
+
+    color: #555;
+
+}
+
+/* =======================================================
+   TABLE STYLE INFORMATION
+======================================================= */
+
+.timeline div {
+
+    margin-bottom: 5px;
+
+}
+
+.timeline strong {
+
+    font-weight: bold;
+
+}
+
+/* =======================================================
+   HOVER EFFECT
+======================================================= */
+
+.timeline:hover {
+
+    background: #fafafa;
+
+    transition: .25s;
+
+    border-radius: 6px;
+
+    padding-top: 10px;
+
+    padding-bottom: 10px;
+
+    padding-right: 10px;
+
+}
+
+/* =======================================================
+   UTILITIES
+======================================================= */
+
+.loading {
+
+    text-align: center;
+
+    padding: 80px;
+
+    font-size: 22px;
+
+    color: #666;
+
+}
+
+img {
+
+    max-width: 100%;
+
+}
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+/* =======================================================
+   PRINT (Angular PDF)
+======================================================= */
+
+@media print {
+
+    body {
+
+        background: white !important;
+
+        margin: 0;
+
+        padding: 0;
+
+    }
+
+    .resume-page {
+
+        padding: 0;
+
+        margin: 0;
+
+        background: white;
+
+    }
+
+    .resume-actions {
+
+        display: none !important;
+
+    }
+
+    .resume {
+
+        width: 100%;
+
+        margin: 0;
+
+        box-shadow: none;
+
+        min-height: auto;
+
+        page-break-after: avoid;
+
+    }
+
+    .sidebar {
+
+        background: #1f3b57 !important;
+
+        color: white !important;
+
+        -webkit-print-color-adjust: exact;
+
+        print-color-adjust: exact;
+
+    }
+
+    .section {
+
+        page-break-inside: avoid;
+
+    }
+
+    .timeline {
+
+        page-break-inside: avoid;
+
+    }
+
+    .reference-card {
+
+        page-break-inside: avoid;
+
+    }
+
+    a {
+
+        color: inherit;
+
+        text-decoration: none;
+
+    }
+
+    @page {
+
+        size: A4;
+
+        margin: 12mm;
+
+    }
+
+}
+
+/* =======================================================
+   RESPONSIVE
+======================================================= */
+
+@media (max-width: 900px) {
+
+    .resume {
+
+        width: 100%;
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .resume-actions {
+
+        width: 100%;
+
+        padding: 15px;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+    }
+
+    .sidebar {
+
+        text-align: center;
+
+    }
+
+    .timeline-header {
+
+        flex-direction: column;
+
+        gap: 5px;
+
+    }
+
+    .content {
+
+        padding: 25px;
+
+    }
+
+    .content h1 {
+
+        font-size: 30px;
+
+    }
+
+}
+
+/* =======================================================
+   NICE SELECTION
+======================================================= */
+
+::selection {
+
+    background: #1f3b57;
+
+    color: white;
+
+}
+
+/* =======================================================
+   SCROLLBAR
+======================================================= */
+
+::-webkit-scrollbar {
+
+    width: 8px;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: #1f3b57;
+
+    border-radius: 20px;
+
+}
+
+::-webkit-scrollbar-track {
+
+    background: #efefef;
+
+}

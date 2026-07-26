@@ -1,0 +1,141 @@
+<div class="card border-0 rounded-0 h-100">
+
+    <!-- Header -->
+    <div class="card-header bg-white">
+
+        <div class="d-flex align-items-center">
+
+            <img [src]="fileService.getGigImage(conversation.gigImage)" class="rounded" width="50" height="50">
+
+            <div class="ms-3">
+
+                <h6 class="mb-0">
+                    {{conversation.gigTitle}}
+                </h6>
+
+                <small class="text-muted">
+                    Buyer: {{conversation.buyerName}}
+                    |
+                    Seller: {{conversation.sellerName}}
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Messages -->
+
+    <div class="card-body overflow-auto" style="height:60vh;background:#ece5dd;">
+
+        <div *ngFor="let message of messages" class="mb-3">
+
+            <div class="d-flex" [class.justify-content-end]="message.senderId==loggedInUserId"
+                [class.justify-content-start]="message.senderId!=loggedInUserId">
+
+                <div class="p-3 rounded shadow-sm" [class.bg-success-subtle]="message.senderId==loggedInUserId"
+                    [class.bg-white]="message.senderId!=loggedInUserId" style="max-width:70%;">
+
+                    <!-- text -->
+
+                    <div *ngIf="message.messageText">
+
+                        {{message.messageText}}
+
+                    </div>
+
+                    <!-- image -->
+
+                    <div *ngIf="message.attachment &&
+                        (
+                        message.attachment.toLowerCase().endsWith('.png') ||
+                        message.attachment.toLowerCase().endsWith('.jpg') ||
+                        message.attachment.toLowerCase().endsWith('.jpeg') ||
+                        message.attachment.toLowerCase().endsWith('.gif') ||
+                        message.attachment.toLowerCase().endsWith('.webp')
+                        )" class="mt-2">
+
+                        <a [href]="fileService.getMessageAttachment(message.attachment)" target="_blank">
+
+                            <img [src]="fileService.getMessageAttachment(message.attachment)"
+                                class="img-fluid rounded border">
+
+                        </a>
+
+                    </div>
+
+                    <!-- file -->
+
+                    <div *ngIf="message.attachment &&
+                        !(
+                        message.attachment.toLowerCase().endsWith('.png') ||
+                        message.attachment.toLowerCase().endsWith('.jpg') ||
+                        message.attachment.toLowerCase().endsWith('.jpeg') ||
+                        message.attachment.toLowerCase().endsWith('.gif') ||
+                        message.attachment.toLowerCase().endsWith('.webp')
+                        )" class="mt-2">
+
+                        <a class="btn btn-sm btn-outline-primary"
+                            [href]="fileService.getMessageAttachment(message.attachment)" target="_blank">
+
+                            📎 Download Attachment
+
+                        </a>
+
+                    </div>
+
+                    <div class="text-end mt-2">
+
+                        <small class="text-muted">
+
+                            {{message.sentAt | date:'short'}}
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Selected File -->
+
+    <div class="border-top bg-light px-3 py-2" *ngIf="selectedFile">
+
+        📎 {{selectedFile.name}}
+
+    </div>
+
+    <!-- Footer -->
+
+    <div class="card-footer bg-white">
+
+        <div class="input-group">
+
+            <label class="btn btn-outline-secondary">
+
+                📎
+
+                <input hidden type="file" (change)="onFileSelected($event)">
+
+            </label>
+
+            <input class="form-control" placeholder="Type a message..." [(ngModel)]="messageText"
+                (keyup.enter)="sendMessage()">
+
+            <button class="btn btn-success" (click)="sendMessage()" [disabled]="sending">
+
+                ➤
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

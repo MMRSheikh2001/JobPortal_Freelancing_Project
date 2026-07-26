@@ -1,0 +1,243 @@
+<div class="container py-4">
+
+    <h2 class="mb-4 text-center">
+        Resume Management
+    </h2>
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center my-5">
+
+        <div class="spinner-border text-primary"></div>
+
+        <p class="mt-3">
+            Loading...
+        </p>
+
+    </div>
+
+    <div *ngIf="!loading">
+
+        <div class="row g-4">
+
+            <!-- ================================================= -->
+            <!-- Uploaded Resume -->
+            <!-- ================================================= -->
+
+            <div class="col-lg-4">
+
+                <div class="card shadow h-100">
+
+                    <div class="card-header bg-primary text-white">
+
+                        <h5 class="mb-0">
+                            Uploaded Resume
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div *ngIf="resumeExists">
+
+                            <p>
+
+                                <strong>File</strong><br>
+
+                                {{uploadedResume?.fileName}}
+
+                            </p>
+
+                            <p>
+
+                                <strong>Uploaded</strong><br>
+
+                                {{uploadedResume?.uploadedAt}}
+
+                            </p>
+
+                            <div class="d-grid gap-2">
+
+                                <button class="btn btn-primary" (click)="openUploadedResume()">
+
+                                    View Resume
+
+                                </button>
+
+                                <button class="btn btn-success" (click)="downloadUploadedResume()">
+
+                                    Download Resume
+
+                                </button>
+
+                                <button class="btn btn-danger" (click)="deleteResume()">
+
+                                    Delete Resume
+
+                                </button>
+
+                            </div>
+
+                            <hr>
+
+                            <label class="form-label">
+
+                                Replace Resume
+
+                            </label>
+
+                            <input class="form-control mb-3" type="file" accept=".pdf,.doc,.docx"
+                                (change)="onFileSelected($event)">
+
+                            <button class="btn btn-warning w-100" [disabled]="uploading" (click)="uploadResume()">
+
+                                Replace Resume
+
+                            </button>
+
+                        </div>
+
+                        <div *ngIf="!resumeExists">
+
+                            <p class="text-muted">
+
+                                No resume uploaded.
+
+                            </p>
+
+                            <label class="form-label">
+
+                                Select Resume
+
+                            </label>
+
+                            <input class="form-control mb-3" type="file" accept=".pdf,.doc,.docx"
+                                (change)="onFileSelected($event)">
+
+                            <button class="btn btn-primary w-100" [disabled]="uploading" (click)="uploadResume()">
+
+                                Upload Resume
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================================================= -->
+            <!-- Angular Resume -->
+            <!-- ================================================= -->
+
+            <div class="col-lg-4">
+
+                <div class="card shadow h-100">
+
+                    <div class="card-header bg-success text-white">
+
+                        <h5 class="mb-0">
+
+                            Angular Resume
+
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
+
+                        <p>
+
+                            Resume generated from your profile information.
+
+                        </p>
+
+                        <ul>
+
+                            <li>Professional Template</li>
+
+                            <li>Always Updated</li>
+
+                            <li>Printable</li>
+
+                            <li>PDF Support</li>
+
+                        </ul>
+
+                        <div class="mt-auto d-grid">
+
+                            <button class="btn btn-success" (click)="previewAngularResume()">
+
+                                Open Resume
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================================================= -->
+            <!-- Backend Resume -->
+            <!-- ================================================= -->
+
+            <div class="col-lg-4">
+
+                <div class="card shadow h-100">
+
+                    <div class="card-header bg-dark text-white">
+
+                        <h5 class="mb-0">
+
+                            Backend Resume PDF
+
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
+
+                        <p>
+
+                            Professionally generated PDF from the server.
+
+                        </p>
+
+                        <ul>
+
+                            <li>Ready for Download</li>
+
+                            <li>ATS Friendly</li>
+
+                            <li>Server Generated</li>
+
+                            <li>Print Ready</li>
+
+                        </ul>
+
+                        <div class="mt-auto d-grid">
+
+                            <button class="btn btn-dark" (click)="downloadBackendPdf()">
+
+                                Download PDF
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

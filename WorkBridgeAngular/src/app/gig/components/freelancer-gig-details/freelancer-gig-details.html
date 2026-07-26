@@ -1,0 +1,325 @@
+<div class="container py-4" *ngIf="order">
+
+    <!-- Header -->
+
+    <div class="card mb-4">
+
+        <div class="card-body">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-2 text-center">
+
+                    <img [src]="fileService.getGigImage(order.gigImage)" class="img-fluid rounded">
+
+                </div>
+
+                <div class="col-md-10">
+
+                    <h3>{{order.gigTitle}}</h3>
+
+                    <p class="mb-1">
+                        Buyer :
+                        <strong>{{order.buyerName}}</strong>
+                    </p>
+
+                    <p class="mb-1">
+                        Status :
+                        <span class="badge bg-primary">
+                            {{order.status}}
+                        </span>
+                    </p>
+
+                    <p class="mb-0">
+                        Order #{{order.id}}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- ORDER PLACED -->
+    <!-- ========================= -->
+
+    <div class="card mb-4" *ngIf="order.status=='ORDER_PLACED'">
+
+        <div class="card-header">
+
+            Send Quote
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Quoted Price
+
+                </label>
+
+                <input type="number" class="form-control" [(ngModel)]="quotedPrice">
+
+            </div>
+
+            <button class="btn btn-success" (click)="sendQuote()" [disabled]="saving">
+
+                Send Quote
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- QUOTED -->
+    <!-- ========================= -->
+
+    <div class="card mb-4" *ngIf="order.status=='QUOTED'">
+
+        <div class="card-body">
+
+            <h5>
+
+                Quote Sent
+
+            </h5>
+
+            <p>
+
+                Waiting for buyer to accept or reject.
+
+            </p>
+
+            <h4>
+
+                {{order.quotedPrice | number}}
+
+            </h4>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- QUOTE ACCEPTED -->
+    <!-- ========================= -->
+
+    <div class="card mb-4" *ngIf="order.status=='QUOTE_ACCEPTED'">
+
+        <div class="card-header">
+
+            Deliver Order
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Delivery Message
+
+                </label>
+
+                <textarea rows="4" class="form-control" [(ngModel)]="deliveryMessage">
+
+                </textarea>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Delivery File
+
+                </label>
+
+                <input type="file" class="form-control" (change)="onFileSelected($event)">
+
+            </div>
+
+            <button class="btn btn-success me-2" (click)="deliverOrder()" [disabled]="saving">
+
+                Deliver Order
+
+            </button>
+
+            <button class="btn btn-danger" (click)="cancelOrder()" [disabled]="saving">
+
+                Cancel Order
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- DELIVERED -->
+    <!-- ========================= -->
+
+    <div class="card mb-4" *ngIf="order.status=='DELIVERED'">
+
+        <div class="card-body">
+
+            <h5>
+
+                Order Delivered
+
+            </h5>
+
+            <p>
+
+                Waiting for buyer response.
+
+            </p>
+
+            <p>
+
+                {{order.deliveryMessage}}
+
+            </p>
+
+            <a class="btn btn-outline-primary" target="_blank"
+                [href]="fileService.getGigDelivery(order.deliveryFileUrl)">
+
+                Download Delivery File
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- BUYER REJECTED -->
+    <!-- ========================= -->
+
+    <div class="card mb-4" *ngIf="order.status=='BUYER_REJECTED'">
+
+        <div class="card-body">
+
+            <div class="alert alert-warning">
+
+                Buyer rejected the delivery.
+
+            </div>
+
+            <p>
+
+                You may raise dispute before
+
+                <strong>
+
+                    {{order.sellerDisputeDeadline | date:'medium'}}
+
+                </strong>
+
+            </p>
+
+            <button class="btn btn-danger" (click)="raiseDispute()" [disabled]="saving">
+
+                Raise Dispute
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- BUYER CANCELLED -->
+    <!-- ========================= -->
+
+    <div class="card mb-4" *ngIf="order.status=='BUYER_CANCELLED'">
+
+        <div class="card-body">
+
+            <div class="alert alert-danger">
+
+                Buyer cancelled the order.
+
+            </div>
+
+            <p>
+
+                You may raise dispute before
+
+                <strong>
+
+                    {{order.sellerDisputeDeadline | date:'medium'}}
+
+                </strong>
+
+            </p>
+
+            <button class="btn btn-danger" (click)="raiseDispute()" [disabled]="saving">
+
+                Raise Dispute
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- Finished States -->
+    <!-- ========================= -->
+
+    <div class="alert alert-success" *ngIf="order.status=='BUYER_ACCEPTED'">
+
+        Buyer accepted the delivery.
+
+    </div>
+
+    <div class="alert alert-info" *ngIf="order.status=='SELLER_DISPUTED'">
+
+        Dispute submitted.
+        Waiting for admin decision.
+
+    </div>
+
+    <div class="alert alert-success" *ngIf="order.status=='PAYMENT_RELEASED'">
+
+        Payment released.
+
+    </div>
+
+    <div class="alert alert-secondary" *ngIf="order.status=='REFUNDED'">
+
+        Buyer refunded.
+
+    </div>
+
+    <div class="alert alert-secondary" *ngIf="order.status=='SELLER_CANCELLED'">
+
+        Order cancelled by seller.
+        Buyer refunded.
+
+    </div>
+
+    <div class="alert alert-secondary" *ngIf="order.status=='QUOTE_REJECTED'">
+
+        Buyer rejected your quote.
+
+    </div>
+
+</div>

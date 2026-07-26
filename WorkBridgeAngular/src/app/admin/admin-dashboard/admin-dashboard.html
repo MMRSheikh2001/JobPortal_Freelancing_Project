@@ -1,0 +1,384 @@
+<div class="container-fluid py-4" *ngIf="!loading && dashboard">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold text-danger mb-1">
+                Admin Dashboard
+            </h2>
+
+            <p class="text-muted mb-0">
+                Platform overview
+            </p>
+
+        </div>
+
+        <button class="btn btn-outline-primary" (click)="openNotifications()">
+
+            Notifications
+            <span class="badge bg-danger ms-2">
+                {{dashboard.unreadNotifications}}
+            </span>
+
+        </button>
+
+    </div>
+
+    <!-- Users -->
+
+    <h5 class="text-primary mb-3">
+        Users
+    </h5>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-2">
+            <div class="card bg-primary text-white">
+                <div class="card-body text-center">
+                    <h3>{{dashboard.totalUsers}}</h3>
+                    <small>Total Users</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card bg-success text-white">
+                <div class="card-body text-center">
+                    <h3>{{dashboard.totalJobSeekers}}</h3>
+                    <small>Job Seekers</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card bg-info text-white">
+                <div class="card-body text-center">
+                    <h3>{{dashboard.totalCompanies}}</h3>
+                    <small>Companies</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card bg-warning">
+                <div class="card-body text-center">
+                    <h3>{{dashboard.totalFreelancers}}</h3>
+                    <small>Freelancers</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card bg-secondary text-white">
+                <div class="card-body text-center">
+                    <h3>{{dashboard.totalClients}}</h3>
+                    <small>Clients</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card bg-dark text-white">
+                <div class="card-body text-center">
+                    <h3>{{dashboard.blockedUsers}}</h3>
+                    <small>Blocked</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Jobs -->
+
+    <h5 class="text-success mb-3">
+        Jobs
+    </h5>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card border-success">
+                <div class="card-body">
+                    <h3>{{dashboard.totalJobs}}</h3>
+                    <small>Total Jobs</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-primary">
+                <div class="card-body">
+                    <h3>{{dashboard.activeJobs}}</h3>
+                    <small>Active Jobs</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-danger">
+                <div class="card-body">
+                    <h3>{{dashboard.inactiveJobs}}</h3>
+                    <small>Inactive Jobs</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-info">
+                <div class="card-body">
+                    <h3>{{dashboard.totalJobApplications}}</h3>
+                    <small>Applications</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Hiring -->
+
+    <!-- Recruitment -->
+
+    <h5 class="text-info mb-3">
+        Recruitment
+    </h5>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="card border-primary">
+                <div class="card-body text-center">
+                    <h4>{{dashboard.totalJobApplications}}</h4>
+                    <small>Total Applications</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-success">
+                <div class="card-body text-center">
+                    <h4>{{dashboard.totalHiredCandidates}}</h4>
+                    <small>Hired Candidates</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-warning">
+                <div class="card-body text-center">
+                    <h4>{{dashboard.pendingReports}}</h4>
+                    <small>Pending Reports</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- Freelancing -->
+
+    <h5 class="text-warning mb-3">
+        Freelancing
+    </h5>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4>{{dashboard.totalGigs}}</h4>
+                    Gigs
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4>{{dashboard.activeGigs}}</h4>
+                    Active
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4>{{dashboard.inactiveGigs}}</h4>
+                    Inactive
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4>{{dashboard.totalOrders}}</h4>
+                    Orders
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card border-success">
+                <div class="card-body text-center">
+                    <h4>{{dashboard.completedOrders}}</h4>
+                    Completed
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card border-danger">
+                <div class="card-body text-center">
+                    <h4>{{dashboard.cancelledOrders}}</h4>
+                    Cancelled
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Finance -->
+
+    <h5 class="text-danger mb-3">
+        Finance
+    </h5>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card bg-success text-white">
+
+                <div class="card-body">
+
+                    <h3>{{dashboard.totalPlatformRevenue | number}}</h3>
+
+                    Platform Revenue
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card bg-warning">
+
+                <div class="card-body">
+
+                    <h3>{{dashboard.pendingWithdrawals}}</h3>
+
+                    Pending Withdrawals
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card bg-info text-white">
+
+                <div class="card-body">
+
+                    <h3>{{dashboard.completedWithdrawals}}</h3>
+
+                    Completed Withdrawals
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- AI -->
+
+    <h5 class="text-secondary mb-3">
+        AI
+    </h5>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3>{{dashboard.totalAIInterviews}}</h3>
+                    AI Interviews
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3>{{dashboard.totalAIMatches}}</h3>
+                    AI Matches
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3>{{dashboard.totalAIQualifiedCandidates}}</h3>
+                    Qualified Candidates
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Actions -->
+
+    <div class="row g-3">
+
+        <div class="col-md-4">
+
+            <button class="btn btn-danger w-100" (click)="openDisputes()">
+
+                Pending Disputes
+                ({{dashboard.pendingDisputes}})
+
+            </button>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <button class="btn btn-primary w-100" (click)="openWallet()">
+
+                Wallet
+
+            </button>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <button class="btn btn-success w-100" (click)="openTransactions()">
+
+                Transactions
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="text-center py-5" *ngIf="loading">
+
+    <div class="spinner-border text-primary"></div>
+
+</div>

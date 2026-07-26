@@ -1,0 +1,168 @@
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+
+                {{ isEdit ? 'Update Country' : 'Add Country' }}
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <form (ngSubmit)="save()">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Country Name
+
+                        </label>
+
+                        <input type="text" class="form-control" name="countryName" [(ngModel)]="country.countryName"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Country Code
+
+                        </label>
+
+                        <input type="text" class="form-control" name="countryCode" [(ngModel)]="country.countryCode"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn btn-success me-2">
+
+                    {{ isEdit ? 'Update' : 'Save' }}
+
+                </button>
+
+                <button type="button" class="btn btn-secondary" (click)="reset()">
+
+                    Reset
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header bg-dark text-white">
+
+            <h5 class="mb-0">
+
+                Country List
+
+            </h5>
+
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th style="width:80px;">
+                            ID
+                        </th>
+
+                        <th>
+                            Country Name
+                        </th>
+
+                        <th>
+                            Country Code
+                        </th>
+
+                        <th style="width:180px;">
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let c of countries">
+
+                        <td>
+
+                            {{ c.countryId }}
+
+                        </td>
+
+                        <td>
+
+                            {{ c.countryName }}
+
+                        </td>
+
+                        <td>
+
+                            {{ c.countryCode }}
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-warning btn-sm me-2" (click)="edit(c)">
+
+                                Edit
+
+                            </button>
+
+                            <button class="btn btn-danger btn-sm" (click)="delete(c.countryId)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="countries.length === 0">
+
+                        <td colspan="4" class="text-center text-muted">
+
+                            No Country Found
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+```

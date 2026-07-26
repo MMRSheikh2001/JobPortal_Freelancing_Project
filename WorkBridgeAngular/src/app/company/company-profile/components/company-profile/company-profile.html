@@ -1,0 +1,288 @@
+<div class="container py-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                Company Profile
+            </h4>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Company Logo -->
+
+            <div class="text-center mb-4">
+
+                <img [src]="getProfileImage()" class="rounded-circle border" width="140" height="140"
+                    style="object-fit: cover;">
+
+                <div class="mt-3">
+
+                    <input type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)">
+
+                </div>
+
+                <button *ngIf="hasImage()" class="btn btn-outline-danger btn-sm mt-2" (click)="deleteImage()">
+
+                    Delete Logo
+
+                </button>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Company Name -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Company Name
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="companyProfile.name">
+
+                </div>
+
+                <!-- Phone -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Phone
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="companyProfile.phone">
+
+                </div>
+
+                <!-- Email -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Company Email
+                    </label>
+
+                    <input type="email" class="form-control" [(ngModel)]="companyProfile.companyEmail">
+
+                </div>
+
+                <!-- Website -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Website
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="companyProfile.companyWebsite">
+
+                </div>
+
+                <!-- Industry -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Industry
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="companyProfile.industry">
+
+                </div>
+
+                <!-- Founded -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Founded Year
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="companyProfile.foundedYear">
+
+                </div>
+
+                <!-- Trade License -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Trade License Number
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="companyProfile.tradeLicenseNumber">
+
+                </div>
+
+                <!-- Description -->
+
+                <div class="col-12 mb-3">
+
+                    <label class="form-label">
+                        Company Description
+                    </label>
+
+                    <textarea rows="5" class="form-control" [(ngModel)]="companyProfile.companyDescription">
+
+                    </textarea>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <h5 class="mb-3">
+                Company Address
+            </h5>
+
+            <div class="row">
+
+                <!-- Country -->
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+                        Country
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="countryId" (change)="onCountryChange()">
+
+                        <option [ngValue]="0">
+                            Select Country
+                        </option>
+
+                        <option *ngFor="let c of countries" [ngValue]="c.countryId">
+
+                            {{c.countryName}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Division -->
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+                        Division
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="divisionId" (change)="onDivisionChange()">
+
+                        <option [ngValue]="0">
+                            Select Division
+                        </option>
+
+                        <option *ngFor="let d of divisions" [ngValue]="d.divisionId">
+
+                            {{d.divisionName}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- District -->
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+                        District
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="districtId" (change)="onDistrictChange()">
+
+                        <option [ngValue]="0">
+                            Select District
+                        </option>
+
+                        <option *ngFor="let d of districts" [ngValue]="d.districtId">
+
+                            {{d.districtName}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Police Station -->
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+                        Police Station
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="companyProfile.locationPoliceStationId">
+
+                        <option [ngValue]="0">
+                            Select Police Station
+                        </option>
+
+                        <option *ngFor="let p of policeStations" [ngValue]="p.policeStationId">
+
+                            {{p.policeStationName}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Address -->
+
+                <div class="col-md-8 mb-3">
+
+                    <label class="form-label">
+                        Address Details
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="companyProfile.locationDetails">
+
+                </div>
+
+                <!-- Post Code -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+                        Post Code
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="companyProfile.locationPostCode">
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="d-flex gap-2">
+
+                <button class="btn btn-primary" (click)="save()">
+
+                    Save Changes
+
+                </button>
+
+                <button class="btn btn-secondary" (click)="reset()">
+
+                    Reset
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

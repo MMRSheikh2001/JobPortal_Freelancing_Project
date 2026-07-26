@@ -1,0 +1,249 @@
+<div class="container py-4">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- Gig -->
+
+    <div *ngIf="!loading && gig">
+
+        <div class="row g-4">
+
+            <!-- Left -->
+
+            <div class="col-lg-8">
+
+                <img [src]="imageUrl" class="img-fluid rounded shadow-sm gig-image">
+
+                <h2 class="mt-4 fw-bold">
+
+                    {{gig.title}}
+
+                </h2>
+
+                <div class="d-flex flex-wrap gap-3 mt-3">
+
+                    <span class="badge bg-primary">
+
+                        {{gig.categoryName}}
+
+                    </span>
+
+                    <span>
+
+                        ⭐ {{gig.averageRating}}
+
+                        ({{gig.totalReviews}} Reviews)
+
+                    </span>
+
+                    <button class="btn btn-link p-0" (click)="viewReviews()">
+
+                        View Reviews
+
+                    </button>
+
+                    <span>
+
+                        {{gig.completedOrders}}
+                        Orders Completed
+
+                    </span>
+
+                </div>
+
+                <hr>
+
+                <h5>Description</h5>
+
+                <p class="description">
+
+                    {{gig.description}}
+
+                </p>
+
+            </div>
+
+            <!-- Right Card -->
+
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm sticky-top">
+
+                    <div class="card-body">
+
+                        <h3 class="text-primary fw-bold">
+
+                            ৳ {{gig.startingPrice}}
+
+                        </h3>
+
+                        <button *ngIf="canOrder()" class="btn btn-light border rounded-circle" (click)="toggleSaveGig()"
+                            [disabled]="savingGig">
+
+                            <i class="bi fs-4" [ngClass]="isSaved
+                ? 'bi-heart-fill text-danger'
+                : 'bi-heart'">
+                            </i>
+
+                        </button>
+
+                        <p class="mb-2">
+
+                            <strong>Seller</strong>
+
+                            <br>
+
+                            <a href="javascript:void(0)" class="fw-semibold text-decoration-none"
+                                (click)="viewSellerProfile()">
+
+                                {{gig.userName}}
+
+                            </a>
+
+                        </p>
+                        <button class="btn btn-outline-secondary w-100 mb-3" (click)="viewSellerProfile()">
+
+                            View Seller Profile
+
+                        </button>
+
+                        <p class="mb-2">
+
+                            <strong>Delivery</strong>
+
+                            <br>
+
+                            {{gig.deliveryDays}}
+                            Days
+
+                        </p>
+
+                        <p class="mb-3">
+
+                            <strong>Revisions</strong>
+
+                            <br>
+
+                            {{gig.revisions}}
+
+                        </p>
+
+                        <!-- Existing Order -->
+                        <div *ngIf="isOwnGig" class="alert alert-warning">
+
+                            This is your own gig.
+                            You cannot place an order on it.
+
+                        </div>
+
+                        <div *ngIf="hasActiveOrder" class="alert alert-success">
+
+                            You already have an active order.
+
+                            <br>
+
+                            Status:
+
+                            <strong>
+
+                                {{activeOrder?.status}}
+
+                            </strong>
+
+                        </div>
+
+                        <!-- Buttons -->
+
+                        <button *ngIf="!hasActiveOrder && !isOwnGig" class="btn btn-primary w-100" (click)="orderGig()">
+
+                            Order Now
+
+                        </button>
+
+                        <button *ngIf="hasActiveOrder" class="btn btn-success w-100" (click)="continueOrder()">
+
+                            Continue Order
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Related -->
+
+        <div *ngIf="relatedGigs.length" class="mt-5">
+
+            <h3 class="mb-4">
+
+                Related Gigs
+
+            </h3>
+
+            <div class="row">
+
+                <div class="col-md-4 mb-4" *ngFor="let item of relatedGigs">
+
+                    <div class="card h-100 shadow-sm related-card">
+
+                        <img [src]="fileService.getGigImage(item.gigImage)" class="card-img-top related-image">
+
+                        <div class="card-body">
+
+                            <h6>
+
+                                {{item.title}}
+
+                            </h6>
+
+                            <p class="text-muted">
+
+                                {{item.userName}}
+
+                            </p>
+
+                            <p>
+
+                                ⭐ {{item.averageRating}}
+
+                            </p>
+
+                            <h5 class="text-primary">
+
+                                ৳ {{item.startingPrice}}
+
+                            </h5>
+
+                        </div>
+
+                        <div class="card-footer bg-white border-0">
+
+                            <button class="btn btn-outline-primary w-100" (click)="openGig(item.id)">
+
+                                View Gig
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

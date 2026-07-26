@@ -1,0 +1,161 @@
+<div class="container py-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+                {{ editMode ? 'Edit Gig' : 'Create Gig' }}
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <!-- Title -->
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Gig Title
+                </label>
+
+                <input type="text" class="form-control" [(ngModel)]="gig.title">
+
+            </div>
+
+            <!-- Category -->
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Category
+                </label>
+
+                <select class="form-select" [(ngModel)]="gig.categoryId">
+
+                    <option [ngValue]="0">
+                        Select Category
+                    </option>
+
+                    <option *ngFor="let category of categories" [ngValue]="category.id">
+
+                        {{ category.name }}
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Starting Price -->
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Starting Price
+                </label>
+
+                <input type="number" class="form-control" [(ngModel)]="gig.startingPrice">
+
+            </div>
+
+            <!-- Delivery Days -->
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Delivery Days
+                </label>
+
+                <input type="number" class="form-control" [(ngModel)]="gig.deliveryDays">
+
+            </div>
+
+            <!-- Revisions -->
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Revisions
+                </label>
+
+                <input type="number" class="form-control" [(ngModel)]="gig.revisions">
+
+            </div>
+
+            <!-- Short Description -->
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Short Description
+                </label>
+
+                <textarea rows="3" class="form-control" [(ngModel)]="gig.shortDescription">
+
+                </textarea>
+
+            </div>
+
+            <!-- Description -->
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Description
+                </label>
+
+                <textarea rows="8" class="form-control" [(ngModel)]="gig.description">
+
+                </textarea>
+
+            </div>
+
+            <!-- Image -->
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Gig Image
+                </label>
+
+                <input type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)">
+
+            </div>
+
+            <!-- Preview -->
+
+            <div class="mb-3" *ngIf="imagePreview">
+
+                <img [src]="imagePreview" class="img-thumbnail" style="max-width:250px">
+
+            </div>
+
+            <!-- Buttons -->
+
+            <div class="d-flex gap-2">
+
+                <button class="btn btn-primary" (click)="save()">
+
+                    {{ editMode ? 'Update Gig' : 'Create Gig' }}
+
+                </button>
+                <button type="button" class="btn btn-secondary" (click)="resetForm()">
+
+                    Reset
+
+                </button>
+                <button class="btn btn-secondary" routerLink="/user/dashboard">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

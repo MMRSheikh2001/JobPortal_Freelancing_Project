@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark px-4 py-3 shadow-sm">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+
+        <!-- Brand Logo/Name on the Left -->
+        <a class="navbar-brand fw-bold text-primary" href="/">
+            WorkBridge Company
+        </a>
+
+        <div class="navbar-nav gap-3 align-items-center">
+
+            <button class="btn btn-outline-light position-relative" (click)="goToNotifications()">
+
+                <i class="bi bi-bell"></i>
+
+                <span *ngIf="unreadCount>0"
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                    {{ unreadCount }}
+
+                </span>
+
+            </button>
+
+           
+
+        </div>
+
+        <!-- Navigation Links Grouped on the Right -->
+        <div class="navbar-nav gap-3">
+            <a class="nav-link fw-semibold px-2" href="/">
+                Home
+            </a>
+            <a class="nav-link fw-semibold px-2" href="/company/dashboard">
+                Dashboard
+            </a>
+        </div>
+
+    </div>
+</nav>

@@ -1,0 +1,11 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.guest-content {
+    flex: 1;
+    padding-top: 70px;
+    background: #f8f9fa;
+}

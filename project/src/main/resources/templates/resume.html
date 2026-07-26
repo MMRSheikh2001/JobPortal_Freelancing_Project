@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${resume.profile.name} + ' — CV'">CV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10.5pt;
+            color: #1a1a1a;
+            background: #ffffff;
+            line-height: 1.5;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 14mm 16mm;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 8px;
+            overflow: auto;
+        }
+
+        .photo {
+            float: right;
+            width: 88px;
+            height: 88px;
+            border: 1px solid #cccccc;
+            margin-left: 14px;
+            margin-bottom: 4px;
+        }
+
+        .name {
+            font-size: 20pt;
+            font-weight: bold;
+            color: #1a2744;
+            margin-bottom: 2px;
+        }
+
+        .headline {
+            font-size: 10.5pt;
+            color: #444444;
+            margin-bottom: 5px;
+        }
+
+        .contact-line {
+            font-size: 9pt;
+            color: #333333;
+            margin-bottom: 2px;
+        }
+
+        /* Divider */
+        .divider {
+            border: none;
+            border-top: 1.5px solid #1a2744;
+            margin: 8px 0 10px 0;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 10pt;
+            font-weight: bold;
+            color: #1a2744;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            border-bottom: 1px solid #1a2744;
+            padding-bottom: 2px;
+            margin-bottom: 7px;
+        }
+
+        /* Entry */
+        .entry {
+            margin-bottom: 9px;
+        }
+
+        .entry-header {
+            overflow: auto;
+            margin-bottom: 1px;
+        }
+
+        .entry-date {
+            float: right;
+            font-size: 9pt;
+            color: #555555;
+            margin-left: 10px;
+        }
+
+        .entry-title {
+            font-weight: bold;
+            font-size: 10.5pt;
+        }
+
+        .entry-subtitle {
+            font-style: italic;
+            font-size: 9.5pt;
+            color: #555555;
+            margin-bottom: 2px;
+        }
+
+        .entry-body {
+            font-size: 10pt;
+            color: #1a1a1a;
+            margin-top: 2px;
+        }
+
+        /* Skills */
+        .skill-row {
+            font-size: 10pt;
+            margin-bottom: 3px;
+        }
+
+        .skill-cat {
+            font-weight: bold;
+        }
+
+        /* References */
+        .ref-grid {
+            overflow: auto;
+        }
+
+        .ref-item {
+            float: left;
+            width: 48%;
+            padding-right: 2%;
+            margin-bottom: 8px;
+            font-size: 10pt;
+        }
+
+        /* Print */
+        @media print {
+            .page {
+                padding: 10mm 14mm;
+                width: 100%;
+                margin: 0;
+            }
+
+            .section, .entry {
+                page-break-inside: avoid;
+            }
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- ══════════════════════════════
+         HEADER
+    ══════════════════════════════ -->
+    <div class="header">
+
+        <!-- Photo floats right — only rendered if photo exists -->
+        <img th:if="${photoDataUri != null}"
+             th:src="${photoDataUri}"
+             class="photo"
+             alt="Profile Photo"/>
+
+        <!-- Name -->
+        <div class="name" th:text="${resume.profile.name}"></div>
+
+        <!-- Headline -->
+        <div class="headline"
+             th:if="${!#strings.isEmpty(resume.profile.headline)}"
+             th:text="${resume.profile.headline}"></div>
+
+        <!-- Contact: email | phone | location -->
+        <div class="contact-line">
+            <span th:text="${resume.profile.userEmail}"></span>
+            <th:block th:if="${!#strings.isEmpty(resume.profile.phone)}">
+                &#160;|&#160;<span th:text="${resume.profile.phone}"></span>
+            </th:block>
+            <th:block th:if="${!#strings.isEmpty(resume.profile.presentDistrictName)}">
+                &#160;|&#160;<span th:text="${resume.profile.presentDistrictName}"></span>
+                <span th:if="${!#strings.isEmpty(resume.profile.presentDivisionName)}">,
+                    <span th:text="${resume.profile.presentDivisionName}"></span>
+                </span>
+                <span th:if="${!#strings.isEmpty(resume.profile.presentCountryName)}">,
+                    <span th:text="${resume.profile.presentCountryName}"></span>
+                </span>
+            </th:block>
+        </div>
+
+        <!-- Social links -->
+        <div class="contact-line"
+             th:if="${!#strings.isEmpty(resume.profile.linkedinLink)
+                  or !#strings.isEmpty(resume.profile.githubLink)
+                  or !#strings.isEmpty(resume.profile.portfolioWebsite)}">
+            <span th:if="${!#strings.isEmpty(resume.profile.linkedinLink)}">
+                LinkedIn: <span th:text="${resume.profile.linkedinLink}"></span>
+            </span>
+            <span th:if="${!#strings.isEmpty(resume.profile.githubLink)}">
+                <span th:if="${!#strings.isEmpty(resume.profile.linkedinLink)}">&#160;|&#160;</span>
+                GitHub: <span th:text="${resume.profile.githubLink}"></span>
+            </span>
+            <span th:if="${!#strings.isEmpty(resume.profile.portfolioWebsite)}">
+                &#160;|&#160;Portfolio: <span th:text="${resume.profile.portfolioWebsite}"></span>
+            </span>
+        </div>
+
+        <div style="clear: both;"></div>
+    </div>
+
+    <hr class="divider"/>
+
+    <!-- ══════════════════════════════
+         PROFESSIONAL SUMMARY
+    ══════════════════════════════ -->
+    <div class="section"
+         th:if="${!#strings.isEmpty(resume.profile.professionalSummary)}">
+        <div class="section-title">Professional Summary</div>
+        <div class="entry-body" th:text="${resume.profile.professionalSummary}"></div>
+    </div>
+
+    <!-- ══════════════════════════════
+         CAREER OBJECTIVE
+    ══════════════════════════════ -->
+    <div class="section"
+         th:if="${!#strings.isEmpty(resume.profile.careerObjective)}">
+        <div class="section-title">Career Objective</div>
+        <div class="entry-body" th:text="${resume.profile.careerObjective}"></div>
+    </div>
+
+    <!-- ══════════════════════════════
+         WORK EXPERIENCE
+    ══════════════════════════════ -->
+    <div class="section"
+         th:if="${resume.experiences != null and !resume.experiences.isEmpty()}">
+        <div class="section-title">Work Experience</div>
+
+        <div class="entry" th:each="exp : ${resume.experiences}">
+            <div class="entry-header">
+                <span class="entry-date">
+                    <span th:if="${exp.startDate != null}"
+                          th:text="${#temporals.format(exp.startDate, 'MMM yyyy')}"></span>
+                    <span th:if="${exp.startDate != null}"> &#8211; </span>
+                    <span th:if="${exp.currentlyWorking != null and exp.currentlyWorking}">Present</span>
+                    <span th:if="${(exp.currentlyWorking == null or !exp.currentlyWorking) and exp.endDate != null}"
+                          th:text="${#temporals.format(exp.endDate, 'MMM yyyy')}"></span>
+                </span>
+                <div class="entry-title" th:text="${exp.position}"></div>
+            </div>
+
+            <div class="entry-subtitle">
+                <span th:text="${exp.companyName}"></span>
+                <span th:if="${exp.employmentType != null}">
+                    &#160;&#183;&#160;
+                    <span th:switch="${exp.employmentType.name()}">
+                        <span th:case="'Full_Time'">Full Time</span>
+                        <span th:case="'Part_Time'">Part Time</span>
+                        <span th:case="'Contract'">Contract</span>
+                        <span th:case="'Internship'">Internship</span>
+                        <span th:case="'Freelance'">Freelance</span>
+                    </span>
+                </span>
+            </div>
+
+            <div class="entry-body"
+                 th:if="${!#strings.isEmpty(exp.responsibilities)}"
+                 th:text="${exp.responsibilities}"></div>
+
+            <div class="entry-body"
+                 th:if="${!#strings.isEmpty(exp.achievements)}">
+                <strong>Achievements: </strong>
+                <span th:text="${exp.achievements}"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         EDUCATION
+    ══════════════════════════════ -->
+    <div class="section"
+         th:if="${resume.educations != null and !resume.educations.isEmpty()}">
+        <div class="section-title">Education</div>
+
+        <div class="entry" th:each="edu : ${resume.educations}">
+            <div class="entry-header">
+                <span class="entry-date">
+                    <span th:if="${edu.startDate != null}"
+                          th:text="${#temporals.format(edu.startDate, 'MMM yyyy')}"></span>
+                    <span th:if="${edu.startDate != null}"> &#8211; </span>
+                    <span th:if="${edu.currentlyStudying != null and edu.currentlyStudying}">Present</span>
+                    <span th:if="${(edu.currentlyStudying == null or !edu.currentlyStudying) and edu.endDate != null}"
+                          th:text="${#temporals.format(edu.endDate, 'MMM yyyy')}"></span>
+                </span>
+                <div class="entry-title">
+                    <span th:if="${edu.educationLevel != null}"
+                          th:switch="${edu.educationLevel.name()}">
+                        <span th:case="'SSC'">Secondary School Certificate (SSC)</span>
+                        <span th:case="'HSC'">Higher Secondary Certificate (HSC)</span>
+                        <span th:case="'DIPLOMA'">Diploma</span>
+                        <span th:case="'BACHELOR'">Bachelor's Degree</span>
+                        <span th:case="'PGD'">Post Graduate Diploma (PGD)</span>
+                        <span th:case="'MASTERS'">Master's Degree</span>
+                        <span th:case="'MPHIL'">M.Phil</span>
+                        <span th:case="'PHD'">PhD</span>
+                    </span>
+                    <span th:if="${!#strings.isEmpty(edu.fieldOfStudy)}">
+                        in <span th:text="${edu.fieldOfStudy}"></span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="entry-subtitle"
+                 th:if="${!#strings.isEmpty(edu.institution)}"
+                 th:text="${edu.institution}"></div>
+
+            <!-- Result display based on ResultType -->
+            <div class="entry-body" th:if="${edu.resultType != null}">
+                <span th:switch="${edu.resultType.name()}">
+                    <span th:case="'CGPA'">
+                        CGPA <span th:text="${edu.result}"></span>
+                        <span th:if="${edu.outOf != null}">
+                            out of <span th:text="${edu.outOf}"></span>
+                        </span>
+                    </span>
+                    <span th:case="'GPA'">
+                        GPA <span th:text="${edu.result}"></span>
+                        <span th:if="${edu.outOf != null}">
+                            out of <span th:text="${edu.outOf}"></span>
+                        </span>
+                    </span>
+                    <span th:case="'PERCENTAGE'">
+                        <span th:text="${edu.result}"></span>%
+                    </span>
+                    <span th:case="'DIVISION'" th:text="${edu.gradeOrDivision}"></span>
+                    <span th:case="'GRADE'">
+                        Grade: <span th:text="${edu.gradeOrDivision}"></span>
+                    </span>
+                </span>
+            </div>
+
+            <div class="entry-body" th:if="${!#strings.isEmpty(edu.board)}">
+                Board: <span th:text="${edu.board}"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         SKILLS
+    ══════════════════════════════ -->
+    <div class="section"
+         th:if="${skillsByCat != null and !skillsByCat.isEmpty()}">
+        <div class="section-title">Skills</div>
+        <div class="skill-row" th:each="entry : ${skillsByCat}">
+            <span class="skill-cat" th:text="${entry.key}"></span>:
+            <span th:text="${entry.value}"></span>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         LANGUAGES
+    ══════════════════════════════ -->
+    <div class="section"
+         th:if="${resume.languages != null and !resume.languages.isEmpty()}">
+        <div class="section-title">Languages</div>
+        <div style="font-size: 10pt;">
+            <span th:each="lang, s : ${resume.languages}">
+                <span th:text="${lang.languageName}"></span>
+                <span th:if="${lang.proficiency != null}">
+                    (<span th:switch="${lang.proficiency.name()}">
+                        <span th:case="'BEGINNER'">Beginner</span>
+                        <span th:case="'INTERMEDIATE'">Intermediate</span>
+                        <span th:case="'ADVANCED'">Advanced</span>
+                        <span th:case="'NATIVE'">Native</span>
+                    </span>)
+                </span>
+                <span th:if="${!s.last}">&#160;&#160;&#183;&#160;&#160;</span>
+            </span>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         TRAINING & CERTIFICATIONS
+    ══════════════════════════════ -->
+    <div class="section"
+         th:if="${resume.trainings != null and !resume.trainings.isEmpty()}">
+        <div class="section-title">Training &amp; Certifications</div>
+
+        <div class="entry" th:each="tr : ${resume.trainings}">
+            <div class="entry-header">
+                <span class="entry-date">
+                    <span th:if="${tr.startDate != null}"
+                          th:text="${#temporals.format(tr.startDate, 'MMM yyyy')}"></span>
+                    <span th:if="${tr.startDate != null and tr.endDate != null}"> &#8211; </span>
+                    <span th:if="${tr.endDate != null}"
+                          th:text="${#temporals.format(tr.endDate, 'MMM yyyy')}"></span>
+                </span>
+                <div class="entry-title" th:text="${tr.name}"></div>
+            </div>
+
+            <div class="entry-subtitle"
+                 th:if="${!#strings.isEmpty(tr.institution)}"
+                 th:text="${tr.institution}"></div>
+
+            <div class="entry-body">
+                <span th:if="${tr.trainingType != null}"
+                      th:switch="${tr.trainingType.name()}">
+                    <span th:case="'Online'">Online</span>
+                    <span th:case="'Offline'">Offline</span>
+                    <span th:case="'Bootcamp'">Bootcamp</span>
+                    <span th:case="'Workshop'">Workshop</span>
+                    <span th:case="'Certification'">Certification</span>
+                </span>
+                <span th:if="${!#strings.isEmpty(tr.duration)}">
+                    <span th:if="${tr.trainingType != null}">&#160;&#183;&#160;</span>
+                    Duration: <span th:text="${tr.duration}"></span>
+                </span>
+                <span th:if="${!#strings.isEmpty(tr.certificateId)}">
+                    &#160;&#183;&#160;Cert ID: <span th:text="${tr.certificateId}"></span>
+                </span>
+            </div>
+
+            <div class="entry-body"
+                 th:if="${!#strings.isEmpty(tr.description)}"
+                 th:text="${tr.description}"></div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         PORTFOLIO & PROJECTS
+    ══════════════════════════════ -->
+    <div class="section"
+         th:if="${resume.portfolios != null and !resume.portfolios.isEmpty()}">
+        <div class="section-title">Portfolio &amp; Projects</div>
+
+        <div class="entry" th:each="pt : ${resume.portfolios}">
+            <div class="entry-title" th:text="${pt.title}"></div>
+
+            <div class="entry-body"
+                 th:if="${!#strings.isEmpty(pt.technologies)}">
+                Technologies: <span th:text="${pt.technologies}"></span>
+            </div>
+
+            <div class="entry-body"
+                 th:if="${!#strings.isEmpty(pt.description)}"
+                 th:text="${pt.description}"></div>
+
+            <div class="entry-body"
+                 th:if="${!#strings.isEmpty(pt.projectUrl)}">
+                URL: <span th:text="${pt.projectUrl}"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         EXTRACURRICULAR ACTIVITIES
+    ══════════════════════════════ -->
+    <div class="section"
+         th:if="${resume.extracurriculars != null and !resume.extracurriculars.isEmpty()}">
+        <div class="section-title">Extracurricular Activities</div>
+
+        <div class="entry" th:each="ex : ${resume.extracurriculars}">
+            <div class="entry-header">
+                <div class="entry-title">
+                    <span th:text="${ex.title}"></span>
+                    <span th:if="${!#strings.isEmpty(ex.role)}">
+                        &#160;&#183;&#160;<span th:text="${ex.role}"></span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="entry-subtitle"
+                 th:if="${!#strings.isEmpty(ex.organization)}"
+                 th:text="${ex.organization}"></div>
+
+            <div class="entry-body"
+                 th:if="${!#strings.isEmpty(ex.description)}"
+                 th:text="${ex.description}"></div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         REFERENCES
+    ══════════════════════════════ -->
+    <div class="section"
+         th:if="${resume.references != null and !resume.references.isEmpty()}">
+        <div class="section-title">References</div>
+        <div class="ref-grid">
+            <div class="ref-item" th:each="ref : ${resume.references}">
+                <strong th:text="${ref.name}"></strong><br/>
+                <span th:if="${!#strings.isEmpty(ref.designation)}"
+                      th:text="${ref.designation}"></span>
+                <span th:if="${!#strings.isEmpty(ref.organization)}">,
+                    <span th:text="${ref.organization}"></span>
+                </span><br/>
+                <span th:if="${!#strings.isEmpty(ref.phone)}"
+                      th:text="${ref.phone}"></span>
+                <span th:if="${!#strings.isEmpty(ref.email)}">
+                    <span th:if="${!#strings.isEmpty(ref.phone)}">&#160;|&#160;</span>
+                    <span th:text="${ref.email}"></span>
+                </span>
+                <span th:if="${!#strings.isEmpty(ref.relation)}"><br/>
+                    <em th:text="${ref.relation}"></em>
+                </span>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+</div>
+</body>
+</html>

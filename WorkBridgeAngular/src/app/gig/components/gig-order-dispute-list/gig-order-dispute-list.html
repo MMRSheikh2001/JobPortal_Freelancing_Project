@@ -1,0 +1,168 @@
+<div class="container-fluid py-4">
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+
+                Gig Order Disputes
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div *ngIf="loading" class="text-center py-5">
+
+                <div class="spinner-border text-primary">
+
+                </div>
+
+            </div>
+
+            <div *ngIf="!loading && disputes.length==0">
+
+                <div class="alert alert-success mb-0">
+
+                    No active disputes found.
+
+                </div>
+
+            </div>
+
+            <div class="table-responsive" *ngIf="!loading && disputes.length>0">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Gig</th>
+
+                            <th>Buyer</th>
+
+                            <th>Seller</th>
+
+                            <th>Agreed Price</th>
+
+                            <th>Delivered</th>
+
+                            <th>Dispute Opened</th>
+
+                            <th>Deadline</th>
+
+                            <th></th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let order of disputes">
+
+                            <!-- Gig -->
+
+                            <td>
+
+                                <div class="d-flex align-items-center">
+
+                                    <img [src]="fileService.getGigImage(order.gigImage)" width="70" height="70"
+                                        class="rounded me-3" style="object-fit:cover;">
+
+                                    <div>
+
+                                        <div class="fw-semibold">
+
+                                            {{order.gigTitle}}
+
+                                        </div>
+
+                                        <small class="text-muted">
+
+                                            #{{order.id}}
+
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <!-- Buyer -->
+
+                            <td>
+
+                                {{order.buyerName}}
+
+                            </td>
+
+                            <!-- Seller -->
+
+                            <td>
+
+                                {{order.sellerName}}
+
+                            </td>
+
+                            <!-- Price -->
+
+                            <td>
+
+                                {{order.agreedPrice | number:'1.0-2'}}
+
+                            </td>
+
+                            <!-- Delivered -->
+
+                            <td>
+
+                                {{order.deliveredAt | date:'medium'}}
+
+                            </td>
+
+                            <!-- Dispute -->
+
+                            <td>
+
+                                {{order.sellerDisputeOpenedAt | date:'medium'}}
+
+                            </td>
+
+                            <!-- Deadline -->
+
+                            <td>
+
+                                {{order.sellerDisputeDeadline | date:'medium'}}
+
+                            </td>
+
+                            <!-- Action -->
+
+                            <td>
+
+                                <button class="btn btn-primary btn-sm" (click)="view(order)">
+
+                                    View
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

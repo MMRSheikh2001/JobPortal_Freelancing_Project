@@ -1,0 +1,481 @@
+<div class="container py-4">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+        <p class="mt-3">
+
+            Loading User Profile...
+
+        </p>
+
+    </div>
+
+    <div *ngIf="resume as r">
+
+        <!-- ===================================== -->
+        <!-- Header -->
+        <!-- ===================================== -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header bg-primary text-white">
+
+                <h4 class="mb-0">
+
+                    User Profile Review
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-3 text-center">
+
+                        <img [src]="getProfileImage(r.profile.image)" class="rounded-circle border"
+                            style="width:180px;height:180px;object-fit:cover;">
+
+                    </div>
+
+                    <div class="col-md-9">
+
+                        <h2 class="mb-1">
+
+                            {{r.profile.name}}
+
+                        </h2>
+
+                        <h5 class="text-primary mb-3">
+
+                            {{r.profile.headline}}
+
+                        </h5>
+
+                        <p><strong>Email:</strong> {{r.profile.userEmail}}</p>
+
+                        <p><strong>Phone:</strong> {{r.profile.phone}}</p>
+
+                        <p><strong>Gender:</strong> {{getGender()}}</p>
+
+                        <p><strong>Date of Birth:</strong> {{r.profile.dateOfBirth}}</p>
+
+                        <p><strong>Nationality:</strong> {{r.profile.nationality}}</p>
+
+                        <p><strong>Religion:</strong> {{r.profile.religion}}</p>
+
+                        <p><strong>Marital Status:</strong> {{r.profile.maritalStatus}}</p>
+
+                        <p><strong>Preferred Job:</strong> {{getJobType()}}</p>
+
+                        <p><strong>Preferred Workplace:</strong> {{getWorkPlace()}}</p>
+
+                        <p><strong>Expected Salary:</strong> {{r.profile.expectedSalary}}</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Professional Summary -->
+
+        <div class="card shadow-sm mb-3" *ngIf="r.profile.professionalSummary">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Professional Summary
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                {{r.profile.professionalSummary}}
+
+            </div>
+
+        </div>
+
+        <!-- Career Objective -->
+
+        <div class="card shadow-sm mb-3" *ngIf="r.profile.careerObjective">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Career Objective
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                {{r.profile.careerObjective}}
+
+            </div>
+
+        </div>
+
+        <!-- Bio -->
+
+        <div class="card shadow-sm mb-3" *ngIf="r.profile.bio">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Bio
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                {{r.profile.bio}}
+
+            </div>
+
+        </div>
+
+        <!-- Experience -->
+
+        <div class="card shadow-sm mb-3">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Experience
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div *ngFor="let item of r.experiences" class="border-bottom mb-3 pb-3">
+
+                    <h5>{{item.position}}</h5>
+
+                    <h6 class="text-primary">
+
+                        {{item.companyName}}
+
+                    </h6>
+
+                    <p>
+
+                        {{item.startDate}}
+                        -
+
+                        {{item.currentlyWorking ? 'Present' : item.endDate}}
+
+                    </p>
+
+                    <p>
+
+                        {{item.responsibilities}}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Education -->
+
+        <div class="card shadow-sm mb-3">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Education
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div *ngFor="let item of r.educations" class="border-bottom mb-3 pb-3">
+
+                    <h5>{{item.educationLevel}}</h5>
+
+                    <h6>{{item.board}}</h6>
+
+                    <p>{{item.fieldOfStudy}}</p>
+
+                    <p>CGPA : {{item.result}}</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Skills -->
+
+        <div class="card shadow-sm mb-3">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Skills
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <span *ngFor="let item of r.skills" class="badge bg-primary me-2 mb-2">
+
+                    {{item.skillName}}
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- Languages -->
+
+        <div class="card shadow-sm mb-3">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Languages
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-bordered">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Language</th>
+
+                            <th>Proficiency</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let item of r.languages">
+
+                            <td>{{item.languageName}}</td>
+
+                            <td>{{item.proficiency}}</td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- Trainings -->
+
+        <div class="card shadow-sm mb-3">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Trainings
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div *ngFor="let item of r.trainings" class="border-bottom mb-3 pb-3">
+
+                    <h5>{{item.name}}</h5>
+
+                    <p>{{item.institution}}</p>
+
+                    <p>{{item.description}}</p>
+
+                    <a *ngIf="item.certificateFile" [href]="getTraining(item.certificateFile)" target="_blank"
+                        class="btn btn-outline-primary btn-sm">
+
+                        View Certificate
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Portfolio -->
+
+        <div class="card shadow-sm mb-3">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Portfolio
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div *ngFor="let item of r.portfolios" class="border-bottom mb-3 pb-3">
+
+                    <h5>{{item.title}}</h5>
+
+                    <p>{{item.description}}</p>
+
+                    <p>
+
+                        <strong>Technology:</strong>
+
+                        {{item.technologies}}
+
+                    </p>
+
+                    <button *ngIf="item.projectUrl" class="btn btn-primary btn-sm me-2" (click)="open(item.projectUrl)">
+
+                        Visit Project
+
+                    </button>
+                    <button class="btn btn-primary" (click)="viewUserGigs()">
+
+                        View All Gigs
+
+                    </button>
+
+                    <a *ngIf="item.fileUrl" [href]="getPortfolio(item.fileUrl)" target="_blank"
+                        class="btn btn-success btn-sm">
+
+                        Download File
+
+                    </a>
+                    <a class="btn btn-outline-dark ms-2" href="/admin/user-profile-management">
+
+                        Back to Profiles
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Extracurricular -->
+
+        <div class="card shadow-sm mb-3">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    Extracurricular Activities
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div *ngFor="let item of r.extracurriculars" class="border-bottom mb-3 pb-3">
+
+                    <h5>{{item.title}}</h5>
+
+                    <p>{{item.organization}}</p>
+
+                    <p>{{item.role}}</p>
+
+                    <p>{{item.description}}</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- References -->
+
+        <div class="card shadow-sm">
+
+            <div class="card-header">
+
+                <h5 class="mb-0">
+
+                    References
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div *ngFor="let item of r.references" class="border-bottom mb-3 pb-3">
+
+                    <h5>{{item.name}}</h5>
+
+                    <p>{{item.designation}}</p>
+
+                    <p>{{item.organization}}</p>
+
+                    <p>{{item.phone}}</p>
+
+                    <p>{{item.email}}</p>
+
+                    <p>{{item.address}}</p>
+
+                    <p>
+
+                        <strong>Relation:</strong>
+
+                        {{item.relation}}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,238 @@
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+                {{ isEdit ? 'Edit Portfolio' : 'Add Portfolio' }}
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <form (ngSubmit)="save()">
+
+                <!-- Title -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Title
+                    </label>
+
+                    <input type="text" class="form-control" name="title" [(ngModel)]="portfolio.title" required>
+
+                </div>
+
+                <!-- Description -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Description
+                    </label>
+
+                    <textarea rows="4" class="form-control" name="description" [(ngModel)]="portfolio.description"
+                        required>
+                    </textarea>
+
+                </div>
+
+                <!-- Project URL -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Project URL
+                    </label>
+
+                    <input type="url" class="form-control" name="projectUrl" [(ngModel)]="portfolio.projectUrl">
+
+                </div>
+
+                <!-- Technologies -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Technologies
+                    </label>
+
+                    <input type="text" class="form-control" name="technologies" [(ngModel)]="portfolio.technologies"
+                        placeholder="Angular, Spring Boot, MySQL">
+
+                </div>
+
+                <!-- File -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Portfolio File
+                    </label>
+
+                    <input type="file" class="form-control" (change)="onFileSelected($event)">
+
+                    <small class="text-muted">
+
+                        Allowed:
+                        PDF, ZIP, RAR, 7Z, DOC, DOCX,
+                        PPT, PPTX, XLS, XLSX,
+                        TXT, JPG, JPEG, PNG,
+                        GIF, MP4, MOV, AVI, MKV
+
+                    </small>
+
+                </div>
+
+                <!-- Buttons -->
+
+                <button class="btn btn-success me-2" type="submit">
+
+                    {{ isEdit ? 'Update' : 'Save' }}
+
+                </button>
+
+                <button class="btn btn-secondary" type="button" (click)="reset()">
+
+                    Reset
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <hr class="my-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+
+            <h5 class="mb-0">
+                Portfolio List
+            </h5>
+
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>Title</th>
+
+                        <th>Technologies</th>
+
+                        <th>Project URL</th>
+
+                        <th>File</th>
+
+                        <th width="180">
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let p of portfolios">
+
+                        <td>
+
+                            {{ p.title }}
+
+                        </td>
+
+                        <td>
+
+                            {{ p.technologies }}
+
+                        </td>
+
+                        <td>
+
+                            <a *ngIf="p.projectUrl" [href]="getProjectUrl(p.projectUrl)" target="_blank">
+
+                                Visit
+
+                            </a>
+
+                        </td>
+
+                        <td>
+
+                            <ng-container *ngIf="hasFile(p.fileUrl); else noFile">
+
+                                <a class="btn btn-sm btn-info me-2" [href]="getPortfolio(p.fileUrl)" target="_blank">
+
+                                    View
+
+                                </a>
+
+                                <button class="btn btn-sm btn-warning" (click)="deleteFile(p.id)">
+
+                                    Delete File
+
+                                </button>
+
+                            </ng-container>
+
+                            <ng-template #noFile>
+
+                                <span class="text-muted">
+
+                                    No File
+
+                                </span>
+
+                            </ng-template>
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-primary btn-sm me-2" (click)="edit(p)">
+
+                                Edit
+
+                            </button>
+
+                            <button class="btn btn-danger btn-sm" (click)="delete(p.id)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="portfolios.length==0">
+
+                        <td colspan="5" class="text-center text-muted">
+
+                            No Portfolio Found.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

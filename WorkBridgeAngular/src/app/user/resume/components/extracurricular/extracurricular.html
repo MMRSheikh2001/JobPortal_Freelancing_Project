@@ -1,0 +1,229 @@
+<div class="container mt-4">
+
+    <h3 class="mb-3">
+        Extracurricular Activities
+    </h3>
+
+
+    <!-- ==========================
+         Form
+    =========================== -->
+
+    <div class="card p-4 mb-4">
+
+        <div class="row">
+
+
+            <!-- Title -->
+
+            <div class="col-md-6 mb-3">
+
+                <label class="form-label">
+                    Title
+                </label>
+
+                <input type="text" class="form-control" [(ngModel)]="extracurricular.title"
+                    placeholder="Enter activity title">
+
+            </div>
+
+
+            <!-- Organization -->
+
+            <div class="col-md-6 mb-3">
+
+                <label class="form-label">
+                    Organization
+                </label>
+
+                <input type="text" class="form-control" [(ngModel)]="extracurricular.organization"
+                    placeholder="Enter organization name">
+
+            </div>
+
+
+            <!-- Role -->
+
+            <div class="col-md-6 mb-3">
+
+                <label class="form-label">
+                    Role
+                </label>
+
+                <input type="text" class="form-control" [(ngModel)]="extracurricular.role"
+                    placeholder="Enter your role">
+
+            </div>
+
+
+            <!-- Description -->
+
+            <div class="col-md-12 mb-3">
+
+                <label class="form-label">
+                    Description
+                </label>
+
+                <textarea class="form-control" rows="4" [(ngModel)]="extracurricular.description"
+                    placeholder="Describe your activity">
+                </textarea>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- Buttons -->
+
+        <div>
+
+            <button class="btn btn-primary me-2" (click)="save()">
+
+                {{isEdit ? 'Update' : 'Save'}}
+
+            </button>
+
+
+            <button class="btn btn-secondary" (click)="reset()">
+
+                Reset
+
+            </button>
+
+
+        </div>
+
+
+    </div> <!-- ==========================
+         Extracurricular List
+    =========================== -->
+
+    <div class="card p-3">
+
+        <h5 class="mb-3">
+            My Extracurricular Activities
+        </h5>
+
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Title
+                        </th>
+
+                        <th>
+                            Organization
+                        </th>
+
+                        <th>
+                            Role
+                        </th>
+
+                        <th>
+                            Description
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr *ngFor="
+                        let data of extracurriculars;
+                        let i = index
+                    ">
+
+
+                        <td>
+                            {{i + 1}}
+                        </td>
+
+
+                        <td>
+                            {{data.title}}
+                        </td>
+
+
+                        <td>
+                            {{data.organization}}
+                        </td>
+
+
+                        <td>
+                            {{data.role}}
+                        </td>
+
+
+                        <td>
+                            {{data.description}}
+                        </td>
+
+
+                        <td>
+
+
+                            <button class="btn btn-warning btn-sm me-2" (click)="edit(data)">
+
+                                Edit
+
+                            </button>
+
+
+                            <button class="btn btn-danger btn-sm" (click)="delete(data.id)">
+
+                                Delete
+
+                            </button>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                    <!-- Empty Data -->
+
+                    <tr *ngIf="extracurriculars.length === 0">
+
+                        <td colspan="6" class="text-center">
+
+                            No extracurricular activity found.
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>

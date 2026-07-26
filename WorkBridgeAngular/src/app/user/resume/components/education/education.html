@@ -1,0 +1,415 @@
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+                Education Information
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Education Level -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Education Level
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="education.educationLevel">
+
+                        <option *ngFor="let level of educationLevels" [ngValue]="level">
+
+                            {{level}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Board -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Board / University
+
+                    </label>
+
+                    <input type="text" class="form-control" [(ngModel)]="education.board">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Institution -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Institution
+
+                    </label>
+
+                    <input type="text" class="form-control" [(ngModel)]="education.institution">
+
+                </div>
+
+                <!-- Subject -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Field Of Study
+
+                    </label>
+
+                    <input type="text" class="form-control" [(ngModel)]="education.fieldOfStudy">
+
+                </div>
+
+            </div>
+            <hr>
+
+            <div class="row">
+
+                <!-- Result Type -->
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+
+                        Result Type
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="education.resultType" (change)="resultTypeChanged()">
+
+                        <option *ngFor="let type of resultTypes" [ngValue]="type">
+
+                            {{type}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Result -->
+
+                <div class="col-md-3 mb-3" *ngIf="
+                        education.resultType!='DIVISION' &&
+                        education.resultType!='GRADE'
+                    ">
+
+                    <label class="form-label">
+
+                        Result
+
+                    </label>
+
+                    <input type="number" class="form-control" [(ngModel)]="education.result">
+
+                </div>
+
+                <!-- Out Of -->
+
+                <div class="col-md-3 mb-3" *ngIf="
+                        education.resultType!='DIVISION' &&
+                        education.resultType!='GRADE'
+                    ">
+
+                    <label class="form-label">
+
+                        Out Of
+
+                    </label>
+
+                    <input type="number" class="form-control" [(ngModel)]="education.outOf">
+
+                </div>
+
+                <!-- Grade / Division -->
+
+                <div class="col-md-6 mb-3" *ngIf="
+                        education.resultType=='DIVISION' ||
+                        education.resultType=='GRADE'
+                    ">
+
+                    <label class="form-label">
+
+                        Grade / Division
+
+                    </label>
+
+                    <input type="text" class="form-control" [(ngModel)]="education.gradeOrDivision">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Start Date -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Start Date
+
+                    </label>
+
+                    <input type="date" class="form-control" [(ngModel)]="education.startDate">
+
+                </div>
+
+                <!-- End Date -->
+
+                <div class="col-md-4 mb-3" *ngIf="!isCurrentlyStudying">
+
+                    <label class="form-label">
+
+                        End Date
+
+                    </label>
+
+                    <input type="date" class="form-control" [(ngModel)]="education.endDate">
+
+                </div>
+
+                <!-- Currently Studying -->
+
+                <div class="col-md-4 d-flex align-items-end">
+
+                    <div class="form-check mb-3">
+
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="isCurrentlyStudying">
+
+                        <label class="form-check-label">
+
+                            Currently Studying
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <hr>
+
+            <div class="text-end">
+
+                <button class="btn btn-success me-2" (click)="save()">
+
+                    {{isEdit ? 'Update Education' : 'Save Education'}}
+
+                </button>
+
+                <button class="btn btn-secondary" (click)="reset()">
+
+                    Reset
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- Education List -->
+    <!-- ========================================= -->
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header bg-dark text-white">
+
+            <h5 class="mb-0">
+
+                Education List
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Level</th>
+
+                            <th>Institution</th>
+
+                            <th>Board</th>
+
+                            <th>Field</th>
+
+                            <th>Result</th>
+
+                            <th>Duration</th>
+
+                            <th width="170">
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let item of educations; let i=index">
+
+                            <td>
+
+                                {{i+1}}
+
+                            </td>
+
+                            <td>
+
+                                {{item.educationLevel}}
+
+                            </td>
+
+                            <td>
+
+                                {{item.institution}}
+
+                            </td>
+
+                            <td>
+
+                                {{item.board}}
+
+                            </td>
+
+                            <td>
+
+                                {{item.fieldOfStudy}}
+
+                            </td>
+
+                            <td>
+
+                                <span *ngIf="item.resultType=='GPA'">
+
+                                    GPA :
+                                    {{item.result}} /
+                                    {{item.outOf}}
+
+                                </span>
+
+                                <span *ngIf="item.resultType=='CGPA'">
+
+                                    CGPA :
+                                    {{item.result}} /
+                                    {{item.outOf}}
+
+                                </span>
+
+                                <span *ngIf="item.resultType=='PERCENTAGE'">
+
+                                    {{item.result}} %
+
+                                </span>
+
+                                <span *ngIf="item.resultType=='GRADE'">
+
+                                    {{item.gradeOrDivision}}
+
+                                </span>
+
+                                <span *ngIf="item.resultType=='DIVISION'">
+
+                                    {{item.gradeOrDivision}}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                {{item.startDate}}
+
+                                <br>
+
+                                <small *ngIf="!item.currentlyStudying">
+
+                                    To
+                                    {{item.endDate}}
+
+                                </small>
+
+                                <span *ngIf="item.currentlyStudying" class="badge bg-success">
+
+                                    Currently Studying
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn btn-warning btn-sm me-2" (click)="edit(item)">
+
+                                    Edit
+
+                                </button>
+
+                                <button class="btn btn-danger btn-sm" (click)="delete(item.id)">
+
+                                    Delete
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        <tr *ngIf="educations.length==0">
+
+                            <td colspan="8" class="text-center">
+
+                                No education information found.
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

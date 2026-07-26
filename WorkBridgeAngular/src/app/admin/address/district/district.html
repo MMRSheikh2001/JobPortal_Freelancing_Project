@@ -1,0 +1,219 @@
+<div class="container mt-4">
+
+    <!-- Form -->
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+
+                {{ isEdit ? 'Update District' : 'Add District' }}
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <form (ngSubmit)="saveDistrict()">
+
+                <div class="row">
+
+                    <!-- Division -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Division
+
+                        </label>
+
+                        <select class="form-select" name="divisionId" [(ngModel)]="district.divisionId" required>
+
+                            <option [ngValue]="0">
+
+                                -- Select Division --
+
+                            </option>
+
+                            <option *ngFor="let d of divisions" [ngValue]="d.divisionId">
+
+                                {{ d.divisionName }}
+                                ({{ d.countryName }})
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- District Name -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            District Name
+
+                        </label>
+
+                        <input type="text" class="form-control" name="districtName" [(ngModel)]="district.districtName"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <button class="btn btn-success me-2" type="submit">
+
+                    {{ isEdit ? 'Update' : 'Save' }}
+
+                </button>
+
+                <button class="btn btn-secondary" type="button" (click)="resetForm()">
+
+                    Reset
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- District Table -->
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header bg-dark text-white">
+
+            <h5 class="mb-0">
+
+                District List
+
+            </h5>
+
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th style="width:80px">
+
+                            ID
+
+                        </th>
+
+                        <th>
+
+                            District
+
+                        </th>
+
+                        <th>
+
+                            Division
+
+                        </th>
+
+                        <th>
+
+                            Country
+
+                        </th>
+
+                        <th>
+
+                            Country Code
+
+                        </th>
+
+                        <th style="width:180px">
+
+                            Action
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let d of districts">
+
+                        <td>
+
+                            {{ d.districtId }}
+
+                        </td>
+
+                        <td>
+
+                            {{ d.districtName }}
+
+                        </td>
+
+                        <td>
+
+                            {{ d.divisionName }}
+
+                        </td>
+
+                        <td>
+
+                            {{ d.countryName }}
+
+                        </td>
+
+                        <td>
+
+                            {{ d.countryCode }}
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-warning btn-sm me-2" (click)="editDistrict(d)">
+
+                                Edit
+
+                            </button>
+
+                            <button class="btn btn-danger btn-sm" (click)="deleteDistrict(d.districtId)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="districts.length === 0">
+
+                        <td colspan="6" class="text-center text-muted">
+
+                            No District Found
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

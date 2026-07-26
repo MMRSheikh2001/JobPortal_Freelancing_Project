@@ -1,0 +1,318 @@
+<div class="container py-4" *ngIf="order">
+
+    <!-- Header -->
+
+    <div class="card mb-4">
+
+        <div class="card-body">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-2 text-center">
+
+                    <img [src]="fileService.getGigImage(order.gigImage)" class="img-fluid rounded">
+
+                </div>
+
+                <div class="col-md-10">
+
+                    <h3>{{order.gigTitle}}</h3>
+
+                    <p class="mb-1">
+                        Seller :
+                        <strong>{{order.sellerName}}</strong>
+                    </p>
+
+                    <p class="mb-1">
+                        Status :
+                        <span class="badge bg-primary">
+                            {{order.status}}
+                        </span>
+                    </p>
+
+                    <p class="mb-0">
+                        Order #{{order.id}}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- ORDER PLACED -->
+    <!-- ===================================== -->
+
+    <div class="card mb-4" *ngIf="order.status=='ORDER_PLACED'">
+
+        <div class="card-body">
+
+            <h5>Waiting for Seller Quote</h5>
+
+            <p>
+                The seller has not sent a quotation yet.
+            </p>
+
+            <button class="btn btn-danger" (click)="cancelOrder()" [disabled]="saving">
+
+                Cancel Order
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- QUOTED -->
+    <!-- ===================================== -->
+
+    <div class="card mb-4" *ngIf="order.status=='QUOTED'">
+
+        <div class="card-body">
+
+            <h5>Seller Quote</h5>
+
+            <h3 class="text-success">
+
+                {{order.quotedPrice | number:'1.0-2'}}
+
+            </h3>
+
+            <p>
+
+                Accept or reject the quotation.
+
+            </p>
+
+            <button class="btn btn-success me-2" (click)="acceptQuote()" [disabled]="saving">
+
+                Accept Quote
+
+            </button>
+
+            <button class="btn btn-danger" (click)="rejectQuote()" [disabled]="saving">
+
+                Reject Quote
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- QUOTE ACCEPTED -->
+    <!-- ===================================== -->
+
+    <div class="card mb-4" *ngIf="order.status=='QUOTE_ACCEPTED'">
+
+        <div class="card-body">
+
+            <h5>
+
+                Seller is working on your order.
+
+            </h5>
+
+            <p>
+
+                Expected Delivery
+
+            </p>
+
+            <h6>
+
+                {{order.expectedDeliveryAt | date:'medium'}}
+
+            </h6>
+
+            <button class="btn btn-danger mt-3" (click)="cancelOrder()" [disabled]="saving">
+
+                Cancel Order
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- DELIVERED -->
+    <!-- ===================================== -->
+
+    <div class="card mb-4" *ngIf="order.status=='DELIVERED'">
+
+        <div class="card-header">
+
+            Delivery Received
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="mb-3">
+
+                <strong>Delivery Message</strong>
+
+                <p class="mt-2">
+
+                    {{order.deliveryMessage}}
+
+                </p>
+
+            </div>
+
+            <a class="btn btn-outline-primary mb-3" target="_blank"
+                [href]="fileService.getGigDelivery(order.deliveryFileUrl)">
+
+                Download Delivery
+
+            </a>
+
+            <br>
+
+            <button class="btn btn-success me-2" (click)="acceptDelivery()" [disabled]="saving">
+
+                Accept Delivery
+
+            </button>
+
+            <button class="btn btn-danger" (click)="rejectDelivery()" [disabled]="saving">
+
+                Reject Delivery
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- BUYER_CANCELLED -->
+    <!-- ===================================== -->
+
+    <div class="alert alert-warning" *ngIf="order.status=='BUYER_CANCELLED'">
+
+        <h5>
+
+            Order Cancelled
+
+        </h5>
+
+        <p>
+
+            Waiting until
+
+            <strong>
+
+                {{order.sellerDisputeDeadline | date:'medium'}}
+
+            </strong>
+
+            for seller dispute.
+
+        </p>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- BUYER_REJECTED -->
+    <!-- ===================================== -->
+
+    <div class="alert alert-warning" *ngIf="order.status=='BUYER_REJECTED'">
+
+        Delivery rejected.
+
+        Waiting for seller response.
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- SELLER DISPUTED -->
+    <!-- ===================================== -->
+
+    <div class="alert alert-info" *ngIf="order.status=='SELLER_DISPUTED'">
+
+        Seller raised a dispute.
+
+        Waiting for admin decision.
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- BUYER ACCEPTED -->
+    <!-- ===================================== -->
+
+    <div class="card mb-4" *ngIf="order.status=='BUYER_ACCEPTED'">
+
+        <div class="card-body">
+
+            <h5>
+
+                Order Completed
+
+            </h5>
+
+            <p>
+
+                Delivery accepted successfully.
+
+            </p>
+
+            <button class="btn btn-primary" (click)="goToReview()">
+
+                {{reviewExists ? 'Edit Review' : 'Write Review'}}
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- PAYMENT RELEASED -->
+    <!-- ===================================== -->
+
+    <div class="alert alert-secondary" *ngIf="order.status=='PAYMENT_RELEASED'">
+
+        Admin released payment to seller after dispute.
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- REFUNDED -->
+    <!-- ===================================== -->
+
+    <div class="alert alert-success" *ngIf="order.status=='REFUNDED'">
+
+        Your money has been refunded.
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- SELLER CANCELLED -->
+    <!-- ===================================== -->
+
+    <div class="alert alert-success" *ngIf="order.status=='SELLER_CANCELLED'">
+
+        Seller cancelled the order.
+
+        Your payment has been refunded.
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- QUOTE REJECTED -->
+    <!-- ===================================== -->
+
+    <div class="alert alert-secondary" *ngIf="order.status=='QUOTE_REJECTED'">
+
+        You rejected the seller's quotation.
+
+    </div>
+
+</div>

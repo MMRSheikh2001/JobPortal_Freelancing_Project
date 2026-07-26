@@ -1,0 +1,181 @@
+<!-- Loading -->
+
+<div *ngIf="loading" class="text-center py-5">
+
+    <div class="spinner-border text-primary">
+    </div>
+
+</div>
+
+<!-- Content -->
+
+<div *ngIf="!loading && profile" class="container py-4">
+
+    <!-- Header -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row align-items-center">
+
+                <!-- Logo -->
+
+                <div class="col-md-3 text-center">
+
+                    <img [src]="getCompanyImage(profile.image)" class="img-thumbnail rounded-circle"
+                        style="width:170px;height:170px;object-fit:cover;">
+
+                </div>
+
+                <!-- Basic Information -->
+
+                <div class="col-md-6">
+
+                    <h2 class="fw-bold mb-2">
+
+                        {{profile.name}}
+
+                    </h2>
+
+                    <h5 class="text-primary">
+
+                        {{profile.industry}}
+
+                    </h5>
+
+                    <p class="mb-1">
+
+                        <strong>Email :</strong>
+
+                        {{profile.companyEmail}}
+
+                    </p>
+
+                    <p class="mb-1">
+
+                        <strong>Phone :</strong>
+
+                        {{profile.phone}}
+
+                    </p>
+
+                </div>
+
+                <!-- Edit Button -->
+
+                <div class="col-md-3 text-md-end text-center mt-3 mt-md-0">
+
+                    <button class="btn btn-primary" (click)="editProfile()">
+
+                        <i class="bi bi-pencil-square me-2"></i>
+
+                        Edit Profile
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Company Information -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+
+                Company Information
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <strong>Company Website</strong>
+
+                    <br>
+
+                    <a href="javascript:void(0)" (click)="open(profile.companyWebsite)">
+
+                        {{profile.companyWebsite}}
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <strong>Founded Year</strong>
+
+                    <br>
+
+                    {{profile.foundedYear}}
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <strong>Trade License Number</strong>
+
+                    <br>
+
+                    {{profile.tradeLicenseNumber}}
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <strong>Company Description</strong>
+
+            <p class="mt-2">
+
+                {{profile.companyDescription}}
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Address -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+
+                Office Address
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            {{getAddress()}}
+
+            <br><br>
+
+            <strong>Post Code :</strong>
+
+            {{profile.locationPostCode}}
+
+        </div>
+
+    </div>
+
+</div>

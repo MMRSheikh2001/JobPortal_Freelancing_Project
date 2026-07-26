@@ -1,0 +1,345 @@
+<div class="container py-4">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <div *ngIf="!loading">
+
+        <!-- ===================================== -->
+        <!-- Wallet Balance -->
+        <!-- ===================================== -->
+
+        <div class="card shadow-sm border-success mb-4">
+
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-8">
+
+                        <h3 class="fw-bold mb-1">
+
+                            Withdraw Money
+
+                        </h3>
+
+                        <p class="text-muted mb-0">
+
+                            Submit a withdrawal request. Your request will be
+                            reviewed by an administrator.
+
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-4 text-md-end">
+
+                        <h6 class="text-muted">
+
+                            Available Balance
+
+                        </h6>
+
+                        <h2 class="text-success fw-bold">
+
+                            ৳ {{wallet?.balance | number:'1.2-2'}}
+
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ===================================== -->
+        <!-- Withdraw Form -->
+        <!-- ===================================== -->
+
+        <div class="card shadow-sm mb-5">
+
+            <div class="card-header bg-light">
+
+                <h5 class="mb-0 fw-bold">
+
+                    Create Withdrawal Request
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <!-- Amount -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+
+                            Amount (৳)
+
+                        </label>
+
+                        <input type="number" class="form-control" [(ngModel)]="request.amount"
+                            placeholder="Enter amount">
+
+                        <small class="text-muted">
+
+                            Minimum withdrawal:
+                            ৳{{minimumAmount}}
+
+                        </small>
+
+                    </div>
+
+                    <!-- Method -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+
+                            Withdraw Method
+
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="request.withdrawMethod">
+
+                            <option *ngFor="let method of withdrawMethods" [value]="method">
+
+                                {{method}}
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Account Number -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+
+                            Account Number
+
+                        </label>
+
+                        <input type="text" class="form-control" [(ngModel)]="request.accountNumber"
+                            placeholder="Enter account number">
+
+                    </div>
+
+                    <!-- Account Name -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+
+                            Account Holder Name
+
+                        </label>
+
+                        <input type="text" class="form-control" [(ngModel)]="request.accountName"
+                            placeholder="Enter account holder name">
+
+                    </div>
+
+                </div>
+
+                <div class="mt-4">
+
+                    <button class="btn btn-primary px-4" (click)="submit()" [disabled]="submitting">
+
+                        <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2">
+                        </span>
+
+                        Submit Withdrawal Request
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ===================================== -->
+        <!-- Withdraw Requests -->
+        <!-- ===================================== -->
+
+        <h4 class="fw-bold mb-3">
+
+            My Withdrawal Requests
+
+        </h4>
+
+        <div *ngIf="withdraws.length === 0" class="alert alert-info">
+
+            You haven't submitted any withdrawal requests yet.
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-lg-6" *ngFor="let withdraw of withdraws">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-header d-flex justify-content-between align-items-center">
+
+                        <strong>
+
+                            Request #{{withdraw.id}}
+
+                        </strong>
+
+                        <span class="badge" [ngClass]="getBadgeClass(withdraw.withdrawStatus)">
+
+                            {{withdraw.withdrawStatus}}
+
+                        </span>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-sm mb-0">
+
+                            <tbody>
+
+                                <tr>
+
+                                    <th width="40%">
+
+                                        Amount
+
+                                    </th>
+
+                                    <td>
+
+                                        ৳ {{withdraw.amount | number:'1.2-2'}}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+
+                                        Method
+
+                                    </th>
+
+                                    <td>
+
+                                        {{withdraw.withdrawMethod}}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+
+                                        Account
+
+                                    </th>
+
+                                    <td>
+
+                                        {{withdraw.accountNumber}}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+
+                                        Account Name
+
+                                    </th>
+
+                                    <td>
+
+                                        {{withdraw.accountName}}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+
+                                        Requested
+
+                                    </th>
+
+                                    <td>
+
+                                        {{withdraw.createdAt | date:'medium'}}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr *ngIf="withdraw.transactionReference">
+
+                                    <th>
+
+                                        Transaction Ref.
+
+                                    </th>
+
+                                    <td>
+
+                                        {{withdraw.transactionReference}}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr *ngIf="withdraw.adminRemarks">
+
+                                    <th>
+
+                                        Admin Remarks
+
+                                    </th>
+
+                                    <td>
+
+                                        {{withdraw.adminRemarks}}
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,241 @@
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+                {{ isEdit ? 'Edit Reference' : 'Add Reference' }}
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <form (ngSubmit)="save()">
+
+                <!-- Name -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Name
+                    </label>
+
+                    <input type="text" class="form-control" name="name" [(ngModel)]="reference.name" required>
+
+                </div>
+
+                <!-- Organization -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Organization
+                    </label>
+
+                    <input type="text" class="form-control" name="organization" [(ngModel)]="reference.organization"
+                        required>
+
+                </div>
+
+                <!-- Designation -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Designation
+                    </label>
+
+                    <input type="text" class="form-control" name="designation" [(ngModel)]="reference.designation"
+                        required>
+
+                </div>
+
+                <!-- Phone -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Phone
+                    </label>
+
+                    <input type="text" class="form-control" name="phone" [(ngModel)]="reference.phone">
+
+                </div>
+
+                <!-- Email -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Email
+                    </label>
+
+                    <input type="email" class="form-control" name="email" [(ngModel)]="reference.email">
+
+                </div>
+
+                <!-- Address -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Address
+                    </label>
+
+                    <textarea class="form-control" rows="3" name="address" [(ngModel)]="reference.address">
+                    </textarea>
+
+                </div>
+
+                <!-- Relation -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Relation
+                    </label>
+
+                    <input type="text" class="form-control" name="relation" [(ngModel)]="reference.relation"
+                        placeholder="Manager, Teacher, Colleague">
+
+                </div>
+
+                <!-- Buttons -->
+
+                <button type="submit" class="btn btn-success me-2">
+
+                    {{ isEdit ? 'Update' : 'Save' }}
+
+                </button>
+
+                <button type="button" class="btn btn-secondary" (click)="reset()">
+
+                    Reset
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <hr class="my-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+
+            <h5 class="mb-0">
+                Reference List
+            </h5>
+
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>Name</th>
+
+                        <th>Organization</th>
+
+                        <th>Designation</th>
+
+                        <th>Phone</th>
+
+                        <th>Email</th>
+
+                        <th>Relation</th>
+
+                        <th width="170">
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let r of references">
+
+                        <td>
+
+                            {{ r.name }}
+
+                        </td>
+
+                        <td>
+
+                            {{ r.organization }}
+
+                        </td>
+
+                        <td>
+
+                            {{ r.designation }}
+
+                        </td>
+
+                        <td>
+
+                            {{ r.phone }}
+
+                        </td>
+
+                        <td>
+
+                            {{ r.email }}
+
+                        </td>
+
+                        <td>
+
+                            {{ r.relation }}
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-primary btn-sm me-2" (click)="edit(r)">
+
+                                Edit
+
+                            </button>
+
+                            <button class="btn btn-danger btn-sm" (click)="delete(r.id)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="references.length == 0">
+
+                        <td colspan="7" class="text-center text-muted">
+
+                            No References Found.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,166 @@
+/* =========================================
+   Page
+========================================= */
+
+.container {
+    max-width: 1300px;
+}
+
+/* =========================================
+   Cards
+========================================= */
+
+.card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: .25s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .12);
+}
+
+.card-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.card-body {
+    line-height: 1.7;
+}
+
+/* =========================================
+   Title
+========================================= */
+
+h2 {
+    font-weight: 700;
+    margin-bottom: .25rem;
+}
+
+h5 {
+    margin-bottom: 0;
+}
+
+/* =========================================
+   Badge
+========================================= */
+
+.badge {
+    font-size: .9rem;
+    padding: .55rem .85rem;
+}
+
+/* =========================================
+   Company Logo
+========================================= */
+
+img {
+    object-fit: cover;
+    border: 3px solid #dee2e6;
+}
+
+/* =========================================
+   Buttons
+========================================= */
+
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+}
+
+/* =========================================
+   Links
+========================================= */
+
+a {
+    text-decoration: none;
+    word-break: break-word;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   Labels
+========================================= */
+
+strong {
+    color: #495057;
+}
+
+/* =========================================
+   AI Section
+========================================= */
+
+.card-body p {
+    margin-bottom: .75rem;
+}
+
+/* =========================================
+   Spinner
+========================================= */
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 991px) {
+
+    .col-lg-4 {
+        margin-top: 1.5rem;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    .badge {
+        margin-top: .75rem;
+    }
+
+}

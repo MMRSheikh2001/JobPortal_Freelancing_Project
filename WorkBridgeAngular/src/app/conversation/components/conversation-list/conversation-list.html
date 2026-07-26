@@ -1,0 +1,115 @@
+<div class="conversation-page">
+
+    <!-- Sidebar -->
+
+    <div class="conversation-sidebar">
+
+        <div class="sidebar-header">
+
+            <h4 class="mb-0">
+                Messages
+            </h4>
+
+        </div>
+
+        <div class="search-box">
+
+            <input type="text" class="form-control" placeholder="Search conversation">
+
+        </div>
+
+        <!-- Loading -->
+
+        <div *ngIf="loading" class="text-center py-5">
+
+            <div class="spinner-border"></div>
+
+        </div>
+
+        <!-- Empty -->
+
+        <div *ngIf="!loading && conversations.length==0" class="empty-state">
+
+            No conversations found.
+
+        </div>
+
+        <!-- Conversation List -->
+
+        <div *ngIf="!loading" class="conversation-items">
+
+            <div class="conversation-item" *ngFor="let conversation of conversations"
+                (click)="openConversation(conversation.id)" [class.active]="selectedConversationId===conversation.id">
+
+                <!-- Avatar -->
+
+                <img [src]="
+                        conversation.gigImage
+                        ?
+                        fileService.getGigImage(conversation.gigImage)
+                        :
+                        'assets/images/default-gig.png'
+                    " class="avatar">
+
+                <!-- Middle -->
+
+                <div class="conversation-content">
+
+                    <div class="conversation-title">
+
+                        {{conversation.gigTitle}}
+
+                    </div>
+
+                    <div class="conversation-user">
+
+                        {{
+                        role==='USER'
+                        && conversation.sellerUserProfileId
+                        === sellerUserProfileId
+                        ?
+
+                        conversation.buyerName
+
+                        :
+
+                        conversation.sellerName
+                        }}
+
+                    </div>
+
+                    <div class="conversation-preview">
+
+                        Open conversation
+
+                    </div>
+
+                </div>
+
+                <!-- Right -->
+
+                <div class="conversation-right">
+
+                    <small>
+
+                        {{conversation.lastMessageAt | date:'shortTime'}}
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Chat Area -->
+
+    <div class="conversation-chat">
+
+        <router-outlet></router-outlet>
+
+    </div>
+
+</div>

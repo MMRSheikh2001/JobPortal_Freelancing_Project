@@ -1,0 +1,277 @@
+<div class="container py-4">
+
+    <!-- Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Notifications
+            </h2>
+
+            <p class="text-muted mb-0">
+                View and manage all your notifications.
+            </p>
+
+        </div>
+
+        <div class="d-flex gap-2">
+
+            <button class="btn btn-outline-success" (click)="markAllRead()">
+
+                <i class="bi bi-check2-all me-1"></i>
+
+                Mark All Read
+
+            </button>
+
+            <button class="btn btn-outline-danger" (click)="clearAll()">
+
+                <i class="bi bi-trash me-1"></i>
+
+                Clear All
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Filter Card -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <!-- Type -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+
+                        Type
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.type">
+
+                        <option [ngValue]="undefined">
+
+                            All
+
+                        </option>
+
+                        <option *ngFor="let t of notificationTypes" [ngValue]="t">
+
+                            {{t}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Read -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+
+                        Status
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.isRead">
+
+                        <option [ngValue]="undefined">
+
+                            All
+
+                        </option>
+
+                        <option [ngValue]="false">
+
+                            Unread
+
+                        </option>
+
+                        <option [ngValue]="true">
+
+                            Read
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Keyword -->
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Keyword
+
+                    </label>
+
+                    <input type="text" class="form-control" placeholder="Search title or message..."
+                        [(ngModel)]="filter.keyword">
+
+                </div>
+
+                <!-- Admin User -->
+
+                <div class="col-md-3" *ngIf="role=='ADMIN'">
+
+                    <label class="form-label">
+
+                        User ID
+
+                    </label>
+
+                    <input type="number" class="form-control" [(ngModel)]="filter.userId">
+
+                </div>
+
+            </div>
+
+            <div class="mt-3 d-flex gap-2">
+
+                <button class="btn btn-primary" (click)="search()">
+
+                    <i class="bi bi-search me-1"></i>
+
+                    Search
+
+                </button>
+
+                <button class="btn btn-outline-secondary" (click)="reset()">
+
+                    Reset
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Loading -->
+
+    <div class="text-center py-5" *ngIf="loading">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- Empty -->
+
+    <div *ngIf="!loading && notifications.length==0" class="alert alert-info text-center">
+
+        No notifications found.
+
+    </div>
+
+    <!-- Cards -->
+
+    <div *ngIf="!loading">
+
+        <div *ngFor="let n of notifications" class="card shadow-sm mb-3" [class.border-primary]="!n.isRead">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <h5 class="mb-1">
+
+                            {{n.title}}
+
+                            <span *ngIf="!n.isRead" class="badge bg-primary ms-2">
+
+                                New
+
+                            </span>
+
+                        </h5>
+
+                        <div class="text-muted small">
+
+                            {{n.createdAt | date:'medium'}}
+
+                        </div>
+
+                    </div>
+
+                    <span class="badge bg-secondary">
+
+                        {{n.type}}
+
+                    </span>
+
+                </div>
+
+                <hr>
+
+                <p class="mb-3">
+
+                    {{n.message}}
+
+                </p>
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <span *ngIf="role=='ADMIN'" class="text-muted">
+
+                            User :
+                            <strong>{{n.userName}}</strong>
+
+                        </span>
+
+                    </div>
+
+                    <div class="d-flex gap-2">
+
+                        <button class="btn btn-sm btn-primary" (click)="markAsRead(n)">
+
+                            <i class="bi bi-eye"></i>
+
+                            Open
+
+                        </button>
+
+                        <button *ngIf="!n.isRead" class="btn btn-sm btn-success" (click)="markAsRead(n)">
+
+                            <i class="bi bi-check-lg"></i>
+
+                            Read
+
+                        </button>
+
+                        <button class="btn btn-sm btn-danger" (click)="delete(n)">
+
+                            <i class="bi bi-trash"></i>
+
+                            Delete
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

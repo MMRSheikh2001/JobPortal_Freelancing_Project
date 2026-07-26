@@ -1,0 +1,346 @@
+<div class="container py-4">
+
+    <!-- ================================= -->
+    <!-- Header -->
+    <!-- ================================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h3 class="fw-bold mb-0">
+                Job Management
+            </h3>
+
+            <small class="text-muted">
+                View, search and manage all jobs
+            </small>
+
+        </div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Filter -->
+    <!-- ================================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <!-- Keyword -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Search
+                    </label>
+
+                    <input class="form-control" [(ngModel)]="keyword" (ngModelChange)="applyFilter()"
+                        placeholder="Job title / Company">
+
+                </div>
+
+                <!-- Category -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Category
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="categoryId" (change)="applyFilter()">
+
+                        <option [ngValue]="0">
+                            All
+                        </option>
+
+                        <option *ngFor="let category of categories" [ngValue]="category.id">
+
+                            {{category.name}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Country -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Country
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="countryId" (change)="countryChanged()">
+
+                        <option [ngValue]="0">
+                            All
+                        </option>
+
+                        <option *ngFor="let country of countries" [ngValue]="country.countryId">
+
+                            {{country.countryName}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Division -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Division
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="divisionId" (change)="divisionChanged()">
+
+                        <option [ngValue]="0">
+                            All
+                        </option>
+
+                        <option *ngFor="let division of divisions" [ngValue]="division.divisionId">
+
+                            {{division.divisionName}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- District -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        District
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="districtId" (change)="applyFilter()">
+
+                        <option [ngValue]="0">
+                            All
+                        </option>
+
+                        <option *ngFor="let district of districts" [ngValue]="district.districtId">
+
+                            {{district.districtName}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Status -->
+
+                <div class="col-md-1">
+
+                    <label class="form-label">
+                        Status
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="active" (change)="applyFilter()">
+
+                        <option value="ALL">
+                            All
+                        </option>
+
+                        <option value="ACTIVE">
+                            Active
+                        </option>
+
+                        <option value="INACTIVE">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Loading -->
+    <!-- ================================= -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border"></div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Empty -->
+    <!-- ================================= -->
+
+    <div *ngIf="!loading && filteredJobs.length==0" class="alert alert-info">
+
+        No jobs found.
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- Table -->
+    <!-- ================================= -->
+
+    <div *ngIf="!loading && filteredJobs.length>0" class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Title</th>
+
+                    <th>Company</th>
+
+                    <th>Category</th>
+
+                    <th>Location</th>
+
+                    <th>Employment</th>
+
+                    <th>Deadline</th>
+
+                    <th>Status</th>
+
+                    <th width="320">
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let job of filteredJobs">
+
+                    <!-- Title -->
+
+                    <td>
+
+                        <div class="fw-semibold">
+
+                            {{job.title}}
+
+                        </div>
+
+                    </td>
+
+                    <!-- Company -->
+
+                    <td>
+
+                        {{job.companyName}}
+
+                    </td>
+
+                    <!-- Category -->
+
+                    <td>
+
+                        {{job.categoryName}}
+
+                    </td>
+
+                    <!-- Location -->
+
+                    <td>
+
+                        {{job.locationDistrictName}},
+                        {{job.locationDivisionName}}
+
+                    </td>
+
+                    <!-- Employment -->
+
+                    <td>
+
+                        {{job.employmentType.replaceAll('_',' ')}}
+
+                    </td>
+
+                    <!-- Deadline -->
+
+                    <td>
+
+                        {{job.applicationDeadline}}
+
+                    </td>
+
+                    <!-- Status -->
+
+                    <td>
+
+                        <span *ngIf="job.isActive" class="badge bg-success">
+
+                            Active
+
+                        </span>
+
+                        <span *ngIf="!job.isActive" class="badge bg-secondary">
+
+                            Inactive
+
+                        </span>
+
+                    </td>
+
+                    <!-- Actions -->
+
+                    <td>
+
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <button class="btn btn-sm btn-outline-primary" (click)="viewJob(job.id)">
+
+                                View
+
+                            </button>
+
+                            <button class="btn btn-sm btn-info text-white" (click)="viewCompany(job.companyProfileId)">
+
+                                Company
+
+                            </button>
+
+                            <button class="btn btn-sm" [ngClass]="job.isActive ? 'btn-secondary':'btn-success'"
+                                (click)="toggleStatus(job)">
+
+                                {{job.isActive ? 'Deactivate':'Activate'}}
+
+                            </button>
+
+                            <button class="btn btn-sm btn-danger" (click)="deleteJob(job)">
+
+                                Delete
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

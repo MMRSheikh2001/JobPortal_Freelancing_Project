@@ -1,0 +1,366 @@
+<div class="container-fluid py-4">
+
+    <div class="row">
+
+        <!-- ========================================= -->
+        <!-- Left Filter -->
+        <!-- ========================================= -->
+
+        <div class="col-lg-3 mb-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    <h5 class="mb-0">
+                        Search Jobs
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <!-- Keyword -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Keyword
+                        </label>
+
+                        <input type="text" class="form-control" [(ngModel)]="searchModel.keyword">
+
+                    </div>
+
+                    <!-- Category -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Category
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="searchModel.categoryId">
+
+                            <option [ngValue]="0">
+                                All Categories
+                            </option>
+
+                            <option *ngFor="let c of categories" [ngValue]="c.id">
+
+                                {{ c.name }}
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Country -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Country
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="searchModel.countryId" (change)="onCountryChange()">
+
+                            <option [ngValue]="0">
+                                All Countries
+                            </option>
+
+                            <option *ngFor="let c of countries" [ngValue]="c.countryId">
+
+                                {{ c.countryName }}
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Division -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Division
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="searchModel.divisionId" (change)="onDivisionChange()">
+
+                            <option [ngValue]="0">
+                                All Divisions
+                            </option>
+
+                            <option *ngFor="let d of divisions" [ngValue]="d.divisionId">
+
+                                {{ d.divisionName }}
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- District -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            District
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="searchModel.districtId" (change)="onDistrictChange()">
+
+                            <option [ngValue]="0">
+                                All Districts
+                            </option>
+
+                            <option *ngFor="let d of districts" [ngValue]="d.districtId">
+
+                                {{ d.districtName }}
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Police Station -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Police Station
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="searchModel.policeStationId">
+
+                            <option [ngValue]="0">
+                                All Police Stations
+                            </option>
+
+                            <option *ngFor="let p of policeStations" [ngValue]="p.policeStationId">
+
+                                {{ p.policeStationName }}
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Employment Type -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Employment Type
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="searchModel.employmentType">
+
+                            <option [ngValue]="null">Any</option>
+
+                            <option [ngValue]="EmploymentType.Full_Time">
+                                Full Time
+                            </option>
+
+                            <option [ngValue]="EmploymentType.Part_Time">
+                                Part Time
+                            </option>
+
+                            <option [ngValue]="EmploymentType.Contract">
+                                Contract
+                            </option>
+
+                            <option [ngValue]="EmploymentType.Internship">
+                                Internship
+                            </option>
+
+                            <option [ngValue]="EmploymentType.Freelance">
+                                Freelance
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Workplace -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Workplace
+                        </label>
+
+                        <select class="form-select" [(ngModel)]="searchModel.workPlaceType">
+
+                            <option [ngValue]="null">
+                                Any
+                            </option>
+
+                            <option value="ONSITE">
+                                Onsite
+                            </option>
+
+                            <option value="REMOTE">
+                                Remote
+                            </option>
+
+                            <option value="HYBRID">
+                                Hybrid
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Salary -->
+
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <input type="number" class="form-control" placeholder="Min"
+                                [(ngModel)]="searchModel.minSalary">
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <input type="number" class="form-control" placeholder="Max"
+                                [(ngModel)]="searchModel.maxSalary">
+
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+
+                        <button class="btn btn-primary" (click)="searchJobs()">
+
+                            Search
+
+                        </button>
+
+                        <button class="btn btn-outline-secondary" (click)="resetSearch()">
+
+                            Reset
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- Job List -->
+        <!-- ========================================= -->
+
+        <div class="col-lg-9">
+
+            <div *ngFor="let job of jobs" class="card shadow-sm mb-3">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <h5 class="fw-bold">
+
+                                {{ job.title }}
+
+                            </h5>
+
+                            <h6 class="text-primary">
+
+                                {{ job.companyName }}
+
+                            </h6>
+
+                        </div>
+
+                        <span class="badge bg-success align-self-start">
+
+                            {{ job.employmentType }}
+
+                        </span>
+
+                    </div>
+
+                    <p class="text-muted mb-2">
+
+                        {{ job.locationDistrictName }},
+                        {{ job.locationDivisionName }}
+
+                    </p>
+
+                    <p>
+
+                        {{ job.jobDescription }}
+
+                    </p>
+
+                    <div class="row mt-3">
+
+                        <div class="col-md-4">
+
+                            <strong>Salary:</strong>
+
+                            {{ job.salaryMin }}
+                            -
+                            {{ job.salaryMax }}
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <strong>Workplace:</strong>
+
+                            {{ job.workPlaceType }}
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <strong>Deadline:</strong>
+
+                            {{ job.applicationDeadline | date }}
+
+                        </div>
+
+                    </div>
+
+                    <div class="text-end mt-3">
+
+                        <a class="btn btn-primary" [routerLink]="['/job-details', job.id]">
+
+                            View Details
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div *ngIf="jobs.length==0" class="alert alert-warning text-center">
+
+                No jobs found.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

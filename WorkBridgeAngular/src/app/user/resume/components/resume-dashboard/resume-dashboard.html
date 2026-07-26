@@ -1,0 +1,428 @@
+<div class="container py-4">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+        <h5 class="mt-3">
+            Loading Resume Dashboard...
+        </h5>
+
+    </div>
+
+    <!-- Dashboard -->
+
+    <div *ngIf="!loading">
+
+        <!-- Header -->
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+                    <div>
+
+                        <h2 class="mb-1">
+                            Resume Dashboard
+                        </h2>
+
+                        <p class="text-muted mb-0">
+                            Complete your profile to improve your visibility.
+                        </p>
+
+                    </div>
+
+                    <div class="text-end">
+
+                        <h4 class="text-primary mb-0">
+                            {{completion}}%
+                        </h4>
+
+                        <small class="text-muted">
+                            Completed
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="progress mt-4">
+
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" [style.width.%]="completion">
+
+                        {{completion}}%
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Quick Actions -->
+
+        <div class="row mb-4">
+
+            <div class="col-md-4 mb-3">
+
+                <button class="btn btn-primary w-100 py-3" (click)="go('/user/user-profile-preview')">
+
+                    Profile Preview
+
+                </button>
+
+            </div>
+
+            <div class="col-md-4 mb-3">
+
+                <button class="btn btn-success w-100 py-3" (click)="go('/user/resume-preview')">
+
+                    Angular Resume
+
+                </button>
+
+            </div>
+
+            <div class="col-md-4 mb-3">
+
+                <button class="btn btn-dark w-100 py-3" (click)="go('/user/resume-control')">
+
+                    Resume Center
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Resume Sections -->
+
+        <div class="row">
+
+            <!-- Profile -->
+
+            <div class="col-lg-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between">
+
+                            <div>
+
+                                <h5>
+                                    Personal Profile
+                                </h5>
+
+                                <p class="mb-0 text-muted">
+
+                                    Status :
+
+                                    <span class="fw-bold" [class.text-success]="profileCompleted"
+                                        [class.text-danger]="!profileCompleted">
+
+                                        {{profileCompleted ? 'Completed' : 'Incomplete'}}
+
+                                    </span>
+
+                                </p>
+
+                            </div>
+
+                            <button class="btn btn-outline-primary" (click)="go('/user/user-profile')">
+
+                                Manage
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Education -->
+
+            <div class="col-lg-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body d-flex justify-content-between">
+
+                        <div>
+
+                            <h5>Education</h5>
+
+                            <p class="mb-0">
+                                {{educationCount}} Record(s)
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-outline-primary" (click)="go('/user/education')">
+
+                            Manage
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Experience -->
+
+            <div class="col-lg-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body d-flex justify-content-between">
+
+                        <div>
+
+                            <h5>Experience</h5>
+
+                            <p class="mb-0">
+                                {{experienceCount}} Record(s)
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-outline-primary" (click)="go('/user/experience')">
+
+                            Manage
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Skills -->
+
+            <div class="col-lg-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body d-flex justify-content-between">
+
+                        <div>
+
+                            <h5>Skills</h5>
+
+                            <p class="mb-0">
+                                {{skillCount}} Skill(s)
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-outline-primary" (click)="go('/user/user-skill')">
+
+                            Manage
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Languages -->
+
+            <div class="col-lg-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body d-flex justify-content-between">
+
+                        <div>
+
+                            <h5>Languages</h5>
+
+                            <p class="mb-0">
+                                {{languageCount}} Language(s)
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-outline-primary" (click)="go('/user/user-language')">
+
+                            Manage
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Training -->
+
+            <div class="col-lg-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body d-flex justify-content-between">
+
+                        <div>
+
+                            <h5>Training</h5>
+
+                            <p class="mb-0">
+                                {{trainingCount}} Training(s)
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-outline-primary" (click)="go('/user/training')">
+
+                            Manage
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Portfolio -->
+
+            <div class="col-lg-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body d-flex justify-content-between">
+
+                        <div>
+
+                            <h5>Portfolio</h5>
+
+                            <p class="mb-0">
+                                {{portfolioCount}} Project(s)
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-outline-primary" (click)="go('/user/portfolio')">
+
+                            Manage
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Reference -->
+
+            <div class="col-lg-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body d-flex justify-content-between">
+
+                        <div>
+
+                            <h5>References</h5>
+
+                            <p class="mb-0">
+                                {{referenceCount}} Reference(s)
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-outline-primary" (click)="go('/user/reference')">
+
+                            Manage
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Extracurricular -->
+
+            <div class="col-lg-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body d-flex justify-content-between">
+
+                        <div>
+
+                            <h5>Extracurricular</h5>
+
+                            <p class="mb-0">
+                                {{extracurricularCount}} Activity(s)
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-outline-primary" (click)="go('/user/extracurricular')">
+
+                            Manage
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Uploaded Resume -->
+
+            <div class="col-lg-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body d-flex justify-content-between">
+
+                        <div>
+
+                            <h5>Uploaded Resume</h5>
+
+                            <p class="mb-0" [class.text-success]="uploadedResume" [class.text-danger]="!uploadedResume">
+
+                                {{uploadedResume ? 'Uploaded' : 'Not Uploaded'}}
+
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-outline-dark" (click)="go('/user/resume-control')">
+
+                            Manage
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

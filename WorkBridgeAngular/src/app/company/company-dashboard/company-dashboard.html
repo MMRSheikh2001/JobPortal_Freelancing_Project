@@ -1,0 +1,278 @@
+<div class="container-fluid py-4" *ngIf="!loading && companyDashboard && buyerDashboard">
+
+    <!-- Header -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body d-flex align-items-center">
+
+            <img [src]="profileImage" class="rounded-circle me-3" width="70" height="70">
+
+            <div class="flex-grow-1">
+
+                <h3 class="mb-1">
+                    {{ companyDashboard.companyName }}
+                </h3>
+
+                <div class="text-muted">
+                    Profile Completion:
+                    <strong>{{ companyDashboard.profileCompletion }}%</strong>
+                </div>
+
+            </div>
+
+            <button class="btn btn-outline-primary" (click)="openWallet()">
+                Wallet
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Company Statistics -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3>{{ companyDashboard.totalJobs }}</h3>
+                    <small>Total Jobs</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3>{{ companyDashboard.activeJobs }}</h3>
+                    <small>Active Jobs</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3>{{ companyDashboard.totalApplications }}</h3>
+                    <small>Applications</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3>{{ companyDashboard.hiredApplications }}</h3>
+                    <small>Hired</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Application Pipeline -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header">
+            Recruitment Pipeline
+        </div>
+
+        <div class="card-body">
+
+            <div class="row text-center">
+
+                <div class="col">
+                    <h5>{{ companyDashboard.appliedApplications }}</h5>
+                    <small>Applied</small>
+                </div>
+
+                <div class="col">
+                    <h5>{{ companyDashboard.aiCompletedApplications }}</h5>
+                    <small>AI Completed</small>
+                </div>
+
+                <div class="col">
+                    <h5>{{ companyDashboard.automaticQualifiedApplications }}</h5>
+                    <small>AI Qualified</small>
+                </div>
+
+                <div class="col">
+                    <h5>{{ companyDashboard.companyShortlistedApplications }}</h5>
+                    <small>Shortlisted</small>
+                </div>
+
+                <div class="col">
+                    <h5>{{ companyDashboard.hiredApplications }}</h5>
+                    <small>Hired</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Buyer Statistics -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4>{{ buyerDashboard.savedGigs }}</h4>
+                    <small>Saved Gigs</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4>{{ buyerDashboard.activeOrders }}</h4>
+                    <small>Active Orders</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4>{{ buyerDashboard.unreadMessages }}</h4>
+                    <small>Unread Messages</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4>{{ buyerDashboard.unreadNotifications }}</h4>
+                    <small>Notifications</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Recent Orders -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header">
+            Recent Gig Orders
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover mb-0">
+
+                <thead>
+
+                    <tr>
+                        <th>Gig</th>
+                        <th>Seller</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let order of buyerDashboard.recentOrders">
+
+                        <td>{{ order.gigTitle }}</td>
+
+                        <td>{{ order.sellerName }}</td>
+
+                        <td>{{ order.status }}</td>
+
+                        <td>
+
+                            <button class="btn btn-sm btn-primary" (click)="openOrder(order.id)">
+                                View
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="buyerDashboard.recentOrders.length===0">
+
+                        <td colspan="4" class="text-center py-3">
+                            No recent orders.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Popular Gigs -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header">
+            Popular Gigs
+        </div>
+
+        <div class="row g-3 p-3">
+
+            <div class="col-md-4" *ngFor="let gig of buyerDashboard.popularGigs">
+
+                <div class="card h-100">
+
+                    <img [src]="getGigImage(gig.gigImage)" class="card-img-top" style="height:180px;object-fit:cover;">
+
+                    <div class="card-body">
+
+                        <h6>{{ gig.title }}</h6>
+
+                        <div class="small text-muted">
+
+                            {{ gig.userName }}
+
+                        </div>
+
+                        <div class="mt-2">
+
+                            ★ {{ gig.averageRating }}
+
+                        </div>
+
+                        <div class="fw-bold mt-2">
+
+                            {{ gig.startingPrice | number }} BDT
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer bg-white border-0">
+
+                        <button class="btn btn-primary btn-sm w-100" (click)="openGig(gig.id)">
+                            View Gig
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div *ngIf="buyerDashboard.popularGigs.length===0" class="col-12 text-center py-4">
+
+                No popular gigs available.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div *ngIf="loading" class="text-center py-5">
+
+    <div class="spinner-border text-primary"></div>
+
+</div>

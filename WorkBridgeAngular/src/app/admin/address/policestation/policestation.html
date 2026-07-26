@@ -1,0 +1,231 @@
+<div class="container mt-4">
+
+    <!-- Form -->
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4 class="mb-0">
+
+                {{ isEdit ? 'Update Police Station' : 'Add Police Station' }}
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <form (ngSubmit)="savePoliceStation()">
+
+                <div class="row">
+
+                    <!-- District -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            District
+
+                        </label>
+
+                        <select class="form-select" name="districtId" [(ngModel)]="policeStation.districtId" required>
+
+                            <option [ngValue]="0">
+
+                                -- Select District --
+
+                            </option>
+
+                            <option *ngFor="let d of districts" [ngValue]="d.districtId">
+
+                                {{ d.districtName }}
+                                ({{ d.divisionName }})
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Police Station Name -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Police Station Name
+
+                        </label>
+
+                        <input type="text" class="form-control" name="policeStationName"
+                            [(ngModel)]="policeStation.policeStationName" required>
+
+                    </div>
+
+                </div>
+
+                <button class="btn btn-success me-2" type="submit">
+
+                    {{ isEdit ? 'Update' : 'Save' }}
+
+                </button>
+
+                <button class="btn btn-secondary" type="button" (click)="resetForm()">
+
+                    Reset
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Table -->
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header bg-dark text-white">
+
+            <h5 class="mb-0">
+
+                Police Station List
+
+            </h5>
+
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th style="width:80px">
+
+                            ID
+
+                        </th>
+
+                        <th>
+
+                            Police Station
+
+                        </th>
+
+                        <th>
+
+                            District
+
+                        </th>
+
+                        <th>
+
+                            Division
+
+                        </th>
+
+                        <th>
+
+                            Country
+
+                        </th>
+
+                        <th>
+
+                            Country Code
+
+                        </th>
+
+                        <th style="width:180px">
+
+                            Action
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let p of policeStations">
+
+                        <td>
+
+                            {{ p.policeStationId }}
+
+                        </td>
+
+                        <td>
+
+                            {{ p.policeStationName }}
+
+                        </td>
+
+                        <td>
+
+                            {{ p.districtName }}
+
+                        </td>
+
+                        <td>
+
+                            {{ p.divisionName }}
+
+                        </td>
+
+                        <td>
+
+                            {{ p.countryName }}
+
+                        </td>
+
+                        <td>
+
+                            {{ p.countryCode }}
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-warning btn-sm me-2" (click)="editPoliceStation(p)">
+
+                                Edit
+
+                            </button>
+
+                            <button class="btn btn-danger btn-sm" (click)="deletePoliceStation(p.policeStationId)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="policeStations.length === 0">
+
+                        <td colspan="7" class="text-center text-muted">
+
+                            No Police Station Found
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

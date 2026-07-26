@@ -1,0 +1,96 @@
+<div class="container py-5">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-warning"></div>
+
+    </div>
+
+    <!-- Cancelled -->
+
+    <div *ngIf="!loading">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-7">
+
+                <div class="card shadow-lg border-0">
+
+                    <div class="card-body text-center p-5">
+
+                        <!-- Cancel Icon -->
+
+                        <div class="mb-4">
+
+                            <i class="bi bi-dash-circle-fill text-warning display-1"></i>
+
+                        </div>
+
+                        <!-- Heading -->
+
+                        <h2 class="fw-bold text-warning mb-3">
+
+                            Payment Cancelled
+
+                        </h2>
+
+                        <!-- Message -->
+
+                        <p class="text-muted fs-5 mb-4">
+
+                            Your payment process was cancelled before it was completed.
+
+                        </p>
+
+                        <p class="text-muted">
+
+                            No money has been deducted or added to your wallet.
+                            You can start a new deposit whenever you're ready.
+
+                        </p>
+
+                        <hr class="my-4">
+
+                        <!-- Action Buttons -->
+
+                        <div class="d-grid gap-3">
+
+                            <button class="btn btn-warning btn-lg" (click)="depositAgain()">
+
+                                <i class="bi bi-arrow-repeat me-2"></i>
+
+                                Deposit Again
+
+                            </button>
+
+                            <button class="btn btn-outline-primary btn-lg" (click)="goWallet()">
+
+                                <i class="bi bi-wallet2 me-2"></i>
+
+                                Go To Wallet
+
+                            </button>
+
+                            <button class="btn btn-outline-secondary" (click)="goDashboard()">
+
+                                <i class="bi bi-house-door me-2"></i>
+
+                                Back To Dashboard
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

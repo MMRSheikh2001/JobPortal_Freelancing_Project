@@ -1,0 +1,153 @@
+<div class="container py-4">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- Content -->
+
+    <div *ngIf="!loading && gig">
+
+        <!-- Header -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 text-center">
+
+                        <img [src]="fileService.getGigImage(gig.gigImage)" class="img-fluid rounded">
+
+                    </div>
+
+                    <div class="col-md-10">
+
+                        <h3 class="mb-2">
+
+                            {{gig.title}}
+
+                        </h3>
+
+                        <p class="mb-1">
+
+                            <strong>Seller:</strong>
+
+                            {{gig.userName}}
+
+                        </p>
+
+                        <p class="mb-0">
+
+                            <span class="text-warning fs-5">
+
+                                ★
+
+                            </span>
+
+                            <strong>
+
+                                {{averageRating | number:'1.1-1'}}
+
+                            </strong>
+
+                            ({{totalReviews}} Reviews)
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Reviews -->
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <h4 class="mb-0">
+
+                Customer Reviews
+
+            </h4>
+
+            <button class="btn btn-outline-secondary" (click)="backToGig()">
+
+                ← Back to Gig
+
+            </button>
+
+        </div>
+
+        <!-- No Reviews -->
+
+        <div *ngIf="reviews.length==0" class="alert alert-info">
+
+            No reviews yet.
+
+        </div>
+
+        <!-- Review List -->
+
+        <div class="card shadow-sm mb-3" *ngFor="let review of reviews">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <h6 class="mb-1">
+
+                            {{review.reviewerName}}
+
+                        </h6>
+
+                        <small class="text-muted">
+
+                            {{review.createdAt | date:'mediumDate'}}
+
+                        </small>
+
+                    </div>
+
+                    <div>
+
+                        <span class="text-warning fs-5" *ngFor="let s of getStars(review.rating)">
+
+                            ★
+
+                        </span>
+
+                        <span class="text-secondary fs-5" *ngFor="let s of getEmptyStars(review.rating)">
+
+                            ☆
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <p class="mb-0">
+
+                    {{review.comment}}
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,96 @@
+<div class="container py-5">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-danger"></div>
+
+    </div>
+
+    <!-- Failure -->
+
+    <div *ngIf="!loading">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-7">
+
+                <div class="card shadow-lg border-0">
+
+                    <div class="card-body text-center p-5">
+
+                        <!-- Failure Icon -->
+
+                        <div class="mb-4">
+
+                            <i class="bi bi-x-circle-fill text-danger display-1"></i>
+
+                        </div>
+
+                        <!-- Heading -->
+
+                        <h2 class="fw-bold text-danger mb-3">
+
+                            Payment Failed
+
+                        </h2>
+
+                        <!-- Message -->
+
+                        <p class="text-muted fs-5 mb-4">
+
+                            Unfortunately, your payment could not be completed.
+
+                        </p>
+
+                        <p class="text-muted">
+
+                            No money has been added to your wallet. Please verify your payment information and try
+                            again. If the issue persists, contact support.
+
+                        </p>
+
+                        <hr class="my-4">
+
+                        <!-- Action Buttons -->
+
+                        <div class="d-grid gap-3">
+
+                            <button class="btn btn-danger btn-lg" (click)="tryAgain()">
+
+                                <i class="bi bi-arrow-repeat me-2"></i>
+
+                                Try Again
+
+                            </button>
+
+                            <button class="btn btn-outline-primary btn-lg" (click)="goWallet()">
+
+                                <i class="bi bi-wallet2 me-2"></i>
+
+                                Go To Wallet
+
+                            </button>
+
+                            <button class="btn btn-outline-secondary" (click)="goDashboard()">
+
+                                <i class="bi bi-house-door me-2"></i>
+
+                                Back To Dashboard
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

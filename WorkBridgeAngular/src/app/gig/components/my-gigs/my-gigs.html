@@ -1,0 +1,230 @@
+<div class="container py-4">
+
+    <!-- ===================================== -->
+    <!-- Header -->
+    <!-- ===================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h3 class="fw-bold mb-0">
+                Manage Gigs
+            </h3>
+
+            <small class="text-muted">
+                Create, edit and manage your freelance gigs
+            </small>
+
+        </div>
+
+        <button class="btn btn-primary" (click)="createGig()">
+
+            <i class="bi bi-plus-circle me-2"></i>
+
+            Create New Gig
+
+        </button>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Loading -->
+    <!-- ===================================== -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border"></div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- No Gigs -->
+    <!-- ===================================== -->
+
+    <div *ngIf="!loading && gigs.length==0" class="alert alert-info">
+
+        You have not created any gigs yet.
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Gig Table -->
+    <!-- ===================================== -->
+
+    <div *ngIf="!loading && gigs.length>0" class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Title</th>
+
+                    <th>Category</th>
+
+                    <th>Price</th>
+
+                    <th>Delivery</th>
+
+                    <th>Rating</th>
+
+                    <th>Reviews</th>
+
+                    <th>Orders</th>
+
+                    <th>Status</th>
+
+                    <th width="430">
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let gig of gigs">
+
+                    <!-- Title -->
+
+                    <td>
+
+                        <div class="fw-semibold">
+
+                            {{gig.title}}
+
+                        </div>
+
+                    </td>
+
+                    <!-- Category -->
+
+                    <td>
+
+                        {{gig.categoryName}}
+
+                    </td>
+
+                    <!-- Price -->
+
+                    <td>
+
+                        {{gig.startingPrice | number:'1.0-2'}}
+
+                    </td>
+
+                    <!-- Delivery -->
+
+                    <td>
+
+                        {{gig.deliveryDays}} Days
+
+                    </td>
+
+                    <!-- Rating -->
+
+                    <td>
+
+                        {{gig.averageRating | number:'1.1-1'}}
+
+                    </td>
+
+                    <!-- Reviews -->
+
+                    <td>
+
+                        {{gig.totalReviews}}
+
+                    </td>
+
+                    <!-- Orders -->
+
+                    <td>
+
+                        {{gig.completedOrders}}
+
+                    </td>
+
+                    <!-- Status -->
+
+                    <td>
+
+                        <span *ngIf="gig.isActive" class="badge bg-success">
+
+                            Active
+
+                        </span>
+
+                        <span *ngIf="!gig.isActive" class="badge bg-secondary">
+
+                            Inactive
+
+                        </span>
+
+                    </td>
+
+                    <!-- Actions -->
+
+                    <td>
+
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <!-- View -->
+
+                            <button class="btn btn-sm btn-outline-primary" (click)="viewGig(gig.id)">
+
+                                View
+
+                            </button>
+
+                            <!-- Orders -->
+
+                            <button class="btn btn-sm btn-info text-white" (click)="gigOrders(gig.id)">
+
+                                Orders
+
+                            </button>
+
+                            <!-- Edit -->
+
+                            <button class="btn btn-sm btn-warning" (click)="editGig(gig.id)">
+
+                                Edit
+
+                            </button>
+
+                            <!-- Activate / Deactivate -->
+
+                            <button class="btn btn-sm" [ngClass]="gig.isActive ? 'btn-secondary' : 'btn-success'"
+                                (click)="toggleStatus(gig)">
+
+                                {{gig.isActive
+                                ? 'Deactivate'
+                                : 'Activate'}}
+
+                            </button>
+
+                            <!-- Delete -->
+
+                            <button class="btn btn-sm btn-danger" (click)="deleteGig(gig)">
+
+                                Delete
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

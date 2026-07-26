@@ -1,0 +1,246 @@
+<div class="container py-4">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <ng-container *ngIf="!loading && company">
+
+        <!-- ========================================= -->
+        <!-- Company Header -->
+        <!-- ========================================= -->
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 text-center">
+
+                        <img [src]="getLogo()" class="img-fluid rounded shadow-sm"
+                            style="width:120px;height:120px;object-fit:cover;">
+
+                    </div>
+
+                    <div class="col-md-10">
+
+                        <h2 class="fw-bold mb-2">
+
+                            {{company.name}}
+
+                        </h2>
+
+                        <span class="badge bg-primary me-2">
+
+                            {{company.industry}}
+
+                        </span>
+
+                        <span class="badge bg-success">
+
+                            {{activeJobs.length}} Open Jobs
+
+                        </span>
+
+                        <hr>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-2">
+
+                                <strong>Email</strong><br>
+
+                                {{company.companyEmail}}
+
+                            </div>
+
+                            <div class="col-md-6 mb-2">
+
+                                <strong>Phone</strong><br>
+
+                                {{company.phone}}
+
+                            </div>
+
+                            <div class="col-md-6 mb-2">
+
+                                <strong>Website</strong><br>
+
+                                <a [href]="company.companyWebsite" target="_blank">
+
+                                    {{company.companyWebsite}}
+
+                                </a>
+
+                            </div>
+
+                            <div class="col-md-6 mb-2">
+
+                                <strong>Founded</strong><br>
+
+                                {{company.foundedYear}}
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <strong>Location</strong><br>
+
+                                {{company.locationDetails}},
+                                {{company.locationPoliceStationName}},
+                                {{company.locationDistrictName}},
+                                {{company.locationDivisionName}},
+                                {{company.locationCountryName}}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- About Company -->
+        <!-- ========================================= -->
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-white">
+
+                <h5 class="mb-0">
+
+                    About Company
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <p class="mb-0" style="white-space: pre-line;">
+
+                    {{company.companyDescription}}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- Open Jobs -->
+        <!-- ========================================= -->
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-white">
+
+                <h5 class="mb-0">
+
+                    Open Positions
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div *ngIf="activeJobs.length==0" class="text-center py-5 text-muted">
+
+                    No active jobs available.
+
+                </div>
+
+                <div *ngFor="let job of activeJobs" class="card border mb-3">
+
+                    <div class="card-body">
+
+                        <div class="row align-items-center">
+
+                            <div class="col-md-9">
+
+                                <h5 class="fw-bold">
+
+                                    {{job.title}}
+
+                                </h5>
+
+                                <p class="text-muted mb-2">
+
+                                    {{job.categoryName}}
+
+                                </p>
+
+                                <div class="small text-secondary">
+
+                                    <span class="me-3">
+
+                                        <strong>Salary:</strong>
+
+                                        <ng-container *ngIf="job.isNegotiable">
+
+                                            Negotiable
+
+                                        </ng-container>
+
+                                        <ng-container *ngIf="!job.isNegotiable">
+
+                                            {{job.salaryMin}} - {{job.salaryMax}}
+
+                                        </ng-container>
+
+                                    </span>
+
+                                    <span class="me-3">
+
+                                        <strong>Type:</strong>
+
+                                        {{job.employmentType}}
+
+                                    </span>
+
+                                    <span>
+
+                                        <strong>Deadline:</strong>
+
+                                        {{job.applicationDeadline}}
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3 text-end">
+
+                                <button class="btn btn-primary" (click)="openJob(job.id)">
+
+                                    View Job
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</div>

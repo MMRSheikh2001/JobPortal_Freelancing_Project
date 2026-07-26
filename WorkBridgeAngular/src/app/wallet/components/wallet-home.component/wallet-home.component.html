@@ -1,0 +1,299 @@
+<div class="container py-4">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- Wallet -->
+
+    <div *ngIf="!loading && wallet">
+
+        <!-- Header -->
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+
+                    My Wallet
+
+                </h2>
+
+                <p class="text-muted mb-0">
+
+                    Manage your earnings, deposits and withdrawals.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Balance Cards -->
+
+        <div class="row g-4 mb-4">
+
+            <!-- Available -->
+
+            <div class="col-md-6">
+
+                <div class="card shadow-sm border-success h-100">
+
+                    <div class="card-body">
+
+                        <h6 class="text-muted">
+
+                            Available Balance
+
+                        </h6>
+
+                        <h2 class="fw-bold text-success">
+
+                            ৳ {{wallet.balance | number:'1.2-2'}}
+
+                        </h2>
+
+                        <small class="text-muted">
+
+                            {{ role === 'ADMIN'
+                            ? 'Administrative wallet overview'
+                            : 'Available for purchases and withdrawal' }}
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Frozen -->
+
+            <div class="col-md-6">
+
+                <div class="card shadow-sm border-warning h-100">
+
+                    <div class="card-body">
+
+                        <h6 class="text-muted">
+
+                            Frozen Balance
+
+                        </h6>
+
+                        <h2 class="fw-bold text-warning">
+
+                            ৳ {{wallet.frozenBalance | number:'1.2-2'}}
+
+                        </h2>
+
+                        <small class="text-muted">
+
+                            Reserved for active orders
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Action Buttons -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <h5 class="fw-bold mb-3">
+
+                    Wallet Actions
+
+                </h5>
+
+                <div class="row g-3">
+
+                    <!-- Deposit (User & Company only) -->
+                    <div class="col-md-3" *ngIf="role !== 'ADMIN'">
+
+                        <button class="btn btn-success w-100" (click)="deposit()">
+
+                            <i class="bi bi-plus-circle me-2"></i>
+
+                            Deposit Money
+
+                        </button>
+
+                    </div>
+
+                    <!-- Withdraw -->
+                    <div class="col-md-3">
+
+                        <button class="btn btn-outline-primary w-100" (click)="withdraw()">
+
+                            <i class="bi bi-cash-stack me-2"></i>
+
+                            {{ role === 'ADMIN'
+                            ? 'Manage Withdraws'
+                            : 'Withdraw' }}
+
+                        </button>
+
+                    </div>
+
+                    <!-- Personal Transaction History -->
+                    <div class="col-md-3">
+
+                        <button class="btn btn-outline-dark w-100" (click)="transactionHistory()">
+
+                            <i class="bi bi-clock-history me-2"></i>
+
+                            Transactions
+
+                        </button>
+
+                    </div>
+
+                    <!-- Admin Only -->
+                    <div class="col-md-3" *ngIf="role === 'ADMIN'">
+
+                        <button class="btn btn-outline-secondary w-100" (click)="allTransactions()">
+
+                            <i class="bi bi-table me-2"></i>
+
+                            All Transactions
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Wallet Information -->
+
+        <div class="row g-4">
+
+            <!-- Information -->
+
+            <div class="col-lg-6">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold mb-3">
+
+                            Wallet Information
+
+                        </h5>
+
+                        <table class="table">
+
+                            <tbody>
+
+                                <tr>
+
+                                    <th width="40%">
+
+                                        Wallet ID
+
+                                    </th>
+
+                                    <td>
+
+                                        {{wallet.id}}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+
+                                        Owner
+
+                                    </th>
+
+                                    <td>
+
+                                        {{wallet.userName}}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>
+
+                                        Created
+
+                                    </th>
+
+                                    <td>
+
+                                        {{wallet.createdAt | date:'medium'}}
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Coming Soon -->
+
+            <div class="col-lg-6">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+
+                        <i class="bi bi-wallet2 display-3 text-primary mb-3">
+
+                        </i>
+
+                        <h5>
+
+                            More Features Coming Soon
+
+                        </h5>
+
+                        <p class="text-muted mb-0">
+
+                            Deposit history, withdrawal history,
+                            payment methods, earnings analytics and
+                            transaction reports will appear here.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

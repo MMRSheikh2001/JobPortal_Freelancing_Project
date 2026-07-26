@@ -1,0 +1,317 @@
+<div class="container py-4">
+
+    <!-- ===================================== -->
+    <!-- Header -->
+    <!-- ===================================== -->
+
+    <div class="mb-4">
+
+        <h3 class="fw-bold mb-0">
+
+            Gig Management
+
+        </h3>
+
+        <small class="text-muted">
+
+            View and manage all gigs in the system
+
+        </small>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Filters -->
+    <!-- ===================================== -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <!-- Keyword -->
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Search
+
+                    </label>
+
+                    <input type="text" class="form-control" [(ngModel)]="keyword" (input)="applyFilter()"
+                        placeholder="Gig title or seller name">
+
+                </div>
+
+                <!-- Category -->
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Category
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="categoryId" (change)="applyFilter()">
+
+                        <option [ngValue]="0">
+
+                            All Categories
+
+                        </option>
+
+                        <option *ngFor="let c of categories" [ngValue]="c.id">
+
+                            {{c.name}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Status -->
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Status
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="active" (change)="applyFilter()">
+
+                        <option value="ALL">
+
+                            All
+
+                        </option>
+
+                        <option value="ACTIVE">
+
+                            Active
+
+                        </option>
+
+                        <option value="INACTIVE">
+
+                            Inactive
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Loading -->
+    <!-- ===================================== -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border"></div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Empty -->
+    <!-- ===================================== -->
+
+    <div *ngIf="!loading && filteredGigs.length==0" class="alert alert-info">
+
+        No gigs found.
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Table -->
+    <!-- ===================================== -->
+
+    <div *ngIf="!loading && filteredGigs.length>0" class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Title</th>
+
+                    <th>Seller</th>
+
+                    <th>Category</th>
+
+                    <th>Price</th>
+
+                    <th>Delivery</th>
+
+                    <th>Rating</th>
+
+                    <th>Orders</th>
+
+                    <th>Status</th>
+
+                    <th width="420">
+
+                        Actions
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let gig of filteredGigs">
+
+                    <!-- Title -->
+
+                    <td>
+
+                        <div class="fw-semibold">
+
+                            {{gig.title}}
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            {{gig.shortDescription}}
+
+                        </small>
+
+                    </td>
+
+                    <!-- Seller -->
+
+                    <td>
+
+                        {{gig.userName}}
+
+                    </td>
+
+                    <!-- Category -->
+
+                    <td>
+
+                        {{gig.categoryName}}
+
+                    </td>
+
+                    <!-- Price -->
+
+                    <td>
+
+                        {{gig.startingPrice | number:'1.0-2'}}
+
+                    </td>
+
+                    <!-- Delivery -->
+
+                    <td>
+
+                        {{gig.deliveryDays}} Days
+
+                    </td>
+
+                    <!-- Rating -->
+
+                    <td>
+
+                        {{gig.averageRating | number:'1.1-1'}}
+
+                    </td>
+
+                    <!-- Orders -->
+
+                    <td>
+
+                        {{gig.completedOrders}}
+
+                    </td>
+
+                    <!-- Status -->
+
+                    <td>
+
+                        <span *ngIf="gig.isActive" class="badge bg-success">
+
+                            Active
+
+                        </span>
+
+                        <span *ngIf="!gig.isActive" class="badge bg-secondary">
+
+                            Inactive
+
+                        </span>
+
+                    </td>
+
+                    <!-- Actions -->
+
+                    <td>
+
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <!-- View Gig -->
+
+                            <button class="btn btn-sm btn-outline-primary" (click)="viewGig(gig.id)">
+
+                                View Gig
+
+                            </button>
+
+                            <!-- Seller -->
+
+                            <button class="btn btn-sm btn-info text-white" (click)="viewSeller(gig.userProfileId)">
+
+                                Seller
+
+                            </button>
+
+                            <!-- Activate -->
+
+                            <button class="btn btn-sm" [ngClass]="
+                                    gig.isActive
+                                    ? 'btn-secondary'
+                                    : 'btn-success'" (click)="toggleStatus(gig)">
+
+                                {{gig.isActive
+                                ? 'Deactivate'
+                                : 'Activate'}}
+
+                            </button>
+
+                            <!-- Delete -->
+
+                            <button class="btn btn-sm btn-danger" (click)="deleteGig(gig)">
+
+                                Delete
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

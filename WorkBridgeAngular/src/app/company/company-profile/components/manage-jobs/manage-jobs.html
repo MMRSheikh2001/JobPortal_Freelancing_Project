@@ -1,0 +1,584 @@
+<div class="container py-4">
+
+    <!-- ===================================== -->
+    <!-- Header -->
+    <!-- ===================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="fw-bold mb-0">
+
+            {{ editMode ? 'Edit Job' : 'Create Job' }}
+
+        </h2>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Basic Information -->
+    <!-- ===================================== -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header fw-bold">
+
+            Basic Information
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <div class="col-md-8">
+
+                    <label class="form-label">
+                        Job Title
+                    </label>
+
+                    <input type="text" class="form-control" name="title" [(ngModel)]="job.title" required minlength="5"
+                        maxlength="150">
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+                        Vacancy
+                    </label>
+
+                    <input type="number" class="form-control" name="vacancy" [(ngModel)]="job.vacancy" min="1" required>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Category
+                    </label>
+
+                    <select class="form-select" name="category" [(ngModel)]="job.categoryId" required>
+
+                        <option [ngValue]="0">
+                            Select Category
+                        </option>
+
+                        <option *ngFor="let c of categories" [ngValue]="c.id">
+
+                            {{ c.name }}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Application Deadline
+                    </label>
+
+                    <input type="date" class="form-control" [min]="today" [(ngModel)]="job.applicationDeadline">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Employment -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header fw-bold">
+
+            Employment
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Employment Type
+
+                    </label>
+
+                    <select class="form-select" name="employmentType" [(ngModel)]="job.employmentType" required>
+
+                        <option *ngFor="let type of employmentTypes" [ngValue]="type">
+
+                            {{ type }}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Workplace Type
+
+                    </label>
+
+                    <select class="form-select" name="workPlaceType" [(ngModel)]="job.workPlaceType" required>
+
+                        <option *ngFor="let type of workPlaceTypes" [ngValue]="type">
+
+                            {{ type }}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Experience -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header fw-bold">
+
+            Experience
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+
+                        Minimum
+
+                    </label>
+
+                    <input type="number" class="form-control" name="minExperience" [(ngModel)]="job.minExperience"
+                        min="0">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+
+                        Maximum
+
+                    </label>
+
+                    <input type="number" class="form-control" name="maxExperience" [(ngModel)]="job.maxExperience"
+                        min="0">
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Experience Requirements
+
+                    </label>
+
+                    <textarea rows="4" class="form-control" [(ngModel)]="job.experienceRequirements"></textarea>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Education -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header fw-bold">
+
+            Educational Requirements
+
+        </div>
+
+        <div class="card-body">
+
+            <textarea rows="4" class="form-control" [(ngModel)]="job.educationalRequirements"></textarea>
+
+        </div>
+
+    </div>
+
+    <!-- Job Description -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header fw-bold">
+
+            Job Description
+
+        </div>
+
+        <div class="card-body">
+
+            <textarea rows="6" class="form-control" [(ngModel)]="job.jobDescription"></textarea>
+
+        </div>
+
+    </div>
+
+    <!-- Responsibilities -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header fw-bold">
+
+            Responsibilities
+
+        </div>
+
+        <div class="card-body">
+
+            <textarea rows="6" class="form-control" [(ngModel)]="job.jobResponsibilities"></textarea>
+
+        </div>
+
+    </div>
+
+    <!-- Additional Requirements -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header fw-bold">
+
+            Additional Requirements
+
+        </div>
+
+        <div class="card-body">
+
+            <textarea rows="5" class="form-control" [(ngModel)]="job.additionalRequirements"></textarea>
+
+        </div>
+
+    </div>
+
+    <!-- Benefits -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header fw-bold">
+
+            Benefits
+
+        </div>
+
+        <div class="card-body">
+
+            <textarea rows="5" class="form-control" [(ngModel)]="job.benefits"></textarea>
+
+        </div>
+
+    </div>
+
+    <!-- Salary -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header fw-bold">
+
+            Salary
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Minimum Salary
+
+                    </label>
+
+                    <input type="number" class="form-control" name="salaryMin" [(ngModel)]="job.salaryMin" min="0">
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Maximum Salary
+
+                    </label>
+
+                    <input type="number" class="form-control" name="salaryMax" [(ngModel)]="job.salaryMax" min="0">
+
+                </div>
+
+                <div class="col-md-4 d-flex align-items-end">
+
+                    <div class="form-check">
+
+                        <input type="checkbox" class="form-check-input" [(ngModel)]="job.isNegotiable">
+
+                        <label class="form-check-label">
+
+                            Negotiable
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Location -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header fw-bold">
+
+            Job Location
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+
+                    <label>Country</label>
+
+                    <select class="form-select" [(ngModel)]="countryId" (change)="onCountryChange()">
+
+                        <option [ngValue]="0">Select Country</option>
+
+                        <option *ngFor="let c of countries" [ngValue]="c.countryId">
+
+                            {{ c.countryName }}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label>Division</label>
+
+                    <select class="form-select" [(ngModel)]="divisionId" (change)="onDivisionChange()">
+
+                        <option [ngValue]="0">Select Division</option>
+
+                        <option *ngFor="let d of divisions" [ngValue]="d.divisionId">
+
+                            {{ d.divisionName }}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label>District</label>
+
+                    <select class="form-select" [(ngModel)]="districtId" (change)="onDistrictChange()">
+
+                        <option [ngValue]="0">Select District</option>
+
+                        <option *ngFor="let d of districts" [ngValue]="d.districtId">
+
+                            {{ d.districtName }}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label>Police Station</label>
+
+                    <select class="form-select" name="policeStation" [(ngModel)]="job.locationPoliceStationId" required>
+
+                        <option [ngValue]="0">
+
+                            Select Police Station
+
+                        </option>
+
+                        <option *ngFor="let p of policeStations" [ngValue]="p.policeStationId">
+
+                            {{ p.policeStationName }}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- AI -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header fw-bold">
+
+            AI Screening Settings
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <div class="form-check">
+
+                        <input type="checkbox" class="form-check-input" [(ngModel)]="job.aiScreeningEnabled">
+
+                        <label class="form-check-label">
+
+                            Enable AI Screening
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="form-check">
+
+                        <input type="checkbox" class="form-check-input" [(ngModel)]="job.aiCvScreeningEnabled">
+
+                        <label class="form-check-label">
+
+                            Enable CV Screening
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="form-check">
+
+                        <input type="checkbox" class="form-check-input" [(ngModel)]="job.aiInterviewEnabled">
+
+                        <label class="form-check-label">
+
+                            Enable AI Interview
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+
+                    <label>Match %</label>
+
+                    <input type="number" class="form-control" name="aiMatchThreshold" [(ngModel)]="job.aiMatchThreshold"
+                        min="0" max="100">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>Questions</label>
+
+                    <input type="number" class="form-control" name="aiQuestionCount" [(ngModel)]="job.aiQuestionCount"
+                        min="1">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>Shortlist</label>
+
+                    <input type="number" class="form-control" name="aiShortlistCount" [(ngModel)]="job.aiShortlistCount"
+                        min="1">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>Deadline Days</label>
+
+                    <input type="number" class="form-control" name="aiDeadlineDays" [(ngModel)]="job.aiDeadlineDays"
+                        min="1">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Buttons -->
+
+    <div class="text-end mb-5">
+
+        <button class="btn btn-primary px-5" (click)="save()">
+
+            {{ editMode ? 'Update Job' : 'Create Job' }}
+
+        </button>
+
+        <button type="button" class="btn btn-secondary" (click)="resetForm()">
+
+            Reset
+
+        </button>
+
+    </div>
+
+</div>

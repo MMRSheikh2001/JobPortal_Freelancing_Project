@@ -1,0 +1,138 @@
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                My Gig Orders
+            </h2>
+
+            <p class="text-muted mb-0">
+                View and manage all your purchased gigs.
+            </p>
+        </div>
+
+        <button class="btn btn-outline-primary" (click)="browseGigs()">
+
+            Browse More Gigs
+
+        </button>
+
+    </div>
+
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary">
+        </div>
+
+    </div>
+
+
+    <!-- Empty -->
+
+    <div *ngIf="!loading && orders.length===0" class="text-center py-5">
+
+        <h4>No Gig Orders Yet</h4>
+
+        <p class="text-muted">
+            You haven't purchased any gigs yet.
+        </p>
+
+        <button class="btn btn-primary" (click)="browseGigs()">
+
+            Browse Gigs
+
+        </button>
+
+    </div>
+
+
+    <!-- Orders -->
+
+    <div *ngIf="!loading && orders.length>0" class="row g-4">
+
+        <div class="col-lg-6" *ngFor="let order of orders">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="row g-0">
+
+                    <div class="col-md-4">
+
+                        <img class="img-fluid rounded-start h-100 object-fit-cover" [src]="getGigImage(order.gigImage)"
+                            alt="Gig Image">
+
+                    </div>
+
+                    <div class="col-md-8">
+
+                        <div class="card-body d-flex flex-column h-100">
+
+                            <h5 class="fw-bold">
+
+                                {{order.gigTitle}}
+
+                            </h5>
+
+                            <p class="mb-2 text-muted">
+
+                                Seller :
+                                <strong>{{order.sellerName}}</strong>
+
+                            </p>
+
+                            <p class="mb-2">
+
+                                Status :
+                                <span class="badge" [ngClass]="getStatusClass(order.status)">
+
+                                    {{ getStatusText(order.status) }}
+
+                                </span>
+
+                            </p>
+
+                            <p class="mb-2">
+
+                                Final Price :
+                                <strong>
+
+                                    {{order.finalPrice}}
+
+                                </strong>
+
+                            </p>
+
+                            <p class="text-muted mb-4">
+
+                                Ordered :
+                                {{order.createdAt }}
+
+                            </p>
+
+                            <div class="mt-auto">
+
+                                <button class="btn btn-primary w-100" (click)="viewOrder(order)">
+
+                                    View Order
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

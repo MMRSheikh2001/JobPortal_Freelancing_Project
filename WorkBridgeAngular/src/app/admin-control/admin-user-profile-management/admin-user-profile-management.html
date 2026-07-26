@@ -1,0 +1,449 @@
+<div class="container-fluid py-4">
+
+    <!-- ========================================= -->
+    <!-- Filter Card -->
+    <!-- ========================================= -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+
+                User Profile Management
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <!-- Keyword -->
+
+                <div class="col-lg-3">
+
+                    <label class="form-label">
+
+                        Keyword
+
+                    </label>
+
+                    <input type="text" class="form-control" placeholder="Name, headline, bio..."
+                        [(ngModel)]="filter.keyword">
+
+                </div>
+
+                <!-- Country -->
+
+                <div class="col-lg-2">
+
+                    <label class="form-label">
+
+                        Country
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.countryId" (change)="countryChanged()">
+
+                        <option [ngValue]="0">
+
+                            All
+
+                        </option>
+
+                        <option *ngFor="let c of countries" [ngValue]="c.countryId">
+
+                            {{c.countryName}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Division -->
+
+                <div class="col-lg-2">
+
+                    <label class="form-label">
+
+                        Division
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.divisionId" (change)="divisionChanged()">
+
+                        <option [ngValue]="0">
+
+                            All
+
+                        </option>
+
+                        <option *ngFor="let d of divisions" [ngValue]="d.divisionId">
+
+                            {{d.divisionName}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- District -->
+
+                <div class="col-lg-2">
+
+                    <label class="form-label">
+
+                        District
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.districtId" (change)="districtChanged()">
+
+                        <option [ngValue]="0">
+
+                            All
+
+                        </option>
+
+                        <option *ngFor="let d of districts" [ngValue]="d.districtId">
+
+                            {{d.districtName}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Police Station -->
+
+                <div class="col-lg-3">
+
+                    <label class="form-label">
+
+                        Police Station
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.policeStationId">
+
+                        <option [ngValue]="0">
+
+                            All
+
+                        </option>
+
+                        <option *ngFor="let p of policeStations" [ngValue]="p.policeStationId">
+
+                            {{p.policeStationName}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Job Type -->
+
+                <div class="col-lg-3">
+
+                    <label class="form-label">
+
+                        Job Type
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.jobType">
+
+                        <option [ngValue]="undefined">
+
+                            All
+
+                        </option>
+
+                        <option *ngFor="let j of jobTypes" [ngValue]="j">
+
+                            {{j}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Workplace -->
+
+                <div class="col-lg-3">
+
+                    <label class="form-label">
+
+                        Workplace
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.workPlaceType">
+
+                        <option [ngValue]="undefined">
+
+                            All
+
+                        </option>
+
+                        <option *ngFor="let w of workPlaceTypes" [ngValue]="w">
+
+                            {{w}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Gender -->
+
+                <div class="col-lg-2">
+
+                    <label class="form-label">
+
+                        Gender
+
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.gender">
+
+                        <option [ngValue]="undefined">
+
+                            All
+
+                        </option>
+
+                        <option *ngFor="let g of genders" [ngValue]="g">
+
+                            {{g}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Buttons -->
+
+                <div class="col-lg-4 d-flex align-items-end">
+
+                    <button class="btn btn-primary me-2" (click)="search()">
+
+                        Search
+
+                    </button>
+
+                    <button class="btn btn-outline-secondary" (click)="reset()">
+
+                        Reset
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- Loading -->
+    <!-- ========================================= -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- Table -->
+    <!-- ========================================= -->
+
+    <div class="card shadow-sm border-0" *ngIf="!loading">
+
+        <div class="card-header bg-white">
+
+            <strong>
+
+                Total Profiles :
+                {{userProfiles.length}}
+
+            </strong>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>Photo</th>
+
+                        <th>Name</th>
+
+                        <th>Headline</th>
+
+                        <th>Gender</th>
+
+                        <th>Job Type</th>
+
+                        <th>Workplace</th>
+
+                        <th>Location</th>
+
+                        <th width="170">
+
+                            Action
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let profile of userProfiles">
+
+                        <!-- Photo -->
+
+                        <td>
+
+                            <img [src]="getProfileImage(profile.image)" class="rounded-circle border" width="55"
+                                height="55" style="object-fit:cover;">
+
+                        </td>
+
+                        <!-- Name -->
+
+                        <td>
+
+                            <strong>
+
+                                {{profile.name}}
+
+                            </strong>
+
+                            <br>
+
+                            <small class="text-muted">
+
+                                {{profile.userEmail}}
+
+                            </small>
+
+                        </td>
+
+                        <!-- Headline -->
+
+                        <td>
+
+                            {{profile.headline}}
+
+                        </td>
+
+                        <!-- Gender -->
+
+                        <td>
+
+                            <span class="badge" [ngClass]="getGenderBadge(profile.gender)">
+
+                                {{profile.gender}}
+
+                            </span>
+
+                        </td>
+
+                        <!-- Job Type -->
+
+                        <td>
+
+                            <span class="badge" [ngClass]="getJobTypeBadge(profile.preferredJobType)">
+
+                                {{profile.preferredJobType}}
+
+                            </span>
+
+                        </td>
+
+                        <!-- Workplace -->
+
+                        <td>
+
+                            <span class="badge" [ngClass]="getWorkplaceBadge(profile.preferredWorkplace)">
+
+                                {{profile.preferredWorkplace}}
+
+                            </span>
+
+                        </td>
+
+                        <!-- Location -->
+
+                        <td>
+
+                            {{profile.presentPoliceStationName}}
+
+                            <br>
+
+                            <small class="text-muted">
+
+                                {{profile.presentDistrictName}},
+                                {{profile.presentDivisionName}}
+
+                            </small>
+
+                        </td>
+
+                        <!-- Actions -->
+
+                        <td>
+
+                            <button class="btn btn-sm btn-outline-primary me-2" (click)="viewProfile(profile.id)">
+
+                                View
+
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger" (click)="delete(profile)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="userProfiles.length==0">
+
+                        <td colspan="8" class="text-center text-muted py-5">
+
+                            No user profiles found.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

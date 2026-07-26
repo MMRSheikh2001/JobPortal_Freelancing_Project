@@ -1,0 +1,181 @@
+<div class="container py-4">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- Details -->
+
+    <div *ngIf="!loading && notification">
+
+        <!-- Header -->
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold">
+
+                    Notification Details
+
+                </h2>
+
+                <p class="text-muted mb-0">
+
+                    View complete notification information.
+
+                </p>
+
+            </div>
+
+            <button class="btn btn-outline-secondary" (click)="back()">
+
+                <i class="bi bi-arrow-left me-2"></i>
+
+                Back
+
+            </button>
+
+        </div>
+
+        <!-- Notification Card -->
+
+        <div class="card shadow-sm">
+
+            <div class="card-body">
+
+                <!-- Status -->
+
+                <div class="mb-3">
+
+                    <span class="badge fs-6" [ngClass]="notification.isRead
+                            ? 'bg-success'
+                            : 'bg-warning text-dark'">
+
+                        {{ notification.isRead ? 'Read' : 'Unread' }}
+
+                    </span>
+
+                </div>
+
+                <!-- Title -->
+
+                <h3 class="fw-bold mb-3">
+
+                    {{notification.title}}
+
+                </h3>
+
+                <!-- Message -->
+
+                <div class="alert alert-light border">
+
+                    {{notification.message}}
+
+                </div>
+
+                <hr>
+
+                <!-- Information -->
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <strong>Notification ID</strong>
+
+                        <div class="text-muted">
+
+                            {{notification.id}}
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <strong>Type</strong>
+
+                        <div>
+
+                            <span class="badge bg-primary">
+
+                                {{notification.type}}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <strong>Receiver</strong>
+
+                        <div class="text-muted">
+
+                            {{notification.userName}}
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <strong>Created</strong>
+
+                        <div class="text-muted">
+
+                            {{notification.createdAt | date:'medium'}}
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <strong>Related Item</strong>
+
+                        <div class="text-muted">
+
+                            {{getRelatedItemLabel()}}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <!-- Actions -->
+
+                <div class="d-flex gap-2 justify-content-end">
+
+                    <button class="btn btn-primary" (click)="openRelated()">
+
+                        <i class="bi bi-box-arrow-up-right me-2"></i>
+
+                        Open Related Page
+
+                    </button>
+
+                    <button class="btn btn-outline-secondary" (click)="back()">
+
+                        Close
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

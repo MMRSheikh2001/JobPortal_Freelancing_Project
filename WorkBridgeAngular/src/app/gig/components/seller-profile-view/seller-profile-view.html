@@ -1,0 +1,311 @@
+<div class="container py-4">
+
+    <!-- ========================= -->
+    <!-- Loading -->
+    <!-- ========================= -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- Seller Profile -->
+    <!-- ========================= -->
+
+    <div *ngIf="!loading && seller">
+
+        <!-- Header -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-3 text-center">
+
+                        <img [src]="fileService.getUserProfileImage(seller.image)" class="rounded-circle border shadow"
+                            width="170" height="170">
+
+                    </div>
+
+                    <div class="col-md-9">
+
+                        <h2 class="fw-bold">
+
+                            {{seller.name}}
+
+                        </h2>
+
+                        <h5 class="text-primary">
+
+                            {{seller.freelancerTitle}}
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            {{seller.headline}}
+
+                        </p>
+
+                        <div class="row mt-4">
+
+                            <div class="col-md-3 mb-3">
+
+                                <h4 class="text-warning">
+
+                                    ⭐ {{averageRating}}
+
+                                </h4>
+
+                                <small>Average Rating</small>
+
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+
+                                <h4>
+
+                                    {{reviewCount}}
+
+                                </h4>
+
+                                <small>Reviews</small>
+
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+
+                                <h4>
+
+                                    {{completedOrders}}
+
+                                </h4>
+
+                                <small>Completed Orders</small>
+
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+
+                                <h4>
+
+                                    {{activeGigCount}}
+
+                                </h4>
+
+                                <small>Active Gigs</small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- About -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <h4 class="mb-0">
+
+                    About Seller
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <h6>
+
+                    Professional Summary
+
+                </h6>
+
+                <p>
+
+                    {{seller.professionalSummary || 'No professional summary provided.'}}
+
+                </p>
+
+                <hr>
+
+                <h6>
+
+                    Biography
+
+                </h6>
+
+                <p>
+
+                    {{seller.bio || 'No biography provided.'}}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Active Gigs -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <h4 class="mb-0">
+
+                    Active Gigs
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-lg-4 col-md-6 mb-4" *ngFor="let gig of gigs">
+
+                        <div class="card h-100 shadow-sm">
+
+                            <img [src]="fileService.getGigImage(gig.gigImage)" class="card-img-top"
+                                style="height:220px;object-fit:cover;">
+
+                            <div class="card-body">
+
+                                <h6>
+
+                                    {{gig.title}}
+
+                                </h6>
+
+                                <p class="small text-muted">
+
+                                    {{gig.shortDescription}}
+
+                                </p>
+
+                                <div class="d-flex justify-content-between">
+
+                                    <span>
+
+                                        ⭐ {{gig.averageRating}}
+
+                                    </span>
+
+                                    <span>
+
+                                        {{gig.completedOrders}} Orders
+
+                                    </span>
+
+                                </div>
+
+                                <h5 class="text-primary mt-3">
+
+                                    ৳ {{gig.startingPrice}}
+
+                                </h5>
+
+                            </div>
+
+                            <div class="card-footer bg-white border-0">
+
+                                <button class="btn btn-outline-primary w-100" (click)="openGig(gig.id)">
+
+                                    View Gig
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Latest Reviews -->
+
+        <div class="card shadow-sm">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+                <h4 class="mb-0">
+
+                    Latest Reviews
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <div *ngIf="latestReviews.length==0" class="text-center text-muted py-4">
+
+                    No reviews yet.
+
+                </div>
+
+                <div *ngFor="let review of latestReviews" class="border rounded p-3 mb-3">
+
+                    <div class="d-flex justify-content-between">
+
+                        <strong>
+
+                            {{review.reviewerName}}
+
+                        </strong>
+
+                        <small>
+
+                            {{review.createdAt | date:'mediumDate'}}
+
+                        </small>
+
+                    </div>
+
+                    <div class="text-warning my-2">
+
+                        <span *ngFor="let star of [1,2,3,4,5]">
+
+                            {{star<=review.rating ? '★' :'☆'}} </span>
+
+                    </div>
+
+                    <p class="mb-2">
+
+                        {{review.comment}}
+
+                    </p>
+
+                    <button class="btn btn-sm btn-outline-primary" (click)="viewReviews(review.gigId)">
+
+                        View All Reviews For This Gig
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

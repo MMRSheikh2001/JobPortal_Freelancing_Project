@@ -1,0 +1,318 @@
+<div class="container-fluid py-4">
+
+    <!-- =============================== -->
+    <!-- Filter Card -->
+    <!-- =============================== -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header">
+            <h4 class="mb-0">
+                User Management
+            </h4>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <!-- Keyword -->
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+                        Search
+                    </label>
+
+                    <input type="text" class="form-control" [(ngModel)]="filter.keyword" placeholder="Email">
+
+                </div>
+
+                <!-- Role -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Role
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.role">
+
+                        <option [ngValue]="undefined">
+                            All
+                        </option>
+
+                        <option *ngFor="let role of roles" [ngValue]="role">
+
+                            {{role}}
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Verified -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Verified
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.isVerified">
+
+                        <option [ngValue]="undefined">
+                            All
+                        </option>
+
+                        <option [ngValue]="true">
+                            Verified
+                        </option>
+
+                        <option [ngValue]="false">
+                            Not Verified
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Active -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Active
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.isActive">
+
+                        <option [ngValue]="undefined">
+                            All
+                        </option>
+
+                        <option [ngValue]="true">
+                            Active
+                        </option>
+
+                        <option [ngValue]="false">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Suspended -->
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Suspended
+                    </label>
+
+                    <select class="form-select" [(ngModel)]="filter.isSuspended">
+
+                        <option [ngValue]="undefined">
+                            All
+                        </option>
+
+                        <option [ngValue]="true">
+                            Suspended
+                        </option>
+
+                        <option [ngValue]="false">
+                            Not Suspended
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+
+                <button class="btn btn-primary me-2" (click)="search()">
+
+                    <i class="bi bi-search"></i>
+                    Search
+
+                </button>
+
+                <button class="btn btn-secondary" (click)="reset()">
+
+                    <i class="bi bi-arrow-clockwise"></i>
+                    Reset
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =============================== -->
+    <!-- Loading -->
+    <!-- =============================== -->
+
+    <div class="text-center py-5" *ngIf="loading">
+
+        <div class="spinner-border text-primary">
+
+        </div>
+
+    </div>
+
+    <!-- =============================== -->
+    <!-- User Table -->
+    <!-- =============================== -->
+
+    <div class="card shadow-sm" *ngIf="!loading">
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-hover table-bordered align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Email</th>
+
+                        <th>Role</th>
+
+                        <th>Verified</th>
+
+                        <th>Active</th>
+
+                        <th>Suspended</th>
+
+                        <th>Created</th>
+
+                        <th width="220">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let user of users; index as i">
+
+                        <td>
+
+                            {{i+1}}
+
+                        </td>
+
+                        <td>
+
+                            {{user.email}}
+
+                        </td>
+
+                        <td>
+
+                        <td>
+
+                            <span class="badge" [ngClass]="getRoleBadge(user.role)">
+
+                                {{user.role}}
+
+                            </span>
+
+                            <span *ngIf="isAdmin(user)" class="badge bg-dark ms-1">
+
+                                Protected
+
+                            </span>
+
+                        </td>
+
+
+
+                        <td>
+
+                            <span class="badge" [class.bg-success]="user.isVerified"
+                                [class.bg-danger]="!user.isVerified">
+
+                                {{user.isVerified ? 'Yes' : 'No'}}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="badge" [class.bg-success]="user.isActive"
+                                [class.bg-secondary]="!user.isActive">
+
+                                {{user.isActive ? 'Active' : 'Inactive'}}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="badge" [class.bg-danger]="user.isSuspended"
+                                [class.bg-success]="!user.isSuspended">
+
+                                {{user.isSuspended ? 'Suspended' : 'Normal'}}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            {{user.createdAt | date:'medium'}}
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-sm me-2" [class.btn-warning]="!user.isSuspended"
+                                [class.btn-success]="user.isSuspended" [disabled]="isAdmin(user)"
+                                (click)="toggleSuspend(user)">
+
+                                {{ user.isSuspended ? 'Unsuspend' : 'Suspend' }}
+
+                            </button>
+
+                            <button class="btn btn-sm btn-danger" [disabled]="isAdmin(user)" (click)="delete(user)">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="users.length==0">
+
+                        <td colspan="8" class="text-center py-4">
+
+                            No users found.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

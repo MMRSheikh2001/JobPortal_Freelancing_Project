@@ -1,0 +1,479 @@
+<div class="container py-4">
+
+    <!-- Loading -->
+
+    <div *ngIf="loading" class="text-center py-5">
+
+        <div class="spinner-border text-primary"></div>
+
+    </div>
+
+    <!-- Job -->
+
+    <div *ngIf="!loading && job" class="row">
+
+        <!-- Left -->
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+
+                            <h2 class="fw-bold">
+
+                                {{job.title}}
+
+                            </h2>
+
+                            <h5 class="text-primary">
+
+                                {{job.companyName}}
+
+                            </h5>
+
+                        </div>
+
+                        <span class="badge" [class.bg-success]="job.isActive" [class.bg-danger]="!job.isActive">
+
+                            {{job.isActive ? 'Active' : 'Inactive'}}
+
+                        </span>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <strong>Location</strong>
+
+                            <div>
+
+                                {{job.locationPoliceStationName}},
+                                {{job.locationDistrictName}}
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <strong>Employment Type</strong>
+
+                            <div>
+
+                                {{job.employmentType}}
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <strong>Workplace</strong>
+
+                            <div>
+
+                                {{job.workPlaceType}}
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <strong>Vacancy</strong>
+
+                            <div>
+
+                                {{job.vacancy}}
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <strong>Salary</strong>
+
+                            <div>
+
+                                <span *ngIf="job.isNegotiable">
+
+                                    Negotiable
+
+                                </span>
+
+                                <span *ngIf="!job.isNegotiable">
+
+                                    {{job.salaryMin}}
+                                    -
+                                    {{job.salaryMax}}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <strong>Deadline</strong>
+
+                            <div>
+
+                                {{job.applicationDeadline | date}}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Description -->
+
+            <div class="card shadow-sm mb-3">
+
+                <div class="card-header">
+
+                    <strong>Job Description</strong>
+
+                </div>
+
+                <div class="card-body">
+
+                    {{job.jobDescription}}
+
+                </div>
+
+            </div>
+
+            <!-- Responsibilities -->
+
+            <div class="card shadow-sm mb-3">
+
+                <div class="card-header">
+
+                    <strong>Responsibilities</strong>
+
+                </div>
+
+                <div class="card-body">
+
+                    {{job.jobResponsibilities}}
+
+                </div>
+
+            </div>
+
+            <!-- Education -->
+
+            <div class="card shadow-sm mb-3">
+
+                <div class="card-header">
+
+                    <strong>Educational Requirements</strong>
+
+                </div>
+
+                <div class="card-body">
+
+                    {{job.educationalRequirements}}
+
+                </div>
+
+            </div>
+
+            <!-- Experience -->
+
+            <div class="card shadow-sm mb-3">
+
+                <div class="card-header">
+
+                    <strong>Experience</strong>
+
+                </div>
+
+                <div class="card-body">
+
+                    {{job.experienceRequirements}}
+
+                </div>
+
+            </div>
+
+            <!-- Additional -->
+
+            <div class="card shadow-sm mb-3">
+
+                <div class="card-header">
+
+                    <strong>Additional Requirements</strong>
+
+                </div>
+
+                <div class="card-body">
+
+                    {{job.additionalRequirements}}
+
+                </div>
+
+            </div>
+
+            <!-- Benefits -->
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    <strong>Benefits</strong>
+
+                </div>
+
+                <div class="card-body">
+
+                    {{job.benefits}}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Right -->
+
+        <div class="col-lg-4">
+
+            <!-- Apply -->
+
+            <div *ngIf="isUser()" class="card shadow-sm mb-4">
+
+                <div class="card-header">
+
+                    <strong>Your Application</strong>
+
+                </div>
+
+                <div class="card-body">
+
+                    <button class="btn w-100 mb-3" [class.btn-outline-primary]="!saved" [class.btn-primary]="saved"
+                        [disabled]="saving" (click)="toggleSave()">
+
+                        <i class="bi" [class.bi-bookmark]="!saved" [class.bi-bookmark-fill]="saved">
+
+                        </i>
+
+                        {{saved ? 'Saved' : 'Save Job'}}
+
+                    </button>
+
+                    <button *ngIf="!alreadyApplied" class="btn btn-success w-100" [disabled]="applying"
+                        (click)="apply()">
+
+                        Apply Now
+
+                    </button>
+
+                    <div *ngIf="alreadyApplied">
+
+                        <p>
+
+                            <strong>Status:</strong>
+
+                            {{application?.status}}
+
+                        </p>
+                        <p *ngIf="application?.aiMatchScore != null">
+                            <strong>AI Match:</strong>
+                            {{application?.aiMatchScore}}
+                        </p>
+
+                        <p *ngIf="application?.aiInterviewScore != null">
+                            <strong>Interview:</strong>
+                            {{application?.aiInterviewScore}}
+                        </p>
+
+                        <p *ngIf="application?.aiFinalScore != null">
+                            <strong>Final Score:</strong>
+                            {{application?.aiFinalScore}}
+                        </p>
+                        <a href="/user/my-applications" class="btn btn-outline-primary w-100">
+
+                            View My Applications
+
+                        </a>
+
+                        <button class="btn btn-warning w-100 mb-2" (click)="withdraw()"
+                            *ngIf="application?.status!='WITHDRAWN'">
+
+                            Withdraw
+
+                        </button>
+
+                        <button *ngIf="application?.status=='AI_PENDING'" class="btn btn-primary w-100"
+                            (click)="startInterview()">
+
+                            Start AI Interview
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- AI -->
+
+            <div *ngIf="job.aiScreeningEnabled" class="card shadow-sm mb-4">
+
+                <div class="card-header">
+
+                    <strong>AI Screening</strong>
+
+                </div>
+
+                <div class="card-body">
+
+                    <p>
+
+                        Resume Screening :
+                        <strong>
+
+                            {{job.aiCvScreeningEnabled ? 'Enabled' : 'Disabled'}}
+
+                        </strong>
+
+                    </p>
+
+                    <p>
+
+                        Interview :
+                        <strong>
+
+                            {{job.aiInterviewEnabled ? 'Enabled' : 'Disabled'}}
+
+                        </strong>
+
+                    </p>
+
+                    <p>
+
+                        Match Threshold :
+                        {{job.aiMatchThreshold}}
+
+                    </p>
+
+                    <p>
+
+                        Interview Questions :
+                        {{job.aiQuestionCount}}
+
+                    </p>
+
+                    <p>
+
+                        Shortlist Count :
+                        {{job.aiShortlistCount}}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Company -->
+
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-header">
+
+                    <strong>Company</strong>
+
+                </div>
+
+                <div class="card-body text-center">
+
+                    <img [src]="companyLogoUrl" class="rounded-circle mb-3" width="120" height="120" alt="Company Logo">
+
+                    <h5>
+
+                        {{job.companyName}}
+
+                    </h5>
+
+                    <p>
+
+                        {{job.companyDescription}}
+
+                    </p>
+
+                    <p>
+
+                        {{job.companyPhone}}
+
+                    </p>
+
+                    <p>
+
+                        {{job.companyEmail}}
+
+                    </p>
+
+                    <a *ngIf="job.companyWebsite" [href]="getCompanyWebsite()" target="_blank">
+                        Visit Website
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Admin -->
+
+            <div *ngIf="isAdmin() || isCompanyOwner()" class="card shadow-sm">
+
+                <div class="card-header">
+
+                    <strong>Admin Actions</strong>
+
+                </div>
+
+                <div class="card-body">
+
+
+                    <button *ngIf="isAdmin() || isCompanyOwner()" class="btn btn-warning w-100 mb-2"
+                        (click)="toggleStatus()">
+
+                        {{job.isActive ? 'Deactivate Job' : 'Activate Job'}}
+
+                    </button>
+
+
+                    <button *ngIf="isAdmin()||isCompanyOwner()" class="btn btn-danger w-100" (click)="deleteJob()">
+
+                        Delete Job
+
+                    </button>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

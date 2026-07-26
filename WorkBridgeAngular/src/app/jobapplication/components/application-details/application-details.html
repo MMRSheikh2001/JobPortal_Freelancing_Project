@@ -1,0 +1,641 @@
+<div *ngIf="loading" class="text-center py-5">
+
+    <div class="spinner-border text-primary"></div>
+
+</div>
+
+<div *ngIf="!loading && application">
+    <!-- ========================= -->
+    <!-- Applicant Information -->
+    <!-- ========================= -->
+
+    <div class="mb-3">
+
+        <button class="btn btn-outline-secondary" (click)="goBack()">
+
+            ← Back to Applications
+
+        </button>
+
+    </div>
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-white">
+
+            <h4 class="mb-0">
+                Applicant Information
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-2 text-center">
+
+                    <img [src]="getUserImage()" class="rounded-circle border" width="120" height="120">
+
+                </div>
+
+                <div class="col-md-7">
+
+                    <h3 class="fw-bold">
+
+                        {{application?.userName}}
+
+                    </h3>
+
+                    <p class="text-muted mb-1">
+
+                        {{application?.userEmail}}
+
+                    </p>
+
+                    <p class="mb-1">
+
+                        Applied on
+
+                        <strong>
+
+                            {{application?.appliedAt | date:'medium'}}
+
+                        </strong>
+
+                    </p>
+
+                    <p class="mb-1">
+
+                        Job
+
+                        <strong>
+
+                            {{application?.jobTitle}}
+
+                        </strong>
+
+                    </p>
+
+                    <p class="mb-0">
+
+                        Status
+
+                        <span class="badge ms-2" [ngClass]="getStatusBadge(application?.status)">
+
+                            {{application?.status}}
+
+                        </span>
+
+                    </p>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <button class="btn btn-outline-primary w-100 mb-2" (click)="viewAngularResume()">
+
+                        Angular Resume
+
+                    </button>
+
+                    <button class="btn btn-outline-success w-100 mb-2" (click)="previewSpringResume()">
+
+                        Spring Resume
+
+                    </button>
+
+                    <button *ngIf="uploadedResume" class="btn btn-outline-dark w-100" (click)="previewUploadedResume()">
+
+                        Uploaded Resume
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div><!-- ========================= -->
+    <!-- AI Screening Summary -->
+    <!-- ========================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-white">
+
+            <h4 class="mb-0">
+
+                AI Screening Summary
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row text-center">
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3">
+
+                        <h6>
+
+                            CV Match
+
+                        </h6>
+
+                        <h2 class="text-primary">
+
+                            {{application?.aiMatchScore ?? '--'}}%
+
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3">
+
+                        <h6>
+
+                            Interview
+
+                        </h6>
+
+                        <h2 class="text-success">
+
+                            {{application?.aiInterviewScore ?? '--'}}
+
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3">
+
+                        <h6>
+
+                            Final Score
+
+                        </h6>
+
+                        <h2 class="text-danger">
+
+                            {{application?.aiFinalScore ?? '--'}}
+
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <strong>
+
+                AI Feedback
+
+            </strong>
+
+            <p class="mt-2 mb-0">
+
+                {{application?.aiMatchFeedback || 'No AI feedback available.'}}
+
+            </p>
+
+        </div>
+
+    </div><!-- ========================= -->
+    <!-- Resume Center -->
+    <!-- ========================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-white">
+
+            <h4 class="mb-0">
+
+                Resume Center
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+
+                    <div class="border rounded text-center p-4 h-100">
+
+                        <h5>
+
+                            Angular Resume
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            Interactive profile
+
+                        </p>
+
+                        <button class="btn btn-primary" (click)="viewAngularResume()">
+
+                            Open
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <div class="border rounded text-center p-4 h-100">
+
+                        <h5>
+
+                            Spring Resume
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            Generated PDF
+
+                        </p>
+
+                        <button class="btn btn-success" (click)="previewSpringResume()">
+
+                            Open
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <div class="border rounded text-center p-4 h-100" *ngIf="uploadedResume">
+
+                        <h5>
+
+                            Uploaded Resume
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            Original applicant CV
+
+                        </p>
+
+                        <button class="btn btn-dark" (click)="previewUploadedResume()">
+
+                            Open
+
+                        </button>
+
+                    </div>
+
+                    <div class="border rounded text-center p-4 h-100 bg-light" *ngIf="!uploadedResume">
+
+                        <h5>
+
+                            Uploaded Resume
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            Not uploaded
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- AI INTERVIEW REVIEW -->
+    <!-- ===================================================== -->
+
+    <div class="card shadow-sm mt-4">
+
+        <div class="card-header bg-dark text-white">
+
+            <h5 class="mb-0">
+                AI Interview
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <!-- Never Started -->
+
+            <div *ngIf="!interview" class="alert alert-warning">
+
+                Applicant has not started the AI interview.
+
+            </div>
+
+            <!-- Started but not completed -->
+
+            <ng-container *ngIf="interview as session">
+
+                <div *ngIf="!session.completed" class="alert alert-info">
+
+                    <strong>
+                        Interview Started
+                    </strong>
+
+                    <br>
+
+                    Started:
+                    {{session.startedAt | date:'medium'}}
+
+                    <br>
+
+                    Applicant has not submitted the interview yet.
+
+                </div>
+
+                <!-- Completed -->
+
+                <div *ngIf="session.completed">
+
+                    <div class="row mb-4">
+
+                        <div class="col-md-4">
+
+                            <div class="card text-center border-success">
+
+                                <div class="card-body">
+
+                                    <h6>
+                                        Final Score
+                                    </h6>
+
+                                    <h2 class="text-success">
+
+                                        {{session.totalScore}}
+
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="card text-center">
+
+                                <div class="card-body">
+
+                                    <h6>
+                                        Started
+                                    </h6>
+
+                                    <small>
+
+                                        {{session.startedAt | date:'medium'}}
+
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="card text-center">
+
+                                <div class="card-body">
+
+                                    <h6>
+                                        Completed
+                                    </h6>
+
+                                    <small>
+
+                                        {{session.completedAt | date:'medium'}}
+
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Questions -->
+
+                    <div *ngFor="let q of session.questions; let i = index" class="card mb-3 border-primary">
+
+                        <div class="card-header">
+
+                            <strong>
+
+                                Question {{i + 1}}
+
+                            </strong>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <p>
+
+                                <strong>
+                                    Question
+                                </strong>
+
+                            </p>
+
+                            <p>
+
+                                {{q.question}}
+
+                            </p>
+
+                            <hr>
+
+                            <p>
+
+                                <strong>
+                                    Candidate Answer
+                                </strong>
+
+                            </p>
+
+                            <p class="text-secondary">
+
+                                {{q.answer || 'No answer'}}
+
+                            </p>
+
+                            <hr>
+
+                            <div class="d-flex justify-content-between">
+
+                                <strong>
+
+                                    AI Score
+
+                                </strong>
+
+                                <span class="badge bg-success">
+
+                                    {{q.score}} / 10
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </ng-container>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- COMPANY DECISION CENTER -->
+    <!-- ===================================================== -->
+
+    <div class="card shadow-sm mt-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+
+                Company Decision
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <!-- Current Status -->
+
+            <div class="mb-4">
+
+                <label class="form-label fw-bold">
+
+                    Current Status
+
+                </label>
+
+                <br>
+
+                <span class="badge fs-6" [ngClass]="getStatusBadge(application?.status ?? '')">
+
+                    {{application?.status}}
+
+                </span>
+
+            </div>
+
+            <!-- Company Notes -->
+
+            <div class="mb-4">
+
+                <label class="form-label fw-bold">
+
+                    Company Notes
+
+                </label>
+
+                <textarea rows="6" class="form-control" [(ngModel)]="companyNotes">
+
+            </textarea>
+
+                <button class="btn btn-outline-primary" [disabled]="companyNotes===application?.companyNotes"
+                    (click)="saveCompanyNotes()">
+
+                    Save Notes
+
+                </button>
+
+            </div>
+
+            <hr>
+
+            <!-- Decision Buttons -->
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+
+                    <button class="btn btn-success w-100" (click)="shortlist()" [disabled]="application?.status==='HIRED'
+                             || application?.status==='REJECTED'
+                             || application?.status==='WITHDRAWN'">
+
+                        Shortlist
+
+                    </button>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <button class="btn btn-danger w-100" (click)="reject()" [disabled]="application?.status==='HIRED'
+                             || application?.status==='REJECTED'
+                             || application?.status==='WITHDRAWN'">
+
+                        Reject
+
+                    </button>
+
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <button class="btn btn-primary w-100" (click)="hire()" [disabled]="application?.status==='HIRED'
+                             || application?.status==='WITHDRAWN'">
+
+                        Hire Candidate
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

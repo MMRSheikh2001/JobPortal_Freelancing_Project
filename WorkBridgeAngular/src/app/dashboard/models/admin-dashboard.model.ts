@@ -1,0 +1,30 @@
+export interface AdminDashboardDTO {
+    totalUsers: number;
+    totalJobSeekers: number;
+    totalCompanies: number;
+    totalFreelancers: number;
+    totalClients: number;
+    totalActiveFreelancers: number;
+    totalActiveClients: number;
+    totalJobs: number;
+    activeJobs: number;
+    inactiveJobs: number;
+    totalJobApplications: number;
+    totalHiredCandidates: number;
+    totalGigs: number;
+    activeGigs: number;
+    inactiveGigs: number;
+    totalOrders: number;
+    completedOrders: number;
+    cancelledOrders: number;
+    totalPlatformRevenue: number;
+    pendingWithdrawals: number;
+    completedWithdrawals: number;
+    totalAIInterviews: number;
+    totalAIMatches: number;
+    totalAIQualifiedCandidates: number;
+    pendingReports: number;
+    pendingDisputes: number;
+    blockedUsers: number;
+    unreadNotifications: number;
+}
