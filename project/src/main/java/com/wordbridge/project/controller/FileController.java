@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class FileController {
     @Value("${image.upload.dir}")
     private String uploadDir;
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/userprofiles/{filename}")
     public ResponseEntity<Resource> getUserProfileImage(
             @PathVariable String filename) throws IOException {
@@ -30,6 +32,7 @@ public class FileController {
         return serveFile("userprofiles", filename);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/companyprofiles/{filename}")
     public ResponseEntity<Resource> getCompanyProfileImage(
             @PathVariable String filename) throws IOException {
@@ -37,6 +40,7 @@ public class FileController {
         return serveFile("companyprofiles", filename);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/resumes/{filename}")
     public ResponseEntity<Resource> getResume(
             @PathVariable String filename) throws IOException {
@@ -44,6 +48,8 @@ public class FileController {
         return serveFile("resumes", filename);
     }
 
+
+    @PreAuthorize("permitAll()")
     @GetMapping("/portfolios/{filename}")
     public ResponseEntity<Resource> getPortfolioFile(
             @PathVariable String filename) throws IOException {
@@ -51,6 +57,7 @@ public class FileController {
         return serveFile("portfolios", filename);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/trainings/{filename}")
     public ResponseEntity<Resource> getTrainingFile(
             @PathVariable String filename) throws IOException {
@@ -58,6 +65,7 @@ public class FileController {
         return serveFile("trainings", filename);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/messages/{filename}")
     public ResponseEntity<Resource> getMessageFile(
             @PathVariable String filename) throws IOException {
@@ -65,6 +73,7 @@ public class FileController {
         return serveFile("messages", filename);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/gigdeliveries/{filename}")
     public ResponseEntity<Resource> getGigDeliveryFile(
             @PathVariable String filename) throws IOException {
@@ -73,6 +82,7 @@ public class FileController {
     }
 
     //open api
+    @PreAuthorize("permitAll()")
     @GetMapping("/gigs/{filename}")
     public ResponseEntity<Resource> getGigImage(
             @PathVariable String filename) throws IOException {
@@ -80,6 +90,8 @@ public class FileController {
         return serveFile("gigs", filename);
     }
 
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/reports/{filename}")
     public ResponseEntity<Resource> getReportsAttachment(
             @PathVariable String filename) throws IOException {

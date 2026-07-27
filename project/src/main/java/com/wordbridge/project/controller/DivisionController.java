@@ -7,6 +7,7 @@ import com.wordbridge.project.service.DivisionService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,18 +19,21 @@ public class DivisionController {
 
     private final DivisionService divisionService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<DivisionResponseDTO> save(@RequestBody DivisionRequestDTO d) {
         DivisionResponseDTO savedDivision = divisionService.save(d);
         return ResponseEntity.ok(savedDivision);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping
     public ResponseEntity<List<DivisionResponseDTO>> getAll() {
         List<DivisionResponseDTO> list = divisionService.getAll();
         return ResponseEntity.ok(list);
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("{id}")
     public ResponseEntity<DivisionResponseDTO> getById(@PathVariable Long id) {
         DivisionResponseDTO dv = divisionService.getById(id);
@@ -37,6 +41,7 @@ public class DivisionController {
         return ResponseEntity.ok(dv);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
     public ResponseEntity<DivisionResponseDTO> update(@RequestBody DivisionRequestDTO d, @PathVariable Long id) {
 
@@ -44,6 +49,7 @@ public class DivisionController {
         return ResponseEntity.ok(updatedDivision);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         divisionService.delete(id);
@@ -51,12 +57,14 @@ public class DivisionController {
     }
 
     //Find By Country id
+    @PreAuthorize("permitAll()")
     @GetMapping("country/{id}")
     public List<DivisionResponseDTO> getByCountryId(@PathVariable Long id) {
         return divisionService.getDivisionByCountryId(id);
     }
 
     //Find By Country Name
+    @PreAuthorize("permitAll()")
     @GetMapping("country/name/{name}")
     public List<DivisionResponseDTO> getByCountryName(@PathVariable String name) {
         return divisionService.getDivisionByCountryName(name);

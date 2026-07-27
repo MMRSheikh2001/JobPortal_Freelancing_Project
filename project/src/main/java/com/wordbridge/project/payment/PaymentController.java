@@ -1,12 +1,16 @@
 package com.wordbridge.project.payment;
 
+import com.wordbridge.project.entity.User;
 import com.wordbridge.project.enums.UserRole;
+import com.wordbridge.project.security.AuthenticationService;
 import com.wordbridge.project.sslcommerz.SSLCommerzService;
 import com.wordbridge.project.sslcommerz.dto.SSLCallbackDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -21,43 +25,52 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final SSLCommerzService sslCommerzService;
 
+    private final AuthenticationService authenticationService;
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("deposit/{userId}")
     public ResponseEntity<DepositSessionResponseDTO> createDeposit(
             @PathVariable Long userId,
             @RequestParam BigDecimal amount
     ) {
+        checkUserIdOwnership(userId);
         return ResponseEntity.ok(
                 paymentService.createDeposit(userId, amount)
         );
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("{id}")
     public ResponseEntity<PaymentResponseDTO> getById(
             @PathVariable Long id
     ) {
-        return ResponseEntity.ok(
-                paymentService.getById(id)
-        );
+        PaymentResponseDTO payment = paymentService.getById(id);
+        checkUserIdOwnership(payment.getUserId());
+        return ResponseEntity.ok(payment);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("gateway/{gatewayTransactionId}")
     public ResponseEntity<PaymentResponseDTO> getByGatewayTransactionId(
             @PathVariable String gatewayTransactionId
     ) {
-        return ResponseEntity.ok(
-                paymentService.getByGatewayTransactionId(gatewayTransactionId)
-        );
+        PaymentResponseDTO payment = paymentService.getByGatewayTransactionId(gatewayTransactionId);
+        checkUserIdOwnership(payment.getUserId());
+        return ResponseEntity.ok(payment);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("user/{userId}")
     public ResponseEntity<List<PaymentResponseDTO>> getUserPayments(
             @PathVariable Long userId
     ) {
+        checkUserIdOwnership(userId);
         return ResponseEntity.ok(
                 paymentService.getUserPayments(userId)
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<PaymentResponseDTO>> getAll() {
         return ResponseEntity.ok(
@@ -65,6 +78,7 @@ public class PaymentController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("status/{status}")
     public ResponseEntity<List<PaymentResponseDTO>> getByStatus(
             @PathVariable PaymentStatus status
@@ -74,6 +88,7 @@ public class PaymentController {
         );
     }
 
+    @PreAuthorize("permitAll()")
     @PostMapping("success")
     public void paymentSuccess(
             @RequestParam("tran_id") String transactionId,
@@ -121,6 +136,7 @@ public class PaymentController {
 //        return ResponseEntity.ok("OK");
 //    }
 
+    @PreAuthorize("permitAll()")
     @PostMapping("fail")
     public void paymentFailed(
             @ModelAttribute SSLCallbackDTO callback,
@@ -139,6 +155,7 @@ public class PaymentController {
 
     }
 
+    @PreAuthorize("permitAll()")
     @PostMapping("cancel")
     public void paymentCancelled(
             @ModelAttribute SSLCallbackDTO callback,
@@ -152,6 +169,13 @@ public class PaymentController {
             response.sendRedirect("http://localhost:4200/user/payment/cancel");
         } else {
             response.sendRedirect("http://localhost:4200/company/payment/cancel");
+        }
+    }
+
+    private void checkUserIdOwnership(Long userId) {
+        User currentUser = authenticationService.getCurrentUser();
+        if (!currentUser.getId().equals(userId) && currentUser.getRole() != UserRole.ADMIN) {
+            throw new AccessDeniedException("Not allowed");
         }
     }
 }
