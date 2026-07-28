@@ -24,6 +24,7 @@ public class WithdrawController {
     // USER
 
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping
     public ResponseEntity<WithdrawResponseDTO> createWithdraw(
             @RequestBody WithdrawRequestDTO requestDTO
@@ -33,6 +34,7 @@ public class WithdrawController {
         return ResponseEntity.ok(withdrawService.createWithdraw(requestDTO));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("user/{userId}")
     public ResponseEntity<List<WithdrawResponseDTO>> getUserWithdraws(
             @PathVariable Long userId
@@ -43,6 +45,7 @@ public class WithdrawController {
         );
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("{withdrawId}/user/{userId}")
     public ResponseEntity<WithdrawResponseDTO> getWithdrawById(
             @PathVariable Long withdrawId,

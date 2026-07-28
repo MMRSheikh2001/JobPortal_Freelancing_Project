@@ -80,7 +80,11 @@
 
                     <div class="conversation-preview">
 
-                        Open conversation
+                        {{
+                        conversation.conversationStatus === 'CLOSED'
+                        ? 'Closed conversation'
+                        : 'Open conversation'
+                        }}
 
                     </div>
 

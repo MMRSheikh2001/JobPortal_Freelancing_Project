@@ -202,10 +202,7 @@ export class ConversationChat implements OnInit {
 
         error: () => {
 
-          this.toast.show(
-            'Unable to send message.',
-            'danger'
-          );
+        
 
           this.sending = false;
 

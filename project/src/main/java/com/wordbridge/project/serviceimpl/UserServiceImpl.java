@@ -148,7 +148,11 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(user);
         UserResponseDTO userResponseDTO = userMapper.toDTO(savedUser);
 
-        sendMailToUser(userResponseDTO);
+
+        if(savedUser.getIsSuspended()){
+            sendMailToUser(userResponseDTO);
+        }
+
         return userResponseDTO;
 
     }

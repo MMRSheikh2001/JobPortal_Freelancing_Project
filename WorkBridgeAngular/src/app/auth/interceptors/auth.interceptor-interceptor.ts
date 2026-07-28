@@ -44,6 +44,8 @@ export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
 
     catchError((error: HttpErrorResponse) => {
 
+      
+
       // JWT expired / invalid
       if (error.status === 401) {
 
@@ -63,11 +65,13 @@ export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
       // Other backend errors
       if (!req.url.includes('/auth/login')) {
 
-        toast.show(
-          error.error?.message ??
-          'Something went wrong.',
-          'danger'
-        );
+        const message =
+          error.error?.message ||
+          error.error?.error ||
+          error.message ||
+          'Something went wrong.';
+
+        toast.show(message, 'danger');
 
       }
 

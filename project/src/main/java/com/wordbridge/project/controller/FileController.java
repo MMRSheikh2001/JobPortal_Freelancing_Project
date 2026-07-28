@@ -40,7 +40,7 @@ public class FileController {
         return serveFile("companyprofiles", filename);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("permitAll()")
     @GetMapping("/resumes/{filename}")
     public ResponseEntity<Resource> getResume(
             @PathVariable String filename) throws IOException {
@@ -57,7 +57,7 @@ public class FileController {
         return serveFile("portfolios", filename);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("permitAll()")
     @GetMapping("/trainings/{filename}")
     public ResponseEntity<Resource> getTrainingFile(
             @PathVariable String filename) throws IOException {
@@ -65,7 +65,7 @@ public class FileController {
         return serveFile("trainings", filename);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("permitAll()")
     @GetMapping("/messages/{filename}")
     public ResponseEntity<Resource> getMessageFile(
             @PathVariable String filename) throws IOException {
@@ -73,7 +73,7 @@ public class FileController {
         return serveFile("messages", filename);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("permitAll()")
     @GetMapping("/gigdeliveries/{filename}")
     public ResponseEntity<Resource> getGigDeliveryFile(
             @PathVariable String filename) throws IOException {
@@ -91,7 +91,7 @@ public class FileController {
     }
 
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("permitAll()")
     @GetMapping("/reports/{filename}")
     public ResponseEntity<Resource> getReportsAttachment(
             @PathVariable String filename) throws IOException {
