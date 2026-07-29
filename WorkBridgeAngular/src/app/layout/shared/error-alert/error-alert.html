@@ -1,0 +1,36 @@
+<div *ngIf="alert.visible" class="error-backdrop">
+
+    <div class="error-box shadow">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h5 class="text-danger mb-0">
+                ⚠ Error
+            </h5>
+
+            <button class="btn-close" (click)="alert.close()">
+            </button>
+
+        </div>
+
+        <hr>
+
+        <p class="mb-4">
+
+            {{alert.message}}
+
+        </p>
+
+        <div class="text-end">
+
+            <button class="btn btn-danger" (click)="alert.close()">
+
+                OK
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

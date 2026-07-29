@@ -1,9 +1,9 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { StorageService } from '../services/storage.service';
 import { inject } from '@angular/core';
-import { ToastService } from '../../services/toast.service';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
 
@@ -11,7 +11,7 @@ export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
   const storage = inject(StorageService);
 
   const router = inject(Router);
-  const toast = inject(ToastService);
+
 
   const publicUrls = [
     '/auth/login',
@@ -44,17 +44,23 @@ export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
 
     catchError((error: HttpErrorResponse) => {
 
-      
+
 
       // JWT expired / invalid
       if (error.status === 401) {
 
         storage.clearSession();
 
-        toast.show(
-          'Your session has expired. Please login again.',
-          'warning'
-        );
+        Swal.fire({
+          icon: 'warning',
+          title: 'Session Expired',
+          text: 'Your session has expired. Please login again.',
+          confirmButtonColor: '#dc3545'
+        }).then(() => {
+
+          router.navigate(['/login']);
+
+        });
 
         router.navigate(['/login']);
 
@@ -71,7 +77,14 @@ export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
           error.message ||
           'Something went wrong.';
 
-        toast.show(message, 'danger');
+
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: message,
+          confirmButtonColor: '#0d6efd'
+        });
 
       }
 
