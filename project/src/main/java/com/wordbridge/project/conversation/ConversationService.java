@@ -7,7 +7,7 @@ import java.util.List;
 @Service
 public interface ConversationService {
 
-    ConversationResponseDTO create(Long gigOrderId);
+    Conversation create(Long gigOrderId);
 
     ConversationResponseDTO getById(Long id);
 

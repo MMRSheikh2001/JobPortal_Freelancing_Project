@@ -45,7 +45,9 @@ public class JobApplicationServiceImpl implements JobApplicationService {
         JobApplication saved = jobApplicationRepository.save(jobApplication);
 
         //AI Resume Screening
-        if (saved.getJob().getAiScreeningEnabled() && saved.getJob().getAiCvScreeningEnabled()) {
+        if (Boolean.TRUE.equals(saved.getJob().getAiScreeningEnabled())
+                && Boolean.TRUE.equals(saved.getJob().getAiCvScreeningEnabled())) {
+
             resumeScreeningService.screenApplication(saved.getId());
         }
 

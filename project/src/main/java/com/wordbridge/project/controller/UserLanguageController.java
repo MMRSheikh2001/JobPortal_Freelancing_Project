@@ -80,11 +80,13 @@ public class UserLanguageController {
     }
 
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("userprofile/{userProfileId}/language/{languageId}")
     public ResponseEntity<UserLanguageResponseDTO> findByUserProfileIdAndLanguageId(
             @PathVariable Long userProfileId,
             @PathVariable Long languageId) {
 
+        checkProfileOwnership(userProfileId);
         UserLanguageResponseDTO dto = userLanguageService
                 .findByUserProfileIdAndLanguageId(userProfileId, languageId);
 

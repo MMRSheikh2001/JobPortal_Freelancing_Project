@@ -1,5 +1,7 @@
 package com.wordbridge.project.gigorder;
 
+import com.wordbridge.project.conversation.Conversation;
+import com.wordbridge.project.conversation.ConversationResponseDTO;
 import com.wordbridge.project.conversation.ConversationService;
 import com.wordbridge.project.entity.User;
 import com.wordbridge.project.enums.GigOrderStatus;
@@ -37,7 +39,7 @@ public class GigOrderServiceImpl implements GigOrderService {
     private final WalletService walletService;
     private final TransactionService transactionService;
     private final NotificationService notificationService;
-    private final AuthenticationService authenticationService;
+
 
 
     List<GigOrderStatus> activeStatuses = List.of(
@@ -91,7 +93,9 @@ public class GigOrderServiceImpl implements GigOrderService {
         GigOrder saved = gigOrderRepository.save(gigOrder);
 
         //Creating chat room after gig order creation
-        conversationService.create(saved.getId());
+      Conversation conversation= conversationService.create(saved.getId());
+
+        saved.setConversation(conversation);
 
         String buyerName;
 

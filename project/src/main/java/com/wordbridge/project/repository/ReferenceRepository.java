@@ -14,4 +14,16 @@ public interface ReferenceRepository extends JpaRepository<Reference,Long> {
 
     void deleteByUserProfileId(Long userProfileId);
 
+
+    boolean existsByUserProfileIdAndPhone(
+            Long userProfileId,
+            String phone
+    );
+
+    boolean existsByUserProfileIdAndEmailIgnoreCase(
+            Long userProfileId,
+            String email
+    );
+
+
 }

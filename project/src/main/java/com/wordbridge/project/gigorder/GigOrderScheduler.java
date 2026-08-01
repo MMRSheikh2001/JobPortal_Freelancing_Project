@@ -11,7 +11,7 @@ public class GigOrderScheduler {
     private final GigOrderService gigOrderService;
 
 
-    //Everyday at midnight
+    //Every hour
     @Scheduled(cron = "0 0 * * * ?")
     public void processExpiredDisputes() {
         gigOrderService.processExpiredDisputes();

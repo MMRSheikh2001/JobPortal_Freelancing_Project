@@ -4,6 +4,7 @@ import com.wordbridge.project.entity.Experience;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -15,5 +16,13 @@ public interface ExperienceRepository extends JpaRepository<Experience, Long> {
 
     void deleteByUserProfileId(Long userProfileId);
 
+
+
+    boolean existsByUserProfileIdAndCompanyNameIgnoreCaseAndPositionIgnoreCaseAndStartDate(
+            Long userProfileId,
+            String companyName,
+            String position,
+            LocalDate startDate
+    );
 
 }

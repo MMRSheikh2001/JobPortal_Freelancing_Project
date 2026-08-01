@@ -82,21 +82,34 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     @Transactional
     public void delete(Long id) {
+
         Review exist = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No Review found"));
 
-
         Gig gig = exist.getGigOrder().getGig();
-        Integer totalReviews = gig.getTotalReviews() - 1;
+
+        int totalReviews = gig.getTotalReviews() - 1;
+
         gig.setTotalReviews(totalReviews);
 
-        Double averageRating = (gig.getAverageRating() * (totalReviews + 1) - exist.getRating()) / totalReviews;
-        gig.setAverageRating(averageRating);
+        if (totalReviews == 0) {
+
+            gig.setAverageRating(0.0);
+
+        } else {
+
+            double averageRating =
+                    (gig.getAverageRating() * (totalReviews + 1)
+                            - exist.getRating())
+                            / totalReviews;
+
+            gig.setAverageRating(averageRating);
+
+        }
+
         gigRepository.save(gig);
 
-
         reviewRepository.delete(exist);
-
 
     }
 

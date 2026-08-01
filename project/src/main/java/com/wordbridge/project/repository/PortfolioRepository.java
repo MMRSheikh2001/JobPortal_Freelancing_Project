@@ -16,4 +16,9 @@ public interface PortfolioRepository extends JpaRepository<Portfolio,Long> {
     void deleteByUserProfileId(Long userProfileId);
 
 
+    boolean existsByUserProfileIdAndTitleIgnoreCase(
+            Long userProfileId,
+            String title
+    );
+
 }

@@ -311,5 +311,20 @@ export class ResumeUpload implements OnInit {
 
 
 
+  // =====================================
+  // Resume Import Preview
+  // =====================================
+
+  openResumeImportPreview() {
+
+    this.router.navigate([
+      '/user/resume-import-preview',
+      this.profileId
+    ]);
+
+  }
+
+
+
 
 }

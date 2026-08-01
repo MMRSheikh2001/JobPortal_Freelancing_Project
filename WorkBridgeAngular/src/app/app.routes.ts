@@ -89,6 +89,7 @@ import { AdminGigOrderManagement } from './admin-control/admin-gig-order-managem
 import { UserReportComponent } from './report/user-report.component/user-report.component';
 import { AdminReportManagementComponent } from './report/admin-report-management.component/admin-report-management.component';
 import { AdminReportDetailsComponent } from './report/admin-report-details.component/admin-report-details.component';
+import { ResumeImportPreviewComponent } from './user/resume/components/resume-import-preview.component/resume-import-preview.component';
 
 export const routes: Routes = [
 
@@ -185,6 +186,7 @@ export const routes: Routes = [
             { path: 'resume-preview', component: ResumePreview },
 
             { path: 'resume-control', component: ResumeUpload },
+             { path: 'resume-import-preview/:userProfileId', component: ResumeImportPreviewComponent },
 
             { path: 'training', component: Training },
 

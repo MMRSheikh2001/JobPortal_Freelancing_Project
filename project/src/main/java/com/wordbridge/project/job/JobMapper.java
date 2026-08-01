@@ -130,9 +130,14 @@ public class JobMapper {
                 .orElseThrow(() -> new RuntimeException("No Police station found"));
         j.setJobLocation(policeStation);
 
-        j.setAiScreeningEnabled(dto.getAiScreeningEnabled());
-        j.setAiCvScreeningEnabled(dto.getAiCvScreeningEnabled());
-        j.setAiInterviewEnabled(dto.getAiInterviewEnabled());
+        j.setAiScreeningEnabled(
+                Boolean.TRUE.equals(dto.getAiScreeningEnabled()));
+
+        j.setAiCvScreeningEnabled(
+                Boolean.TRUE.equals(dto.getAiCvScreeningEnabled()));
+
+        j.setAiInterviewEnabled(
+                Boolean.TRUE.equals(dto.getAiInterviewEnabled()));
         j.setAiMatchThreshold(dto.getAiMatchThreshold());
         j.setAiQuestionCount(dto.getAiQuestionCount());
         j.setAiShortlistCount(dto.getAiShortlistCount());

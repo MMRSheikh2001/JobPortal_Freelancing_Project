@@ -59,7 +59,7 @@ public class CompanyProfile {
     @JoinColumn(name = "location_id")
     private Address location;
 
-    @OneToMany
+    @OneToMany(mappedBy = "companyProfile")
     @JsonIgnore
     private List<Job> jobs;
 

@@ -16,4 +16,10 @@ public interface TrainingRepository extends JpaRepository<Training,Long> {
     void deleteByUserProfileId(Long userProfileId);
 
 
+    boolean existsByUserProfileIdAndNameIgnoreCaseAndInstitutionIgnoreCase(
+            Long userProfileId,
+            String name,
+            String institution
+    );
+
 }

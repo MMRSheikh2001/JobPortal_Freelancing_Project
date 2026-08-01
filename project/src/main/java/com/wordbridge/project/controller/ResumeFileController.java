@@ -33,6 +33,21 @@ public class ResumeFileController {
 
         checkOwnerOnly(userProfileId);
 
+        if (cv == null || cv.isEmpty()) {
+            throw new RuntimeException("Please select a resume file.");
+        }
+
+        String fileName = cv.getOriginalFilename();
+
+        if (fileName == null ||
+                !(fileName.toLowerCase().endsWith(".pdf")
+                        || fileName.toLowerCase().endsWith(".docx"))) {
+
+            throw new RuntimeException(
+                    "Only PDF and DOCX resume files are supported."
+            );
+        }
+
         ResumeRequestDTO dto = new ResumeRequestDTO();
         dto.setUserProfileId(userProfileId);
 
@@ -108,7 +123,6 @@ public class ResumeFileController {
             throw new AccessDeniedException("Not allowed");
         }
     }
-
 
 
 }

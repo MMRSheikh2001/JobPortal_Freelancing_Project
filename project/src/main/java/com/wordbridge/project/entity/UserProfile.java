@@ -106,31 +106,31 @@ public class UserProfile {
     @JsonIgnore
     private List<UserSkill> userSkills;
 
-    @OneToMany
+    @OneToMany(mappedBy = "userProfile")
     @JsonIgnore
     private List<UserLanguage> userLanguages;
 
-    @OneToMany
+    @OneToMany(mappedBy = "userProfile")
     @JsonIgnore
     private List<Education> educations;
 
-    @OneToMany
+    @OneToMany(mappedBy = "userProfile")
     @JsonIgnore
     private List<Experience> experiences;
 
-    @OneToMany
+    @OneToMany(mappedBy = "userProfile")
     @JsonIgnore
     private List<Training> trainings;
 
-    @OneToMany
+    @OneToMany(mappedBy = "userProfile")
     @JsonIgnore
     private List<Portfolio> portfolios;
 
-    @OneToMany
+    @OneToMany(mappedBy = "userProfile")
     @JsonIgnore
     private List<Reference> references;
 
-    @OneToMany
+    @OneToMany(mappedBy = "userProfile")
     @JsonIgnore
     private List<Extracurricular> extracurriculars;
 

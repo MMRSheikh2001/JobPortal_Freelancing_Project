@@ -23,7 +23,7 @@ export class ConversationChat implements OnInit {
 
   conversationId = 0;
 
-  conversation!: ConversationResponseModel;
+  conversation?: ConversationResponseModel;
 
   messages: MessageResponseModel[] = [];
 

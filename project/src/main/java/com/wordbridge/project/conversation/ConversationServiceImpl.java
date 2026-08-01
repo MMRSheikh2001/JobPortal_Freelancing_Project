@@ -21,7 +21,7 @@ public class ConversationServiceImpl implements ConversationService {
 
     @Override
     @Transactional
-    public ConversationResponseDTO create(Long gigOrderId) {
+    public Conversation create(Long gigOrderId) {
         if (conversationRepository.existsByGigOrderId(gigOrderId)) {
             throw new RuntimeException("A Chat room already exists for this Gig Order");
         }
@@ -37,7 +37,7 @@ public class ConversationServiceImpl implements ConversationService {
         conversation.setLastMessageAt(LocalDateTime.now());
         Conversation saved = conversationRepository.save(conversation);
 
-        return conversationMapper.toDTO(saved);
+        return saved;
     }
 
     @Override

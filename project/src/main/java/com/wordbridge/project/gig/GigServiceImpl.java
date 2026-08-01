@@ -63,6 +63,10 @@ public class GigServiceImpl implements GigService {
         gig.setUpdatedAt(LocalDateTime.now());
         gig.setIsActive(exist.getIsActive());
 
+        gig.setAverageRating(exist.getAverageRating());
+        gig.setTotalReviews(exist.getTotalReviews());
+        gig.setCompletedOrders(exist.getCompletedOrders());
+
 
         if (image != null && !image.isEmpty()) {
             String fileName = imageStorageService.uploadImage(image, gig.getUserProfile().getUser().getEmail(), "gigs");

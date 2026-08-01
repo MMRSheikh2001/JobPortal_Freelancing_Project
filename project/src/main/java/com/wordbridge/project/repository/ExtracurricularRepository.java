@@ -16,4 +16,11 @@ public interface ExtracurricularRepository extends JpaRepository<Extracurricular
     void deleteByUserProfileId(Long userProfileId);
 
 
+    boolean existsByUserProfileIdAndTitleIgnoreCaseAndOrganizationIgnoreCase(
+            Long userProfileId,
+            String title,
+            String organization
+    );
+
+
 }

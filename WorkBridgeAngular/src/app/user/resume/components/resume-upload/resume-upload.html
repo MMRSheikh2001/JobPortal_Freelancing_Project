@@ -70,6 +70,12 @@
 
                                 </button>
 
+                                <button *ngIf="resumeExists" class="btn btn-info" (click)="openResumeImportPreview()">
+
+                                    Import Information From Resume
+
+                                </button>
+
                                 <button class="btn btn-danger" (click)="deleteResume()">
 
                                     Delete Resume

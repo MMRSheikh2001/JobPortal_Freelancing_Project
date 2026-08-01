@@ -169,7 +169,7 @@ export class NotificationDetailsComponent implements OnInit {
         if (this.role === 'COMPANY') {
 
           this.router.navigate([
-            '/company/job-applications',
+            '/company/application-details',
             this.notification.referenceId
           ]);
 
