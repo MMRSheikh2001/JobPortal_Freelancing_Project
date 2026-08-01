@@ -1,12 +1,10 @@
 package com.wordbridge.project.resumeimport;
 
-import com.wordbridge.project.dto.responsedto.ResumeFileResponseDTO;
-import com.wordbridge.project.dto.responsedto.ResumeResponseDTO;
+
 import com.wordbridge.project.dto.responsedto.UserProfileResponseDTO;
 import com.wordbridge.project.entity.User;
 import com.wordbridge.project.enums.UserRole;
 import com.wordbridge.project.security.AuthenticationService;
-import com.wordbridge.project.service.ResumeFileService;
 import com.wordbridge.project.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,19 +19,20 @@ public class ResumeImportController {
     private final ResumeImportService resumeImportService;
     private final AuthenticationService authenticationService;
     private final UserProfileService userProfileService;
-    private final ResumeFileService resumeFileService;
+
 
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("{resumeId}")
-    public ResponseEntity<ResumeImportPreviewDTO> getJSONFromResume(@PathVariable Long resumeId) {
-
-        ResumeFileResponseDTO resumeResponseDTO = resumeFileService.getById(resumeId);
-
-        checkProfileOwnership(resumeResponseDTO.getUserProfileId());
+    @GetMapping("{userProfileId}")
+    public ResponseEntity<ResumeImportPreviewDTO> getJSONFromResume(
+            @PathVariable Long userProfileId) {
 
 
-        return ResponseEntity.ok(resumeImportService.getPreviewFromGemini(resumeId));
+
+        checkProfileOwnership(userProfileId);
+
+
+        return ResponseEntity.ok(resumeImportService.getPreviewFromGemini(userProfileId));
 
     }
 
