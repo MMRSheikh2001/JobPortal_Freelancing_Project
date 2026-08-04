@@ -27,7 +27,7 @@ public class FileStorageService {
                 throw new RuntimeException("File is empty");
             }
 
-            long maxSize = 10 * 1024 * 1024; // 5 MB
+            long maxSize = 1000 * 1024 * 1024; // 1000 MB
 
             if (file.getSize() > maxSize) {
                 throw new RuntimeException(
@@ -40,8 +40,9 @@ public class FileStorageService {
 
             if (contentType == null ||
                     !(contentType.equals("application/pdf")
+                            ||(contentType.equals("application/docx")
                             || contentType.equals("image/jpeg")
-                            || contentType.equals("image/png"))) {
+                            || contentType.equals("image/png")))) {
 
                 throw new RuntimeException(
                         "Only PDF, JPG and PNG files are allowed"
