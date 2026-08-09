@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F5F7"
+    tools:context=".UserProfileActivity">
+
+    <!-- ===================== Top App Bar ===================== -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
+        app:title="Edit Profile"
+        app:titleTextColor="@color/white" />
+
+    <!-- ===================== Scrollable Content ===================== -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="96dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ===================== Profile Photo Header ===================== -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                app:cardBackgroundColor="?attr/colorPrimary"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="28dp">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/ivProfilePhoto"
+                            android:layout_width="104dp"
+                            android:layout_height="104dp"
+                            android:background="@color/white"
+                            android:contentDescription="Profile photo"
+                            android:padding="2dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/workbridge_logo"
+                            app:shapeAppearanceOverlay="@style/CircleImage"
+                            app:strokeColor="@color/white"
+                            app:strokeWidth="3dp" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fabEditPhoto"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="bottom|end"
+                            android:contentDescription="Change photo"
+                            android:src="@android:drawable/ic_menu_camera"
+                            app:backgroundTint="@color/teal_200"
+                            app:borderWidth="0dp"
+                            app:elevation="3dp"
+                            app:fabCustomSize="34dp"
+                            app:maxImageSize="18dp"
+                            app:tint="@color/black" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvHeaderName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Your Name"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvUserEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:alpha="0.85"
+                        android:text="user@email.com"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipProfileStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:checkable="false"
+                        android:clickable="false"
+                        android:text="Profile Incomplete"
+                        android:textSize="12sp"
+                        app:chipBackgroundColor="@color/white"
+                        app:chipIcon="@android:drawable/ic_dialog_info"
+                        app:chipIconTint="?attr/colorPrimary" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===================== Basic Information ===================== -->
+            <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+
+                <LinearLayout style="@style/SectionInner">
+
+                    <TextView
+                        style="@style/SectionTitle"
+                        android:text="👤 Basic Information" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Full Name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etName"
+                            style="@style/InputEdit"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Phone Number">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPhone"
+                            style="@style/InputEdit"
+                            android:inputType="phone" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Headline (e.g. Senior Android Developer)">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etHeadline"
+                            style="@style/InputEdit"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Freelancer Title">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etFreelancerTitle"
+                            style="@style/InputEdit"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Date of Birth"
+                        app:endIconDrawable="@android:drawable/ic_menu_my_calendar"
+                        app:endIconMode="custom">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etDateOfBirth"
+                            style="@style/InputEdit"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/InputBoxHalfStart"
+                            android:hint="Gender"
+                            app:endIconMode="dropdown_menu">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/actvGender"
+                                style="@style/InputEdit"
+                                android:inputType="none" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/InputBoxHalfEnd"
+                            android:hint="Marital Status"
+                            app:endIconMode="dropdown_menu">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/actvMaritalStatus"
+                                style="@style/InputEdit"
+                                android:inputType="none" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/InputBoxHalfStart"
+                            android:hint="Nationality">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etNationality"
+                                style="@style/InputEdit"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/InputBoxHalfEnd"
+                            android:hint="Religion">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etReligion"
+                                style="@style/InputEdit"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===================== About ===================== -->
+            <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+
+                <LinearLayout style="@style/SectionInner">
+
+                    <TextView
+                        style="@style/SectionTitle"
+                        android:text="📝 About You" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Professional Summary"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="500">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etProfessionalSummary"
+                            style="@style/InputEditMultiline"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:maxLength="500"
+                            android:minLines="3" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Bio">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etBio"
+                            style="@style/InputEditMultiline"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:minLines="3" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Career Objective">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etCareerObjective"
+                            style="@style/InputEditMultiline"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:minLines="2" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===================== Identity & Family ===================== -->
+            <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+
+                <LinearLayout style="@style/SectionInner">
+
+                    <TextView
+                        style="@style/SectionTitle"
+                        android:text="🪪 Identity &amp; Family" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/InputBoxHalfStart"
+                            android:hint="Father's Name">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etFatherName"
+                                style="@style/InputEdit"
+                                android:inputType="textPersonName" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/InputBoxHalfEnd"
+                            android:hint="Mother's Name">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etMotherName"
+                                style="@style/InputEdit"
+                                android:inputType="textPersonName" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="NID Number">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etNidNumber"
+                            style="@style/InputEdit"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Passport Number">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPassportNumber"
+                            style="@style/InputEdit"
+                            android:inputType="textCapCharacters" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===================== Career Preferences ===================== -->
+            <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+
+                <LinearLayout style="@style/SectionInner">
+
+                    <TextView
+                        style="@style/SectionTitle"
+                        android:text="💼 Career Preferences" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/InputBoxHalfStart"
+                            android:hint="Preferred Job Type"
+                            app:endIconMode="dropdown_menu">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/actvPreferredJobType"
+                                style="@style/InputEdit"
+                                android:inputType="none" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/InputBoxHalfEnd"
+                            android:hint="Preferred Workplace"
+                            app:endIconMode="dropdown_menu">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/actvPreferredWorkplace"
+                                style="@style/InputEdit"
+                                android:inputType="none" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/InputBoxHalfStart"
+                            android:hint="Expected Salary"
+                            app:prefixText="৳">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etExpectedSalary"
+                                style="@style/InputEdit"
+                                android:inputType="numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/InputBoxHalfEnd"
+                            android:hint="Current Salary"
+                            app:prefixText="৳">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etCurrentSalary"
+                                style="@style/InputEdit"
+                                android:inputType="numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===================== Online Presence ===================== -->
+            <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+
+                <LinearLayout style="@style/SectionInner">
+
+                    <TextView
+                        style="@style/SectionTitle"
+                        android:text="🔗 Online Presence" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="GitHub Profile URL"
+                        app:startIconDrawable="@android:drawable/ic_menu_share">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etGithubLink"
+                            style="@style/InputEdit"
+                            android:inputType="textUri" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="LinkedIn Profile URL"
+                        app:startIconDrawable="@android:drawable/ic_menu_share">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etLinkedinLink"
+                            style="@style/InputEdit"
+                            android:inputType="textUri" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Portfolio Website"
+                        app:startIconDrawable="@android:drawable/ic_menu_share">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPortfolioWebsite"
+                            style="@style/InputEdit"
+                            android:inputType="textUri" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===================== Present Address ===================== -->
+            <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+
+                <LinearLayout style="@style/SectionInner">
+
+                    <TextView
+                        style="@style/SectionTitle"
+                        android:text="📍 Present Address" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Country"
+                        app:endIconMode="dropdown_menu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actvPresentCountry"
+                            style="@style/InputEdit"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Division"
+                        app:endIconMode="dropdown_menu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actvPresentDivision"
+                            style="@style/InputEdit"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="District"
+                        app:endIconMode="dropdown_menu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actvPresentDistrict"
+                            style="@style/InputEdit"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Police Station"
+                        app:endIconMode="dropdown_menu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actvPresentPoliceStation"
+                            style="@style/InputEdit"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Address Details">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPresentAddressDetails"
+                            style="@style/InputEditMultiline"
+                            android:minLines="2" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Post Code">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPresentAddressPostCode"
+                            style="@style/InputEdit"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ===================== Permanent Address ===================== -->
+            <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+
+                <LinearLayout style="@style/SectionInner">
+
+                    <TextView
+                        style="@style/SectionTitle"
+                        android:text="🏠 Permanent Address" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cbSameAsPresentAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Same as Present Address" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Country"
+                        app:endIconMode="dropdown_menu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actvPermanentCountry"
+                            style="@style/InputEdit"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Division"
+                        app:endIconMode="dropdown_menu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actvPermanentDivision"
+                            style="@style/InputEdit"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="District"
+                        app:endIconMode="dropdown_menu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actvPermanentDistrict"
+                            style="@style/InputEdit"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Police Station"
+                        app:endIconMode="dropdown_menu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/actvPermanentPoliceStation"
+                            style="@style/InputEdit"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Address Details">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPermanentAddressDetails"
+                            style="@style/InputEditMultiline"
+                            android:minLines="2" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/InputBox"
+                        android:hint="Post Code">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPermanentAddressPostCode"
+                            style="@style/InputEdit"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ===================== Sticky Bottom Save Bar ===================== -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancel"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="Cancel" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Save Profile" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ProgressBar
+        android:id="@+id/progressLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
