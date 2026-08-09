@@ -39,9 +39,15 @@ export class JobDetails implements OnInit {
 
   saved = false;
 
-saving = false;
+  saving = false;
 
-userId = 0;
+  userId = 0;
+
+  aiMatchScore?: number;
+
+  aiMatchFeedback = '';
+
+  checkingMatch = false;
 
 
 
@@ -73,7 +79,7 @@ userId = 0;
     this.profileId = this.storageService.getProfileId();
 
     this.userId =
-  this.storageService.getUserId() ?? 0;
+      this.storageService.getUserId() ?? 0;
 
     this.jobId = Number(
       this.route.snapshot.paramMap.get('id')
@@ -103,7 +109,7 @@ userId = 0;
           this.fileService.getCompanyProfileImage(
             data.companyLogo
           );
-          this.checkSaved();
+        this.checkSaved();
 
         this.loading = false;
 
@@ -461,72 +467,110 @@ userId = 0;
 
 
   //=========================================
-// Check Saved
-//=========================================
+  // Check Saved
+  //=========================================
 
-checkSaved(): void {
+  checkSaved(): void {
 
-  if (this.role !== 'USER') {
+    if (this.role !== 'USER') {
 
-    return;
+      return;
 
-  }
-
-  this.savedJobService
-    .isJobSaved(
-      this.userId,
-      this.jobId
-    )
-    .subscribe({
-
-      next: res => {
-
-        this.saved = res;
-
-        this.cdr.markForCheck();
-
-      }
-
-    });
-
-}
-
-//=========================================
-// Save / Unsave
-//=========================================
-
-toggleSave(): void {
-
-  if (!this.storageService.isLoggedIn()) {
-
-    this.toast.show(
-      'Please login first.',
-      'warning'
-    );
-
-    this.router.navigate(['/login']);
-
-    return;
-
-  }
-
-  if (this.role !== 'USER') {
-
-    this.toast.show(
-      'Only users can save jobs.',
-      'warning'
-    );
-
-    return;
-
-  }
-
-  this.saving = true;
-
-  if (this.saved) {
+    }
 
     this.savedJobService
-      .unsaveJob(
+      .isJobSaved(
+        this.userId,
+        this.jobId
+      )
+      .subscribe({
+
+        next: res => {
+
+          this.saved = res;
+
+          this.cdr.markForCheck();
+
+        }
+
+      });
+
+  }
+
+  //=========================================
+  // Save / Unsave
+  //=========================================
+
+  toggleSave(): void {
+
+    if (!this.storageService.isLoggedIn()) {
+
+      this.toast.show(
+        'Please login first.',
+        'warning'
+      );
+
+      this.router.navigate(['/login']);
+
+      return;
+
+    }
+
+    if (this.role !== 'USER') {
+
+      this.toast.show(
+        'Only users can save jobs.',
+        'warning'
+      );
+
+      return;
+
+    }
+
+    this.saving = true;
+
+    if (this.saved) {
+
+      this.savedJobService
+        .unsaveJob(
+          this.userId,
+          this.jobId
+        )
+        .subscribe({
+
+          next: () => {
+
+            this.saved = false;
+
+            this.saving = false;
+
+            this.toast.show(
+              'Removed from saved jobs.'
+            );
+
+            this.cdr.markForCheck();
+
+          },
+
+          error: () => {
+
+            this.saving = false;
+
+            this.toast.show(
+              'Unable to remove.',
+              'danger'
+            );
+
+          }
+
+        });
+
+      return;
+
+    }
+
+    this.savedJobService
+      .saveJob(
         this.userId,
         this.jobId
       )
@@ -534,12 +578,12 @@ toggleSave(): void {
 
         next: () => {
 
-          this.saved = false;
+          this.saved = true;
 
           this.saving = false;
 
           this.toast.show(
-            'Removed from saved jobs.'
+            'Job saved.'
           );
 
           this.cdr.markForCheck();
@@ -551,7 +595,7 @@ toggleSave(): void {
           this.saving = false;
 
           this.toast.show(
-            'Unable to remove.',
+            'Unable to save.',
             'danger'
           );
 
@@ -559,45 +603,59 @@ toggleSave(): void {
 
       });
 
-    return;
-
   }
 
-  this.savedJobService
-    .saveJob(
-      this.userId,
-      this.jobId
-    )
-    .subscribe({
 
-      next: () => {
+  checkJobMatch(): void {
 
-        this.saved = true;
+    if (!this.profileId) {
 
-        this.saving = false;
+      this.toast.show(
+        'Please login first.',
+        'warning'
+      );
 
-        this.toast.show(
-          'Job saved.'
-        );
+      return;
 
-        this.cdr.markForCheck();
+    }
 
-      },
+    this.checkingMatch = true;
 
-      error: () => {
+    this.applicationService
+      .getJobMatchScore(
+        this.jobId,
+        this.profileId
+      )
+      .subscribe({
 
-        this.saving = false;
+        next: (data) => {
 
-        this.toast.show(
-          'Unable to save.',
-          'danger'
-        );
+          this.aiMatchScore = data.matchScore;
 
-      }
+          this.aiMatchFeedback = data.feedback;
 
-    });
+          this.checkingMatch = false;
 
-}
+          this.cdr.markForCheck();
+
+        },
+
+        error: () => {
+
+          this.checkingMatch = false;
+
+          this.toast.show(
+            'Unable to calculate job match.',
+            'danger'
+          );
+
+          this.cdr.markForCheck();
+
+        }
+
+      });
+
+  }
 
 
 }

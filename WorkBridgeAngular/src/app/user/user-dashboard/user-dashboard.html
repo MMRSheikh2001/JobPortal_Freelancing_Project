@@ -358,6 +358,109 @@
     </div>
 
 
+    <!-- ========================= -->
+    <!-- Recommended Jobs -->
+    <!-- ========================= -->
+
+    <div class="card shadow-sm border-0 mb-4" *ngIf="recommendedJobs.length > 0">
+
+        <div class="card-header bg-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <h5 class="mb-0">
+                        Recommended Jobs
+                    </h5>
+
+                    <small class="text-muted">
+                        Jobs selected based on your profile
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-lg-4 mb-3" *ngFor="let job of recommendedJobs">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <div class="d-flex align-items-center mb-3">
+
+                            <img [src]="fileService.getCompanyProfileImage(job.companyLogo)" width="50" height="50"
+                                class="rounded-circle me-2">
+
+                            <div>
+
+                                <strong>
+                                    {{job.companyName}}
+                                </strong>
+
+                                <div class="small text-muted">
+
+                                    {{job.locationDistrictName}}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <h6 class="fw-bold">
+
+                            {{job.title}}
+
+                        </h6>
+
+                        <div class="small text-muted mb-2">
+
+                            {{job.employmentType}}
+                            ·
+                            {{job.workPlaceType}}
+
+                        </div>
+
+                        <div *ngIf="job.minExperience != null" class="small mb-2">
+
+                            Experience:
+                            {{job.minExperience}}
+                            -
+                            {{job.maxExperience}}
+                            years
+
+                        </div>
+
+                        <div class="small text-muted mb-3">
+
+                            Deadline:
+                            {{job.applicationDeadline | date}}
+
+                        </div>
+
+                        <button class="btn btn-primary btn-sm w-100" (click)="openRecommendedJob(job.id)">
+
+                            View Job
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
 
     <!-- ========================= -->
     <!-- Latest Jobs -->

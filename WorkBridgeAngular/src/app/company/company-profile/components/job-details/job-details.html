@@ -278,12 +278,50 @@
 
                     </button>
 
+
+                    <button *ngIf="!alreadyApplied" class="btn btn-outline-info w-100 mb-3" [disabled]="checkingMatch"
+                        (click)="checkJobMatch()">
+
+                        <span *ngIf="checkingMatch" class="spinner-border spinner-border-sm me-2">
+                        </span>
+
+                        {{ checkingMatch ? 'Checking Match...' : 'Check AI Job Match' }}
+
+                    </button>
+
+
                     <button *ngIf="!alreadyApplied" class="btn btn-success w-100" [disabled]="applying"
                         (click)="apply()">
 
                         Apply Now
 
                     </button>
+
+                    <div *ngIf="aiMatchScore !== null" class="alert alert-info mt-3">
+
+                        <strong>AI Job Match</strong>
+
+                        <div class="display-6 fw-bold">
+                            {{aiMatchScore}}%
+                        </div>
+
+                        <small>
+                            This score compares your resume with this job.
+                        </small>
+
+                    </div>
+                    <div *ngIf="aiMatchFeedback !== null" class="alert alert-info mt-3">
+
+                        <strong>AI Job Feedback</strong>
+                        <br>
+
+                        <small>
+                            {{aiMatchFeedback}}
+                        </small>
+
+
+
+                    </div>
 
                     <div *ngIf="alreadyApplied">
 

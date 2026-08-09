@@ -74,3 +74,11 @@ export interface JobApplicationFilterRequestDTO {
   appliedFrom?: string;
   appliedTo?: string;
 }
+
+export interface ResumeScreeningResult {
+
+  matchScore: number;
+
+  feedback: string;
+
+}

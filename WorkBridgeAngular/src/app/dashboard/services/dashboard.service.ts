@@ -7,6 +7,7 @@ import { UserDashboardDTO } from '../models/user-dashboard.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../enviroments/environment';
 import { HomeStatisticsDTO } from '../models/home-statistics.model';
+import { JobResponseModel } from '../../company/company-profile/models/job.model';
 
 @Injectable({
   providedIn: 'root',
@@ -99,5 +100,23 @@ export class DashboardService {
     );
 
   }
+
+  //=====================================
+// Recommended Jobs
+//=====================================
+
+getRecommendedJobs(
+  userProfileId: number
+): Observable<JobResponseModel[]> {
+
+  return this.http.get<JobResponseModel[]>(
+    `${environment.apiUrl}recommended-job/${userProfileId}`
+  );
+
+}
+
+
+
+
 
 }

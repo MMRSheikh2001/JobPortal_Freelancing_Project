@@ -8,9 +8,11 @@ import com.wordbridge.project.entity.UserProfile;
 import com.wordbridge.project.enums.ApplicationStatus;
 import com.wordbridge.project.job.Job;
 import com.wordbridge.project.job.JobMapper;
+import com.wordbridge.project.job.JobRepository;
 import com.wordbridge.project.job.JobResponseDTO;
 import com.wordbridge.project.jobapplication.JobApplication;
 import com.wordbridge.project.jobapplication.JobApplicationRepository;
+import com.wordbridge.project.repository.UserProfileRepository;
 import com.wordbridge.project.service.ResumeService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,8 @@ public class ResumeScreeningServiceImpl implements ResumeScreeningService {
     private final JobMapper jobMapper;
     private final GeminiService geminiService;
     private final ObjectMapper objectMapper;
+
+    private final JobRepository jobRepository;
 
 
     @Override
@@ -89,6 +93,40 @@ public class ResumeScreeningServiceImpl implements ResumeScreeningService {
         jobApplicationRepository.save(jobApplication);
 
 
+    }
+
+    @Override
+    public ResumeScreeningResult calculateJobMatch(
+            Long jobId,
+            Long userProfileId
+    ) {
+
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() ->
+                        new RuntimeException("Job not found"));
+
+
+        ResumeResponseDTO resumeResponseDTO =
+                resumeService.generateResume(userProfileId);
+
+        String prompt =
+                buildPrompt(job, resumeResponseDTO);
+
+        String geminiAnswer =
+                geminiService.askGemini(prompt);
+
+        try {
+
+            return objectMapper.readValue(
+                    geminiAnswer,
+                    ResumeScreeningResult.class
+            );
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+
+        }
     }
 
 

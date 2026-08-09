@@ -6,6 +6,7 @@ import { StorageService } from '../../auth/services/storage.service';
 import { ToastService } from '../../services/toast.service';
 import { FileResourceHandleService } from '../../services/file-resource-handle.service';
 import { Router } from '@angular/router';
+import { JobResponseModel } from '../../company/company-profile/models/job.model';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -28,6 +29,8 @@ export class UserDashboard implements OnInit {
   userId = 0;
 
   dashboard!: UserDashboardDTO;
+
+  recommendedJobs: JobResponseModel[] = [];
 
   //=====================================
   // Constructor
@@ -60,7 +63,9 @@ export class UserDashboard implements OnInit {
 
     this.loadDashboard();
 
-    
+    this.loadRecommendedJobs();
+
+
 
   }
 
@@ -258,6 +263,49 @@ export class UserDashboard implements OnInit {
         return 'bg-light text-dark';
 
     }
+
+  }
+
+  loadRecommendedJobs(): void {
+
+    const profileId =
+      this.storage.getProfileId();
+
+    if (!profileId) {
+      return;
+    }
+
+    this.dashboardService
+      .getRecommendedJobs(profileId)
+      .subscribe({
+
+        next: (data) => {
+
+          this.recommendedJobs =
+            data ?? [];
+
+          this.cdr.markForCheck();
+
+        },
+
+        error: () => {
+
+          this.recommendedJobs = [];
+
+          this.cdr.markForCheck();
+
+        }
+
+      });
+
+  }
+
+  openRecommendedJob(jobId: number): void {
+
+    this.router.navigate([
+      '/job-details',
+      jobId
+    ]);
 
   }
 

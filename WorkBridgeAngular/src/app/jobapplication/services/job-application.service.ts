@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../enviroments/environment';
 import { HttpClient } from '@angular/common/http';
-import { AIInterviewSessionResponseDTO, JobApplicationFilterRequestDTO, JobApplicationRequestModel, JobApplicationResponseModel } from '../models/job-application.model';
+import { AIInterviewSessionResponseDTO, JobApplicationFilterRequestDTO, JobApplicationRequestModel, JobApplicationResponseModel, ResumeScreeningResult } from '../models/job-application.model';
 import { Observable } from 'rxjs';
 import { ApplicationStatus } from '../../enums/application-status.enum';
 
@@ -452,6 +452,20 @@ export class JobApplicationService {
       jobId +
       '/userprofile/' +
       userProfileId
+    );
+
+  }
+
+  //AI Job Match
+
+
+  getJobMatchScore(
+    jobId: number,
+    userProfileId: number
+  ): Observable<ResumeScreeningResult> {
+
+    return this.http.get<ResumeScreeningResult>(
+      this.aiApi + jobId + '/match/' + userProfileId
     );
 
   }

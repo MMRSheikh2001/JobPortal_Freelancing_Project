@@ -1,13 +1,18 @@
 package com.wordbridge.project.ai.controller;
 
 import com.wordbridge.project.ai.AIInterviewSessionResponseDTO;
+import com.wordbridge.project.ai.ResumeScreeningResult;
 import com.wordbridge.project.ai.service.AIInterviewService;
+import com.wordbridge.project.ai.service.ResumeScreeningService;
+import com.wordbridge.project.dto.responsedto.UserProfileResponseDTO;
 import com.wordbridge.project.entity.User;
 import com.wordbridge.project.enums.UserRole;
 import com.wordbridge.project.jobapplication.JobApplicationResponseDTO;
 import com.wordbridge.project.jobapplication.JobApplicationService;
 import com.wordbridge.project.security.AuthenticationService;
+import com.wordbridge.project.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +25,27 @@ public class AIInterviewController {
 
     private final JobApplicationService jobApplicationService;
     private final AuthenticationService authenticationService;
+    private final ResumeScreeningService resumeScreeningService;
+    private final UserProfileService userProfileService;
+
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/{jobId}/match/{userProfileId}")
+    public ResponseEntity<ResumeScreeningResult> calculateJobMatch(
+            @PathVariable Long jobId,
+            @PathVariable Long userProfileId
+    ) {
+
+        checkProfileOwnership(userProfileId);
+
+        return ResponseEntity.ok(
+                resumeScreeningService.calculateJobMatch(
+                        jobId,
+                        userProfileId
+                )
+        );
+    }
+
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("start/{applicationId}")
@@ -62,6 +88,15 @@ public class AIInterviewController {
         boolean isApplicant = app.getUserId().equals(currentUser.getId());
         boolean isHiringCompany = app.getCompanyUserId().equals(currentUser.getId());
         if (!isApplicant && !isHiringCompany) {
+            throw new AccessDeniedException("Not allowed");
+        }
+    }
+
+
+    private void checkProfileOwnership(Long userProfileId) {
+        User currentUser = authenticationService.getCurrentUser();
+        UserProfileResponseDTO profile = userProfileService.findById(userProfileId);
+        if (!profile.getUserId().equals(currentUser.getId())) {
             throw new AccessDeniedException("Not allowed");
         }
     }
