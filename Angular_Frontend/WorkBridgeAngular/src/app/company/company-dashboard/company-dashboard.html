@@ -1,106 +1,372 @@
-<div class="container-fluid py-4" *ngIf="!loading && companyDashboard && buyerDashboard">
+<div
+    class="container-fluid py-4"
+    *ngIf="!loading && companyDashboard && buyerDashboard"
+>
 
-    <!-- Header -->
-    <div class="card shadow-sm mb-4">
-        <div class="card-body d-flex align-items-center">
+    <!-- ===================================================== -->
+    <!-- COMPANY HEADER -->
+    <!-- ===================================================== -->
 
-            <img [src]="profileImage" class="rounded-circle me-3" width="70" height="70">
+    <div class="card border-0 shadow-sm mb-4 overflow-hidden">
 
-            <div class="flex-grow-1">
+        <div class="card-body p-4">
 
-                <h3 class="mb-1">
-                    {{ companyDashboard.companyName }}
-                </h3>
+            <div class="d-flex align-items-center">
 
-                <div class="text-muted">
-                    Profile Completion:
-                    <strong>{{ companyDashboard.profileCompletion }}%</strong>
+                <!-- Profile Image -->
+                <img
+                    [src]="profileImage"
+                    class="rounded-circle border border-3 border-primary me-3"
+                    width="80"
+                    height="80"
+                    alt="Company Logo"
+                >
+
+                <!-- Company Information -->
+                <div class="flex-grow-1">
+
+                    <div class="text-primary fw-semibold small mb-1">
+                        <i class="bi bi-building me-1"></i>
+                        COMPANY DASHBOARD
+                    </div>
+
+                    <h3 class="fw-bold mb-1">
+                        {{ companyDashboard.companyName }}
+                    </h3>
+
+                    <div class="text-muted">
+
+                        Profile Completion:
+
+                        <strong class="text-dark">
+                            {{ companyDashboard.profileCompletion }}%
+                        </strong>
+
+                    </div>
+
+                    <!-- Profile Progress -->
+                    <div
+                        class="progress mt-2"
+                        style="height: 7px; max-width: 320px;"
+                    >
+
+                        <div
+                            class="progress-bar bg-success"
+                            [style.width.%]="companyDashboard.profileCompletion"
+                        >
+                        </div>
+
+                    </div>
+
                 </div>
+
+                <!-- Wallet -->
+                <button
+                    class="btn btn-outline-primary px-4"
+                    (click)="openWallet()"
+                >
+
+                    <i class="bi bi-wallet2 me-1"></i>
+
+                    Wallet
+
+                </button>
 
             </div>
 
-            <button class="btn btn-outline-primary" (click)="openWallet()">
-                Wallet
-            </button>
-
         </div>
+
     </div>
 
-    <!-- Company Statistics -->
+
+    <!-- ===================================================== -->
+    <!-- COMPANY STATISTICS -->
+    <!-- ===================================================== -->
+
     <div class="row g-3 mb-4">
 
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h3>{{ companyDashboard.totalJobs }}</h3>
-                    <small>Total Jobs</small>
+        <!-- Total Jobs -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body d-flex align-items-center">
+
+                    <div
+                        class="bg-primary bg-opacity-10 text-primary rounded-3 p-3 me-3"
+                    >
+
+                        <i class="bi bi-briefcase-fill fs-3"></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="text-muted small">
+                            Total Jobs
+                        </div>
+
+                        <h3 class="fw-bold mb-0">
+                            {{ companyDashboard.totalJobs }}
+                        </h3>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h3>{{ companyDashboard.activeJobs }}</h3>
-                    <small>Active Jobs</small>
+
+        <!-- Active Jobs -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body d-flex align-items-center">
+
+                    <div
+                        class="bg-success bg-opacity-10 text-success rounded-3 p-3 me-3"
+                    >
+
+                        <i class="bi bi-check-circle-fill fs-3"></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="text-muted small">
+                            Active Jobs
+                        </div>
+
+                        <h3 class="fw-bold mb-0">
+                            {{ companyDashboard.activeJobs }}
+                        </h3>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h3>{{ companyDashboard.totalApplications }}</h3>
-                    <small>Applications</small>
+
+        <!-- Applications -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body d-flex align-items-center">
+
+                    <div
+                        class="bg-warning bg-opacity-10 text-warning rounded-3 p-3 me-3"
+                    >
+
+                        <i class="bi bi-people-fill fs-3"></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="text-muted small">
+                            Applications
+                        </div>
+
+                        <h3 class="fw-bold mb-0">
+                            {{ companyDashboard.totalApplications }}
+                        </h3>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h3>{{ companyDashboard.hiredApplications }}</h3>
-                    <small>Hired</small>
+
+        <!-- Hired -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body d-flex align-items-center">
+
+                    <div
+                        class="bg-info bg-opacity-10 text-info rounded-3 p-3 me-3"
+                    >
+
+                        <i class="bi bi-person-check-fill fs-3"></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="text-muted small">
+                            Hired
+                        </div>
+
+                        <h3 class="fw-bold mb-0">
+                            {{ companyDashboard.hiredApplications }}
+                        </h3>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
 
     </div>
 
-    <!-- Application Pipeline -->
-    <div class="card shadow-sm mb-4">
 
-        <div class="card-header">
-            Recruitment Pipeline
+    <!-- ===================================================== -->
+    <!-- RECRUITMENT PIPELINE -->
+    <!-- ===================================================== -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white border-0 pt-4 px-4">
+
+            <h5 class="fw-bold mb-1">
+
+                <i class="bi bi-diagram-3 text-primary me-2"></i>
+
+                Recruitment Pipeline
+
+            </h5>
+
+            <small class="text-muted">
+                Track candidates through your hiring process
+            </small>
+
         </div>
 
-        <div class="card-body">
 
-            <div class="row text-center">
+        <div class="card-body px-4 pb-4">
 
-                <div class="col">
-                    <h5>{{ companyDashboard.appliedApplications }}</h5>
-                    <small>Applied</small>
+            <div class="row g-3 text-center">
+
+                <!-- Applied -->
+                <div class="col-xl col-md-4">
+
+                    <div
+                        class="bg-primary bg-opacity-10 rounded-3 p-3 h-100"
+                    >
+
+                        <i class="bi bi-send text-primary fs-4"></i>
+
+                        <h4 class="fw-bold text-primary mt-2 mb-1">
+
+                            {{ companyDashboard.appliedApplications }}
+
+                        </h4>
+
+                        <small class="text-muted">
+                            Applied
+                        </small>
+
+                    </div>
+
                 </div>
 
-                <div class="col">
-                    <h5>{{ companyDashboard.aiCompletedApplications }}</h5>
-                    <small>AI Completed</small>
+
+                <!-- AI Completed -->
+                <div class="col-xl col-md-4">
+
+                    <div
+                        class="bg-info bg-opacity-10 rounded-3 p-3 h-100"
+                    >
+
+                        <i class="bi bi-robot text-info fs-4"></i>
+
+                        <h4 class="fw-bold text-info mt-2 mb-1">
+
+                            {{ companyDashboard.aiCompletedApplications }}
+
+                        </h4>
+
+                        <small class="text-muted">
+                            AI Completed
+                        </small>
+
+                    </div>
+
                 </div>
 
-                <div class="col">
-                    <h5>{{ companyDashboard.automaticQualifiedApplications }}</h5>
-                    <small>AI Qualified</small>
+
+                <!-- AI Qualified -->
+                <div class="col-xl col-md-4">
+
+                    <div
+                        class="bg-warning bg-opacity-10 rounded-3 p-3 h-100"
+                    >
+
+                        <i class="bi bi-stars text-warning fs-4"></i>
+
+                        <h4 class="fw-bold text-warning mt-2 mb-1">
+
+                            {{ companyDashboard.automaticQualifiedApplications }}
+
+                        </h4>
+
+                        <small class="text-muted">
+                            AI Qualified
+                        </small>
+
+                    </div>
+
                 </div>
 
-                <div class="col">
-                    <h5>{{ companyDashboard.companyShortlistedApplications }}</h5>
-                    <small>Shortlisted</small>
+
+                <!-- Shortlisted -->
+                <div class="col-xl col-md-4">
+
+                    <div
+                        class="bg-secondary bg-opacity-10 rounded-3 p-3 h-100"
+                    >
+
+                        <i class="bi bi-list-check text-secondary fs-4"></i>
+
+                        <h4 class="fw-bold text-secondary mt-2 mb-1">
+
+                            {{ companyDashboard.companyShortlistedApplications }}
+
+                        </h4>
+
+                        <small class="text-muted">
+                            Shortlisted
+                        </small>
+
+                    </div>
+
                 </div>
 
-                <div class="col">
-                    <h5>{{ companyDashboard.hiredApplications }}</h5>
-                    <small>Hired</small>
+
+                <!-- Hired -->
+                <div class="col-xl col-md-4">
+
+                    <div
+                        class="bg-success bg-opacity-10 rounded-3 p-3 h-100"
+                    >
+
+                        <i class="bi bi-person-check text-success fs-4"></i>
+
+                        <h4 class="fw-bold text-success mt-2 mb-1">
+
+                            {{ companyDashboard.hiredApplications }}
+
+                        </h4>
+
+                        <small class="text-muted">
+                            Hired
+                        </small>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -109,93 +375,299 @@
 
     </div>
 
-    <!-- Buyer Statistics -->
+
+    <!-- ===================================================== -->
+    <!-- BUYER STATISTICS -->
+    <!-- ===================================================== -->
+
+    <div class="d-flex align-items-center mb-3">
+
+        <div>
+
+            <h5 class="fw-bold mb-1">
+
+                <i class="bi bi-shop text-primary me-2"></i>
+
+                Marketplace Overview
+
+            </h5>
+
+            <small class="text-muted">
+                Your activity as a buyer
+            </small>
+
+        </div>
+
+    </div>
+
+
     <div class="row g-3 mb-4">
 
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h4>{{ buyerDashboard.savedGigs }}</h4>
-                    <small>Saved Gigs</small>
+        <!-- Saved Gigs -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body d-flex align-items-center">
+
+                    <div
+                        class="bg-warning bg-opacity-10 text-warning rounded-3 p-3 me-3"
+                    >
+
+                        <i class="bi bi-bookmark-heart-fill fs-3"></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="text-muted small">
+                            Saved Gigs
+                        </div>
+
+                        <h4 class="fw-bold mb-0">
+                            {{ buyerDashboard.savedGigs }}
+                        </h4>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h4>{{ buyerDashboard.activeOrders }}</h4>
-                    <small>Active Orders</small>
+
+        <!-- Active Orders -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body d-flex align-items-center">
+
+                    <div
+                        class="bg-success bg-opacity-10 text-success rounded-3 p-3 me-3"
+                    >
+
+                        <i class="bi bi-cart-check-fill fs-3"></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="text-muted small">
+                            Active Orders
+                        </div>
+
+                        <h4 class="fw-bold mb-0">
+                            {{ buyerDashboard.activeOrders }}
+                        </h4>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h4>{{ buyerDashboard.unreadMessages }}</h4>
-                    <small>Unread Messages</small>
+
+        <!-- Messages -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body d-flex align-items-center">
+
+                    <div
+                        class="bg-primary bg-opacity-10 text-primary rounded-3 p-3 me-3"
+                    >
+
+                        <i class="bi bi-chat-dots-fill fs-3"></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="text-muted small">
+                            Unread Messages
+                        </div>
+
+                        <h4 class="fw-bold mb-0">
+                            {{ buyerDashboard.unreadMessages }}
+                        </h4>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h4>{{ buyerDashboard.unreadNotifications }}</h4>
-                    <small>Notifications</small>
+
+        <!-- Notifications -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body d-flex align-items-center">
+
+                    <div
+                        class="bg-danger bg-opacity-10 text-danger rounded-3 p-3 me-3"
+                    >
+
+                        <i class="bi bi-bell-fill fs-3"></i>
+
+                    </div>
+
+                    <div>
+
+                        <div class="text-muted small">
+                            Notifications
+                        </div>
+
+                        <h4 class="fw-bold mb-0">
+                            {{ buyerDashboard.unreadNotifications }}
+                        </h4>
+
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
 
     </div>
 
-    <!-- Recent Orders -->
-    <div class="card shadow-sm mb-4">
 
-        <div class="card-header">
-            Recent Gig Orders
+    <!-- ===================================================== -->
+    <!-- RECENT GIG ORDERS -->
+    <!-- ===================================================== -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white border-0 pt-4 px-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <h5 class="fw-bold mb-1">
+
+                        <i class="bi bi-clock-history text-primary me-2"></i>
+
+                        Recent Gig Orders
+
+                    </h5>
+
+                    <small class="text-muted">
+                        Your latest marketplace activity
+                    </small>
+
+                </div>
+
+            </div>
+
         </div>
+
 
         <div class="table-responsive">
 
-            <table class="table table-hover mb-0">
+            <table class="table table-hover align-middle mb-0">
 
-                <thead>
+                <thead class="table-light">
 
                     <tr>
-                        <th>Gig</th>
-                        <th>Seller</th>
-                        <th>Status</th>
-                        <th></th>
+
+                        <th class="ps-4">
+                            Gig
+                        </th>
+
+                        <th>
+                            Seller
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th class="text-end pe-4">
+                            Action
+                        </th>
+
                     </tr>
 
                 </thead>
 
+
                 <tbody>
 
-                    <tr *ngFor="let order of buyerDashboard.recentOrders">
+                    <tr
+                        *ngFor="let order of buyerDashboard.recentOrders"
+                    >
 
-                        <td>{{ order.gigTitle }}</td>
+                        <td class="ps-4 fw-semibold">
 
-                        <td>{{ order.sellerName }}</td>
+                            {{ order.gigTitle }}
 
-                        <td>{{ order.status }}</td>
+                        </td>
+
 
                         <td>
 
-                            <button class="btn btn-sm btn-primary" (click)="openOrder(order.id)">
+                            <i class="bi bi-person-circle text-muted me-1"></i>
+
+                            {{ order.sellerName }}
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="badge rounded-pill"
+                                [ngClass]="getOrderBadge(order.status)"
+                            >
+
+                                {{ order.status.replaceAll('_', ' ') }}
+
+                            </span>
+
+                        </td>
+
+
+                        <td class="text-end pe-4">
+
+                            <button
+                                class="btn btn-sm btn-outline-primary"
+                                (click)="openOrder(order.id)"
+                            >
+
+                                <i class="bi bi-eye me-1"></i>
+
                                 View
+
                             </button>
 
                         </td>
 
                     </tr>
 
-                    <tr *ngIf="buyerDashboard.recentOrders.length===0">
 
-                        <td colspan="4" class="text-center py-3">
+                    <tr
+                        *ngIf="buyerDashboard.recentOrders.length === 0"
+                    >
+
+                        <td
+                            colspan="4"
+                            class="text-center text-muted py-5"
+                        >
+
+                            <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+
                             No recent orders.
+
                         </td>
 
                     </tr>
@@ -208,38 +680,90 @@
 
     </div>
 
-    <!-- Popular Gigs -->
-    <div class="card shadow-sm mb-4">
 
-        <div class="card-header">
-            Popular Gigs
+    <!-- ===================================================== -->
+    <!-- POPULAR GIGS -->
+    <!-- ===================================================== -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white border-0 pt-4 px-4">
+
+            <h5 class="fw-bold mb-1">
+
+                <i class="bi bi-fire text-danger me-2"></i>
+
+                Popular Gigs
+
+            </h5>
+
+            <small class="text-muted">
+                Discover popular services from freelancers
+            </small>
+
         </div>
 
-        <div class="row g-3 p-3">
 
-            <div class="col-md-4" *ngFor="let gig of buyerDashboard.popularGigs">
+        <div class="row g-4 p-4">
 
-                <div class="card h-100">
 
-                    <img [src]="getGigImage(gig.gigImage)" class="card-img-top" style="height:180px;object-fit:cover;">
+            <!-- Gig Card -->
+            <div
+                class="col-xl-4 col-md-6"
+                *ngFor="let gig of buyerDashboard.popularGigs"
+            >
+
+                <div
+                    class="card border-0 shadow-sm h-100 overflow-hidden"
+                >
+
+                    <!-- Image -->
+                    <img
+                        [src]="getGigImage(gig.gigImage)"
+                        class="card-img-top"
+                        style="height: 190px; object-fit: cover;"
+                        alt="Gig Image"
+                    >
+
 
                     <div class="card-body">
 
-                        <h6>{{ gig.title }}</h6>
+                        <h6 class="fw-bold mb-2">
 
-                        <div class="small text-muted">
+                            {{ gig.title }}
+
+                        </h6>
+
+
+                        <div class="small text-muted mb-2">
+
+                            <i class="bi bi-person-circle me-1"></i>
 
                             {{ gig.userName }}
 
                         </div>
 
-                        <div class="mt-2">
 
-                            ★ {{ gig.averageRating }}
+                        <!-- Rating -->
+
+                        <div class="mb-2">
+
+                            <span class="text-warning">
+
+                                <i class="bi bi-star-fill"></i>
+
+                            </span>
+
+                            <strong class="ms-1">
+                                {{ gig.averageRating }}
+                            </strong>
 
                         </div>
 
-                        <div class="fw-bold mt-2">
+
+                        <!-- Price -->
+
+                        <div class="fw-bold text-success fs-5">
 
                             {{ gig.startingPrice | number }} BDT
 
@@ -247,10 +771,18 @@
 
                     </div>
 
-                    <div class="card-footer bg-white border-0">
 
-                        <button class="btn btn-primary btn-sm w-100" (click)="openGig(gig.id)">
+                    <div class="card-footer bg-white border-0 p-3">
+
+                        <button
+                            class="btn btn-primary w-100"
+                            (click)="openGig(gig.id)"
+                        >
+
+                            <i class="bi bi-arrow-right-circle me-1"></i>
+
                             View Gig
+
                         </button>
 
                     </div>
@@ -259,9 +791,21 @@
 
             </div>
 
-            <div *ngIf="buyerDashboard.popularGigs.length===0" class="col-12 text-center py-4">
 
-                No popular gigs available.
+            <!-- Empty -->
+
+            <div
+                *ngIf="buyerDashboard.popularGigs.length === 0"
+                class="col-12"
+            >
+
+                <div class="text-center text-muted py-5">
+
+                    <i class="bi bi-box-seam fs-1 d-block mb-3"></i>
+
+                    No popular gigs available.
+
+                </div>
 
             </div>
 
@@ -269,10 +813,27 @@
 
     </div>
 
+
 </div>
 
-<div *ngIf="loading" class="text-center py-5">
 
-    <div class="spinner-border text-primary"></div>
+<!-- ========================================================= -->
+<!-- LOADING -->
+<!-- ========================================================= -->
+
+<div
+    *ngIf="loading"
+    class="text-center py-5"
+>
+
+    <div
+        class="spinner-border text-primary"
+        style="width: 3rem; height: 3rem;"
+    >
+    </div>
+
+    <div class="text-muted mt-3">
+        Loading dashboard...
+    </div>
 
 </div>

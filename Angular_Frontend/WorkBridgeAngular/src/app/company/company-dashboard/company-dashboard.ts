@@ -229,6 +229,58 @@ export class CompanyDashboard implements OnInit {
   }
 
 
+  //=====================================
+  // Gig Order Status Badge
+  //=====================================
+
+  getOrderBadge(status: string): string {
+
+    switch (status) {
+
+      case 'ORDER_PLACED':
+        return 'bg-primary';
+
+      case 'QUOTED':
+        return 'bg-info';
+
+      case 'QUOTE_ACCEPTED':
+        return 'bg-success';
+
+      case 'QUOTE_REJECTED':
+        return 'bg-danger';
+
+      case 'DELIVERED':
+        return 'bg-warning text-dark';
+
+      case 'BUYER_ACCEPTED':
+        return 'bg-success';
+
+      case 'PAYMENT_RELEASED':
+        return 'bg-success';
+
+      case 'BUYER_REJECTED':
+        return 'bg-danger';
+
+      case 'BUYER_CANCELLED':
+        return 'bg-secondary';
+
+      case 'SELLER_CANCELLED':
+        return 'bg-secondary';
+
+      case 'SELLER_DISPUTED':
+        return 'bg-dark';
+
+      case 'REFUNDED':
+        return 'bg-secondary';
+
+      default:
+        return 'bg-light text-dark';
+
+    }
+
+  }
+
+
 
 
 }
