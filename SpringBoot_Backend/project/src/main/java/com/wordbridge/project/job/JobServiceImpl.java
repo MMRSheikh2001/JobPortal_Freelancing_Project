@@ -83,36 +83,42 @@ public class JobServiceImpl implements JobService {
 
         validateAISettings(dto);
 
+
+        BigDecimal oldCost = calculateJobCost(exist);
+
         Job job = jobMapper.toEntity(dto);
         job.setId(exist.getId());
         job.setCreatedAt(exist.getCreatedAt());
         job.setUpdatedAt(LocalDateTime.now());
-        job.setUpdatedAt(LocalDateTime.now());
-
-        BigDecimal totalCost = calculateJobCost(job);
-
-        User admin = userRepository.findByRole(UserRole.ADMIN)
-                .orElseThrow(() -> new RuntimeException("Admin not found"));
-
-        walletService.transfer(
-                job.getCompanyProfile().getUser().getId(),
-                admin.getId(),
-                totalCost
-        );
 
 
+        BigDecimal newCost = calculateJobCost(job);
 
+        BigDecimal difference = newCost.subtract(oldCost);
+
+
+        if (difference.compareTo(BigDecimal.ZERO) > 0) {
+
+            User admin = userRepository.findByRole(UserRole.ADMIN)
+                    .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+            walletService.transfer(
+                    job.getCompanyProfile().getUser().getId(),
+                    admin.getId(),
+                    difference
+            );
+
+            transactionService.createTransaction(
+                    TransactionType.JOB_POST_PAYMENT,
+                    job.getCompanyProfile().getUser(),
+                    admin,
+                    difference,
+                    "Additional charge for Job #" + job.getId() + " (AI settings upgraded)"
+            );
+        }
 
         Job updated = jobRepository.save(job);
         synchronizeApplications(updated);
-
-        transactionService.createTransaction(
-                TransactionType.JOB_POST_PAYMENT,
-                job.getCompanyProfile().getUser(),
-                admin,
-                totalCost,
-                "Payment for Job #" + updated.getId()
-        );
 
         return jobMapper.toDTO(updated);
     }
