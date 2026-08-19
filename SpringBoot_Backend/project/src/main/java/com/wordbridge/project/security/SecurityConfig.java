@@ -92,12 +92,14 @@ public class SecurityConfig {
 
         // CORS for Angular
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(
+        configuration.setAllowedOriginPatterns(List.of(
                 "http://localhost:4200",
                 "http://192.168.88.250:4200",
                 "http://localhost:8090",
                 "http://127.0.0.1:8090",
-                "http://10.0.2.2:8090"
+                "http://10.0.2.2:8090",
+                "http://localhost:[*]",
+                "http://127.0.0.1:[*]"
         ));
         configuration.setAllowedMethods(List.of(
                 "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"
