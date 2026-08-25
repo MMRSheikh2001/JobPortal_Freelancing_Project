@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:work_bridge_flutter/enums/training_type.dart';
 
 class TrainingRequestDTO {
@@ -95,4 +97,11 @@ class TrainingRequestDTO {
       userProfileId: userProfileId ?? this.userProfileId,
     );
   }
+
+
+
+// Add inside TrainingRequestDTO class:
+  String toJsonString() => jsonEncode(toJson());
+
+
 }

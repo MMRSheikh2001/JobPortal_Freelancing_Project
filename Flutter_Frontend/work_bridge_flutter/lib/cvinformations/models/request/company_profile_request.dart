@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class CompanyProfileRequestDTO {
   final int? userId;
   final String? name;
@@ -52,20 +54,19 @@ class CompanyProfileRequestDTO {
   /// Converts this [CompanyProfileRequestDTO] instance into a JSON-compatible map.
   Map<String, dynamic> toJson() {
     return {
-      if (userId != null) 'userId': userId,
-      if (name != null) 'name': name,
-      if (phone != null) 'phone': phone,
-      if (companyEmail != null) 'companyEmail': companyEmail,
-      if (companyDescription != null) 'companyDescription': companyDescription,
-      if (companyWebsite != null) 'companyWebsite': companyWebsite,
-      if (industry != null) 'industry': industry,
-      if (foundedYear != null) 'foundedYear': foundedYear,
-      if (tradeLicenseNumber != null) 'tradeLicenseNumber': tradeLicenseNumber,
-      if (locationId != null) 'locationId': locationId,
-      if (locationDetails != null) 'locationDetails': locationDetails,
-      if (locationPostCode != null) 'locationPostCode': locationPostCode,
-      if (locationPoliceStationId != null)
-        'locationPoliceStationId': locationPoliceStationId,
+      'userId': userId,
+      'name': name,
+      'phone': phone,
+      'companyEmail': companyEmail,
+      'companyDescription': companyDescription,
+      'companyWebsite': companyWebsite,
+      'industry': industry,
+      'foundedYear': foundedYear,
+      'tradeLicenseNumber': tradeLicenseNumber,
+      'locationId': locationId,
+      'locationDetails': locationDetails,
+      'locationPostCode': locationPostCode,
+      'locationPoliceStationId': locationPoliceStationId,
     };
   }
 
@@ -102,4 +103,6 @@ class CompanyProfileRequestDTO {
       locationPoliceStationId ?? this.locationPoliceStationId,
     );
   }
+
+  String toJsonString() => jsonEncode(toJson());
 }

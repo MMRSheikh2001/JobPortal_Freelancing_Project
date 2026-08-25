@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.mmrsheikh2001.work_bridge_flutter"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37//flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

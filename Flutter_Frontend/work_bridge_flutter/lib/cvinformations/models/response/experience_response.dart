@@ -1,4 +1,4 @@
-import 'package:work_bridge_flutter/job/entity/response/job_response.dart';
+import 'package:work_bridge_flutter/enums/employment_type.dart';
 
 class ExperienceResponseDTO {
   final int? id;

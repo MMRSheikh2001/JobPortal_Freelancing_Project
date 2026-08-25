@@ -1,8 +1,9 @@
-import 'package:work_bridge_flutter/cvinformations/models/request/reference_request.dart';
+
 import 'package:work_bridge_flutter/cvinformations/models/response/education_response.dart';
 import 'package:work_bridge_flutter/cvinformations/models/response/experience_response.dart';
 import 'package:work_bridge_flutter/cvinformations/models/response/extracurricular_response.dart';
 import 'package:work_bridge_flutter/cvinformations/models/response/portfolio_response.dart';
+import 'package:work_bridge_flutter/cvinformations/models/response/reference_response.dart';
 import 'package:work_bridge_flutter/cvinformations/models/response/training_response.dart';
 import 'package:work_bridge_flutter/cvinformations/models/response/user_language_response.dart';
 import 'package:work_bridge_flutter/cvinformations/models/response/user_profile_response.dart';

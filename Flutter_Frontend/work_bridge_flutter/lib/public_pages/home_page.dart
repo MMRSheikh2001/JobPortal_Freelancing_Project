@@ -332,7 +332,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         badge: dashboard.unreadMessages ?? 0,
         onTap: () {
           Navigator.of(context).pushNamed(
-            AppRouter.chat,
+            AppRouter.chatList,
           );
         },
       ),
@@ -596,6 +596,11 @@ class _StatisticsGrid extends StatelessWidget {
         label: 'Unread Messages',
         value: unreadMessages,
         icon: Icons.mark_unread_chat_alt_outlined,
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            AppRouter.chatList,
+          );
+        },
       ),
     ];
 
@@ -623,11 +628,13 @@ class _StatisticItem {
     required this.label,
     required this.value,
     required this.icon,
+    this.onTap,
   });
 
   final String label;
   final int value;
   final IconData icon;
+  final VoidCallback? onTap;
 }
 
 class _StatisticCard extends StatelessWidget {
@@ -640,48 +647,52 @@ class _StatisticCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 20,
-              child: Icon(
-                item.icon,
-                size: 20,
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: item.onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 20,
+                child: Icon(
+                  item.icon,
+                  size: 20,
+                ),
               ),
-            ),
 
-            const SizedBox(width: 10),
+              const SizedBox(width: 10),
 
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${item.value}',
-                    style: const TextStyle(
-                      fontSize: 21,
-                      fontWeight: FontWeight.bold,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${item.value}',
+                      style: const TextStyle(
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
 
-                  const SizedBox(height: 2),
+                    const SizedBox(height: 2),
 
-                  Text(
-                    item.label,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.grey.shade600,
+                    Text(
+                      item.label,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.grey.shade600,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

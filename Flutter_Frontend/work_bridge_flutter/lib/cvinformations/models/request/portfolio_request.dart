@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class PortfolioRequestDTO {
   final String? title;
   final String? description;
@@ -51,4 +53,8 @@ class PortfolioRequestDTO {
       userProfileId: userProfileId ?? this.userProfileId,
     );
   }
+
+  String toJsonString() => jsonEncode(toJson());
+
+
 }

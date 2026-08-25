@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:work_bridge_flutter/enums/gender_type.dart';
 import 'package:work_bridge_flutter/enums/job_type.dart';
 import 'package:work_bridge_flutter/enums/work_place_type.dart';
@@ -243,4 +245,8 @@ class UserProfileRequestDTO {
           this.permanentAddressPoliceStationId,
     );
   }
+
+  String toJsonString() => jsonEncode(toJson());
+
+
 }
