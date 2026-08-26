@@ -235,8 +235,9 @@ class AppRouter {
       case resumeFile:
         return MaterialPageRoute(builder: (_) => const ResumeFileScreen());
       case resumeFileImport:
+        final profileId = settings.arguments as int;
         return MaterialPageRoute(
-          builder: (_) => const ResumeFileImportScreen(),
+          builder: (_) => ResumeFileImportScreen(userProfileId: profileId),
         );
 
       case trainings:
