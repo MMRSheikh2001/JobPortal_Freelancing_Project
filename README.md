@@ -174,6 +174,379 @@ npm start        # http://localhost:4200
 
 ---
 
-## About the Author
+# WorkBridge Flutter
 
-Built solo, end-to-end: backend and database design, web frontend, and native mobile client across a job portal + gig marketplace domain.
+WorkBridge Flutter is the cross-platform mobile and web client for **WorkBridge**, a full-stack job marketplace and freelance platform. It consumes the existing Spring Boot REST API and provides role-based features for job seekers and gig buyers.
+
+## 🚀 Overview
+
+The Flutter application is designed to provide a modern, responsive client for the WorkBridge platform.
+
+It communicates with the WorkBridge Spring Boot backend through REST APIs and uses JWT-based authentication for secure access.
+
+### Current Flutter Scope
+
+* **Job Seeker**
+
+  * Registration and login
+  * Email verification
+  * Password recovery
+  * Job browsing and searching
+  * Job details
+  * Job applications
+  * User profile management
+  * Education, experience, skills, languages, training and portfolio management
+  * Resume generation
+  * Resume file upload and import
+  * AI job matching / interview features
+
+* **Gig Buyer**
+
+  * Browse gigs
+  * View gig details
+  * Place orders
+  * Manage orders
+  * Delivery and related gig features
+
+The application follows the existing WorkBridge backend design rather than introducing a separate backend.
+
+---
+
+## 🛠️ Technology Stack
+
+### Frontend
+
+* **Flutter**
+* **Dart**
+* Material Design
+* Riverpod for state management
+* Dio for HTTP communication
+* Flutter Secure Storage for session/token storage
+
+### Backend
+
+The Flutter application consumes the existing WorkBridge backend:
+
+* Java
+* Spring Boot
+* Spring Security
+* JWT Authentication
+* Spring Data JPA
+* Hibernate
+* MySQL
+* REST API
+
+### Development Tools
+
+* Android Studio
+* Visual Studio Code
+* Git
+* GitHub
+* Postman
+
+---
+
+## 🏗️ Architecture
+
+The project follows a feature-oriented structure with separation between UI, state management, repositories, models and API communication.
+
+
+The application uses:
+
+```text
+Screen
+   ↓
+Provider / Controller
+   ↓
+Repository
+   ↓
+ApiClient (Dio)
+   ↓
+Spring Boot REST API
+   ↓
+MySQL
+```
+
+---
+
+## 🔐 Authentication
+
+WorkBridge Flutter uses JWT authentication.
+
+The authentication flow is:
+
+```text
+Register
+   ↓
+Email Verification
+   ↓
+Login
+   ↓
+JWT Token
+   ↓
+Secure Storage
+   ↓
+Authenticated API Requests
+```
+
+The `ApiClient` automatically retrieves the stored JWT and attaches it to authenticated requests:
+
+```text
+Authorization: Bearer <JWT>
+```
+
+Unauthorized responses are handled centrally by the API client.
+
+---
+
+## 🌐 API Configuration
+
+The API base URL is configured through `ApiConstants`.
+
+For example:
+
+```text
+http://localhost:8090/api/
+```
+
+The application automatically determines the appropriate host depending on the platform.
+
+### Android Emulator
+
+```text
+10.0.2.2
+```
+
+This allows the Android emulator to access the host machine's localhost.
+
+### Flutter Web
+
+```text
+localhost
+```
+
+### iOS Simulator
+
+```text
+localhost
+```
+
+---
+
+## 📱 Main Features
+
+### Authentication
+
+* User registration
+* Login
+* Email verification
+* Forgot password
+* Reset password
+* JWT session management
+* Automatic logout on unauthorized requests
+
+### Job Marketplace
+
+* Search jobs
+* Filter jobs
+* View job details
+* Apply for jobs
+* Track applications
+
+### User Profile
+
+* Personal information
+* Contact information
+* Present and permanent address
+* Professional summary
+* Career objective
+* Social links
+* Salary expectations
+* Job preferences
+
+### CV Information
+
+The application supports management of:
+
+* Education
+* Work experience
+* Skills
+* Languages
+* Training
+* Portfolio
+* References
+* Extracurricular activities
+
+### Resume
+
+* Generate resume
+* View resume
+* Generate PDF resume
+* Upload existing resume
+* Import resume information
+* Preview imported information before saving
+
+### Freelance Marketplace
+
+For the gig buyer side:
+
+* Browse gigs
+* View gig details
+* Place orders
+* Manage orders
+* Handle gig deliveries
+
+---
+
+## 🤖 AI Features
+
+WorkBridge integrates AI-assisted functionality through the existing backend.
+
+The Flutter client can communicate with the AI job matching/interview functionality provided by the Spring Boot API.
+
+This allows job seekers to receive job-related matching and interview assistance based on their profile and selected job.
+
+---
+
+## 📂 API Modules
+
+The Flutter client communicates with several WorkBridge API modules:
+
+```text
+Authentication
+Dashboard
+Jobs
+User Profiles
+Company Profiles
+Education
+Experience
+Skills
+Languages
+Training
+Portfolio
+References
+Extracurricular Activities
+Resume
+Resume Import
+Uploaded Resume Files
+Gigs
+Orders
+Messages
+Wallet
+Payments
+```
+
+---
+
+## 🔄 Resume Import Flow
+
+The resume import feature follows this workflow:
+
+```text
+Upload Resume
+      ↓
+Spring Boot Resume Parser
+      ↓
+Resume Import API
+      ↓
+Flutter Preview
+      ↓
+User Reviews Information
+      ↓
+Save Imported Information
+      ↓
+User Profile / CV Sections Updated
+```
+
+The Flutter application receives a `ResumeImportPreviewDTO` containing the extracted profile and CV information.
+
+---
+
+## ▶️ Running the Project
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/MMRSheikh2001/JobPortal_Freelancing_Project.git
+```
+
+### 2. Open the Flutter project
+
+Open the Flutter project directory in Android Studio or Visual Studio Code.
+
+### 3. Install dependencies
+
+```bash
+flutter pub get
+```
+
+### 4. Start the Spring Boot backend
+
+Make sure the WorkBridge Spring Boot backend is running on:
+
+```text
+http://localhost:8090
+```
+
+### 5. Run Flutter
+
+For web:
+
+```bash
+flutter run -d chrome
+```
+
+For Android:
+
+```bash
+flutter run
+```
+
+---
+
+## 🔧 Important Configuration
+
+Before running the application, make sure:
+
+* The Spring Boot backend is running.
+* MySQL is running.
+* The backend database is configured correctly.
+* The API port is `8090`.
+* CORS is configured correctly for Flutter Web.
+* An Android emulator or physical device can reach the backend when running on Android.
+
+For a physical Android device, `localhost` or `10.0.2.2` should not be used to reach the development PC. The computer's local network IP should be configured instead.
+
+---
+
+## 📌 Project Status
+
+The Flutter client is an ongoing cross-platform implementation of the WorkBridge platform.
+
+The primary goal is to provide a modern Flutter client while reusing the completed Spring Boot backend and its existing REST API architecture.
+
+---
+
+## 👨‍💻 Developer
+
+**Md. Mahbubur Rahman Sheikh**
+
+WorkBridge was developed as part of the **ISDB-BISEW IT Scholarship Programme — Diploma in Web and Mobile App Development using Spring Boot, Android & Flutter**.
+
+### Related Technologies
+
+```text
+Spring Boot + MySQL
+        ↓
+     REST API
+        ↓
+      Flutter
+        ↓
+ Android / iOS / Web
+```
+
+---
+
+## 📄 License
+
+This project is developed as an educational and portfolio project.
