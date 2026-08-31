@@ -37,7 +37,7 @@ public class GigController {
                 , HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("permitAll()")
     @GetMapping
     public ResponseEntity<List<GigResponseDTO>> findAll() {
         List<GigResponseDTO> list = gigService.findAll();

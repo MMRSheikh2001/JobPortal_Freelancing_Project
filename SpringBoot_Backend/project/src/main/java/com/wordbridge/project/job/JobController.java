@@ -34,7 +34,7 @@ public class JobController {
         return ResponseEntity.ok(saved);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("permitAll()")
     @GetMapping
     public ResponseEntity<List<JobResponseDTO>> getAll() {
         List<JobResponseDTO> list = jobService.getAll();

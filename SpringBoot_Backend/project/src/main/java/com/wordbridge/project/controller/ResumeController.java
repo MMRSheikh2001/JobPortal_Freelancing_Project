@@ -28,33 +28,33 @@ public class ResumeController {
     private final AuthenticationService authenticationService;
 
     // Existing — returns JSON
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("permitAll()")
     @GetMapping("{userProfileId}")
     public ResponseEntity<ResumeResponseDTO> generateResume(
             @PathVariable Long userProfileId) {
-        checkProfileAccess(userProfileId);
+      //  checkProfileAccess(userProfileId);
         return ResponseEntity.ok(resumeService.generateResume(userProfileId));
     }
 
     // Preview — returns rendered HTML string
     // Angular can display this in an <iframe srcdoc="..."> or new tab
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("permitAll()")
     @GetMapping(value = "{userProfileId}/html",
             produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> generateHtml(
             @PathVariable Long userProfileId) {
-        checkProfileAccess(userProfileId);
+ //       checkProfileAccess(userProfileId);
         return ResponseEntity.ok()
                 .contentType(MediaType.TEXT_HTML)
                 .body(resumeService.generateHtml(userProfileId));
     }
 
     // Download — returns PDF bytes as file download
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("permitAll()")
     @GetMapping("{userProfileId}/pdf")
     public ResponseEntity<byte[]> generatePdf(
             @PathVariable Long userProfileId) {
-        checkProfileAccess(userProfileId);
+  //      checkProfileAccess(userProfileId);
         byte[] pdf = resumeService.generatePdf(userProfileId);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)

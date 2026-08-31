@@ -2,14 +2,11 @@ package com.wordbridge.project.message;
 
 import com.wordbridge.project.conversation.ConversationResponseDTO;
 import com.wordbridge.project.conversation.ConversationService;
-import com.wordbridge.project.dto.requestdto.UserProfileRequestDTO;
-import com.wordbridge.project.dto.responsedto.UserProfileResponseDTO;
 import com.wordbridge.project.entity.User;
 import com.wordbridge.project.enums.UserRole;
 import com.wordbridge.project.security.AuthenticationService;
 import com.wordbridge.project.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,8 +21,8 @@ import java.util.List;
 public class MessageController {
     private final MessageService messageService;
 
-    private final ConversationService conversationService;   // NEW - reused
-    private final UserProfileService userProfileService;     // NEW - reused
+    private final ConversationService conversationService;
+    private final UserProfileService userProfileService;
     private final AuthenticationService authenticationService;
 
     @PreAuthorize("isAuthenticated()")

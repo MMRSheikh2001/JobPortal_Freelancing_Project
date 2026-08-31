@@ -71,7 +71,7 @@ public class CompanyProfileController {
         return ResponseEntity.ok(updated);
     }
 
-    @PreAuthorize("hasRole('COMPANY')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         checkOwnership(id);
@@ -91,7 +91,7 @@ public class CompanyProfileController {
         );
     }
 
-    //Find User Profile By User Id
+    //Find Company Profile By User Id
     @PreAuthorize("permitAll()")
     @GetMapping("user/{userId}")
     public ResponseEntity<CompanyProfileResponseDTO> getByUserId(
