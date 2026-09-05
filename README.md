@@ -10,6 +10,8 @@ A full-stack marketplace platform combining a **traditional job portal** (compan
 
 ---
 
+ ▶️ [Watch Demo Video](https://www.youtube.com/watch?v=yzHAcHdAU7k)
+
 ## What's implemented
 
 - **Two marketplace models on one backend** — a job portal (`Job` / `JobApplication`, company-posted, deadline- and vacancy-driven) and a gig marketplace (`Gig` / `GigOrder`, freelancer-posted, order-lifecycle-driven), sharing the same user, category, payment, and review infrastructure.
