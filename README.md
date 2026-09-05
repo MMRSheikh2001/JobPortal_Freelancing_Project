@@ -22,6 +22,8 @@ A full-stack marketplace platform combining a **traditional job portal** (compan
 
 ---
 
+ ▶️ [Watch Demo Video](https://www.youtube.com/watch?v=yzHAcHdAU7k)
+
 ## Tech Stack
 
 | Layer | Technology |
