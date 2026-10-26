@@ -34,7 +34,7 @@ A full-stack marketplace platform combining a **traditional job portal** (compan
 | **Auth** | JJWT (JWT issuing/validation), BCrypt password hashing, stateless sessions |
 | **Backend integrations** | Google Gemini API (AI resume parsing & interview questions), SSLCommerz (payment gateway), Jakarta Mail (email/OTP), Apache PDFBox + OpenHTMLtoPDF (resume/PDF generation), Apache POI (document processing), springdoc-openapi (Swagger/OpenAPI docs) |
 | **Frontend (Web)** | Angular 21 (standalone components), TypeScript, RxJS, Bootstrap 5, SweetAlert2, JWT decode |
-| **Mobile** | Native Android (Java), Retrofit + OkHttp (networking), Gson, Glide (image loading), Lombok |
+| **Mobile** | Native Android (Java),Flutter(Cross Platform),Riverpod, Retrofit + OkHttp (networking), Gson, Glide (image loading), Lombok |
 | **Database** | MySQL — 50 tables, normalized schema, join tables for many-to-many domains (skills, categories, geo hierarchy) |
 | **Build tools** | Maven (backend), Angular CLI / npm (web), Gradle (Android) |
 
